@@ -155,10 +155,57 @@ $(document).ready(() => {
     }
   }, 500);
 
+  function initFlyOutNav(){
+    const $hamburger = $('.header__hamburger')
+    const $flyout = $('.fly-out-nav')
+    const $close = $('.fly-out-nav__close')
+    const $collectionList = $('.fly-out-nav__collections a')
+    const $collections = $('.fly-out-collection')
+    const $hiddenImage = $('.js-header-product-image')
+    const $productListItems = $('.fly-out-collection__items a')
+    const $mobBack = $('.fly-out-collection__back')
+
+
+
+    $hamburger.on('click', function(){
+      $flyout.addClass('active');
+      disableScrolling()
+    })
+
+    $close.on('click', function(){
+      $flyout.removeClass('active');
+      $collections.each(function(){ $(this).removeClass('active');})
+      enableScrolling()
+    })
+
+    $collectionList.on('mouseenter', function(){
+      let hoveredCollection = $(this).attr('data-collection') 
+
+      $collections.each(function(){
+        if($(this).attr('data-collection') == hoveredCollection){
+          $(this).addClass('active');
+        }
+        else{
+          $(this).removeClass('active');
+        }
+      })
+    })
+
+    $productListItems.on('mouseenter', function(){
+      let imageSrc = $(this).find('img').attr('src') 
+      console.log($(this).parent());
+      $(this).parent().parent().find('.js-header-product-image').attr('src', imageSrc)    
+    })
+
+    $mobBack.on('click', function(){
+      $collections.each(function(){ $(this).removeClass('active');})
+    })
+  }
+
   /* FUNCTION CALLS */
   /* ============= */
   bindEvents();
-  console.log('yup');
+  initFlyOutNav()
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

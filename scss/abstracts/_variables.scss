@@ -2,22 +2,19 @@
 // This file contains all application-wide Sass variables.
 // -----------------------------------------------------------------------------
 
-/// Regular font family
-/// @type List
-$text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue',
-  'Helvetica', 'Arial', sans-serif !default;
+
 
 /// Copy text color
 /// @type Color
-$text-color: rgb(34, 34, 34) !default;
+$nuzest-navy: #07272D!default;
 
 /// Main brand color
 /// @type Color
-$brand-color: rgb(229, 0, 80) !default;
+$light-blue: #99B3B7 !default;
 
 /// Light grey
 /// @type Color
-$light-grey: rgb(237, 237, 237) !default;
+$off-white: #FCF8F4 !default;
 
 /// Medium grey
 /// @type Color

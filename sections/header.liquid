@@ -1,0 +1,156 @@
+<header class="header">
+  <div class="header__left">
+    <div class="header__hamburger">
+      <div class="header__hamburger-line"></div>
+      <div class="header__hamburger-line"></div>
+    </div>
+    <a href=""><p class="caption-regular">Shop All</p></a>
+    <a href=""><p class="caption-regular">Who We Are</p></a>
+    <a href=""><p class="caption-regular">The Digest</p></a>
+  </div>
+  <div class="header__center">
+    <a href="">{% include 'nav-logo' %}</a>  
+  </div>
+  <div class="header__right">
+    <a href="">{% include 'icon-search' %}</a>
+    <a href="">{% include 'icon-lang' %}</a>
+    <a href="">{% include 'icon-my-account' %}</a>
+    <a href="">{% include 'icon-bag' %}  </a>  
+  </div>
+</header>
+
+<div class="" style="height: 900px; background-color: gray;">spaceeee</div>
+
+<section class="fly-out-nav">
+  <div class="fly-out-nav__inner">
+    <div class="fly-out-nav__header">
+      <div class="fly-out-nav__close">
+        {% include 'icon-close' %}
+      </div>
+      <a href=""><p class="caption-regular">Shop All</p></a>
+      <a href=""><p class="caption-regular">Who We Are</p></a>
+      <a href=""><p class="caption-regular">The Digest</p></a>
+      <div class="fly-out-nav__header-icons">
+        <a href="">{% include 'icon-lang' %}</a>
+        <a href="">{% include 'icon-bag' %}  </a>  
+      </div>
+    </div>
+    <div class="fly-out-nav__collections">
+      {% for block in section.blocks %}
+        {% if block.type == 'logo_image' %}
+        <a href="javascript:void(0);" data-collection="{{ collections[block.settings.collection].handle }}">
+          <h2 class="header-small">{{ collections[block.settings.collection].title }}</h2>
+        </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="fly-out-nav__pages">
+      {% for block in section.blocks %}
+        {% if block.type == 'page' %}
+          <a href="{{ pages[block.settings.page].url }}" >
+            <h3 class="sub-header">{{ pages[block.settings.page].title }}</h3>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="fly-out-nav__account">
+      <a href="">{% include 'icon-my-account' %}</a>
+      <a href=""><h3 class="sub-header">My Account</h3></a>
+    </div>
+  </div>
+</section>
+
+{% for block in section.blocks %}
+{% if block.type == 'logo_image' %}
+  <div class="fly-out-collection" data-collection="{{ collections[block.settings.collection].handle }}">
+    <div class="fly-out-collection__inner">
+      <div class="fly-out-collection__back">
+        {% include 'icon-back' %}
+      </div>     
+      <div class="fly-out-collection__items">
+        {% assign first_image = collections[block.settings.collection].products[0].featured_image | img_url: '400x400' %}
+        {% for product in collections[block.settings.collection].products %}
+            <a href="{{ product.url }}">
+              <h2 class="header-small">{{ product.title }}</h2>
+              <img class="hidden" src="{{product.featured_image | img_url: '400x400'}}" alt="">
+            </a>
+        {% endfor %}
+      </div>
+      <img class="js-header-product-image" src="{{ first_image }}" alt="">
+    </div>
+  </div>
+{% endif %}
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+{% schema %}
+{
+  "name": "Fly Out Nav",
+  "max_blocks": 20,
+  "class": "alt-img-with-text--section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Instructions"
+    },
+    {
+      "type": "paragraph",
+      "content": "Click 'add content' above and add the collections and pages you would like to display in the Fly out menu."
+    }
+  ],
+    "blocks": [
+    {
+      "type": "logo_image",
+      "name": {
+        "en": "Collection"
+      },
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": {
+            "en": "Collection"
+          }
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": {
+        "en": "Page"
+      },
+      "settings": [
+        {
+          "type": "page",
+          "id": "page",
+          "label": {
+            "en": "Page"
+          }
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fly Out Nav"
+    }
+  ]
+}
+
+{% endschema %}
+
+
+
+
+
+
+ 

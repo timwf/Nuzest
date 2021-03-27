@@ -1,0 +1,214 @@
+.fly-out-nav{
+  position: fixed;
+  min-height: 100vh;
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+  background-color: $off-white;
+  top: 0px;
+  left: 0px;
+  padding: 22px;
+  transform: translateX(-759px);
+  transition: all 800ms cubic-bezier(0.250, 0.250, 0.000, 1.015); /* custom */
+  z-index: 9;
+
+  &.active{
+    transform: translateX(0px);
+    transition: all 800ms cubic-bezier(0.075, 0.650, 0.000, 0.965); /* custom */
+  }
+  
+
+  @include respond-to(sm){
+    width: 474px;
+    border-right: solid #EAD7CA;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include respond-to(sm){
+    padding: 21px 41px;
+  }
+  
+  &__header{
+    display: flex;
+    align-items: center;
+
+    p{
+      display: none;
+
+      @include respond-to(sm){
+        display: block;
+        margin-left: 48px;
+
+        @include hover{
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }      
+    }
+  }
+
+  &__close{
+    @include hover{
+      cursor: pointer;
+    }
+  }
+
+  &__header-icons{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    align-items: baseline;
+
+    svg{
+      margin-left: 20px;
+    }
+
+    @include respond-to(sm){
+      display: none;
+    }
+  }
+
+  &__collections{
+    padding-top: 50px;
+
+    @include respond-to(xl){
+      padding-top: 70px;
+    }
+
+    h2{
+      margin-bottom: 24px;
+
+      @include respond-to(xl){
+        margin-bottom: 30px;
+      }
+
+      @include hover{
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__pages{
+    padding-top: 17px;
+
+    @include respond-to(sm){
+      padding-top: 7px;
+    }
+
+    @include respond-to(xl){
+      padding-top: 20px;
+    }
+
+    h3{
+      text-transform: uppercase;
+      margin-bottom: 20px;
+
+      @include hover{
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__account{
+    display: flex;
+    align-items: center;
+    margin-top: 55px;
+
+    @include respond-to(sm){
+      margin-top: 33px;
+    }
+
+    h3{
+      text-transform: uppercase;
+      margin-left: 14px;
+
+      @include hover{
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.fly-out-collection{
+  z-index: 19;
+  position: fixed;
+  min-height: 100vh;
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+  background-color: $off-white;
+  top: 0px;
+  left: 0px;
+  // padding: 22px;
+  transform: translateX(-1200px);
+  transition: all 1000ms cubic-bezier(0.250, 0.250, 0.000, 1.015); /* custom */
+
+  @include respond-to(sm){
+    z-index: 1;
+  }  
+
+  &.active{
+    transform: translateX(0px);
+    transition: all 1000ms cubic-bezier(0.075, 0.650, 0.000, 0.965); /* custom */
+  }
+  
+  &__back{
+    position: absolute;
+    top: 24px;
+    left: auto;
+
+    @include respond-to(sm){
+      display: none;
+    }
+  }
+
+  @include respond-to(sm){
+    left: 474px;
+    width: 649px;
+  }
+
+  &__inner{
+    padding: 104px 20px;
+    display: flex;
+    justify-content: space-between;
+
+    @include respond-to(sm){
+      padding: 73px 86px;
+    }
+
+    @include respond-to(lg){
+      padding: 95px 86px;
+    }
+
+    h2{
+      margin-bottom: 24px;
+      text-transform:lowercase;
+      text-transform: capitalize;
+
+      @include respond-to(xl){
+        margin-bottom: 30px;
+      }
+
+      @include hover{
+        text-decoration: underline;
+      }
+    }
+
+    img{
+      display: none;
+
+      @include respond-to(sm){
+        display: block;
+        width: 137px;
+        height: 175px;
+        object-fit: cover;
+        margin-left: 16px;
+      }
+    }
+  }
+}

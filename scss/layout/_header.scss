@@ -1,13 +1,109 @@
 // -----------------------------------------------------------------------------
 // This file contains all styles related to the header of the site/application.
 // -----------------------------------------------------------------------------
-.page-header {
-  position: relative;
-  padding-top: 10px;
-  padding-bottom: 10px;
+
+.header{
   display: flex;
   justify-content: space-between;
+  padding: 12px 21px;
+  align-items: center;
+  border-bottom: solid $nuzest-navy;
+  border-width: 1.25px;
+  position: fixed;
+  width: 100%;
+  background-color: #FCF8F4;
 
-  &__logo {
+  @include respond-to(md){
+    padding: 12px 39px;
+  }
+
+  @include respond-to(xl){
+    padding: 12px 89px;
+  }
+
+  & > div{
+    display: flex;
+    align-items: center;
+  }
+
+  &__hamburger{
+    margin-right: 18px;
+
+    @include hover{
+      cursor: pointer;
+    }
+
+    @include respond-to(lg){
+      margin-right: 85px;
+    }    
+  }
+
+  &__hamburger-line{    
+    width: 27px;
+    height: 2px;
+    border-radius: 5px;
+    background-color: $nuzest-navy;
+    margin: 4px 0px;
+  }
+
+  &__left{
+    width: 40%;
+
+    p{
+      display: none;
+
+      @include respond-to(md){
+        display: block;
+        margin-left: 41px;
+        transition: 0.2s;
+  
+        @include hover{
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &__center{
+    width: 20%;
+    justify-content: center;
+    transition: 0.2s;
+
+    svg{
+      @include hover{
+        cursor: pointer;
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &__right{
+    width: 40%;
+    justify-content: flex-end;
+
+    a:nth-child(1), a:nth-child(3){
+      display: none;
+
+      @include respond-to(md){
+        display: block;
+      }
+    }
+
+    svg{
+      margin-left: 22px;
+
+      *{
+        transition: 0.2s;
+      }
+
+      @include hover{
+        cursor: pointer;
+
+        *{
+          stroke: $light-blue;
+        }
+      }
+    }
   }
 }
