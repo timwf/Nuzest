@@ -16,17 +16,22 @@ $light-blue: #99B3B7 !default;
 /// @type Color
 $off-white: #FCF8F4 !default;
 
+/// blue
+/// @type Color
+$blue-kgs: #0D5257 !default;
+
+
 /// Medium grey
 /// @type Color
-$mid-grey: rgb(153, 153, 153) !default;
+$cream: #F8EBD6 !default;
 
 /// Dark grey
 /// @type Color
-$dark-grey: rgb(68, 68, 68) !default;
+$green: #00E132 !default;
 
 /// Container's maximum width
 /// @type Length
-$max-width: 1170px !default;
+$max-width: 1440px !default;
 
 /// Breakpoints map
 /// @prop {String} keys - Keys are identifiers mapped to a given length

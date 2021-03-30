@@ -15,6 +15,11 @@ body {
   overflow-x: hidden;
 }
 
+.page-container{
+  padding-top: 60px;
+}
+
+
 /**
  * Make all elements from the DOM inherit from the parent box-sizing
  * Since `*` has a specificity of 0, it does not override the `html` value
@@ -28,6 +33,10 @@ body {
 
   margin: 0;
   padding: 0;
+}
+
+*{
+  outline: none;
 }
 
 img {

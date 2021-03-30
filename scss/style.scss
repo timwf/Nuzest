@@ -10,7 +10,8 @@
 @import 'base/base', 'base/fonts', 'base/typography', 'base/helpers';
 
 // 4. Layout-related sections
-@import 'layout/header', 'layout/footer';
+@import 'layout/header', 'layout/footer', 'layout/home-hero', 'layout/usps', 
+'layout/home-featured-product', 'layout/home-scrolling-animation';
 
 // 5. Components
 @import 'components/button', 'components/hamburger', 'components/fly-out-nav' ;

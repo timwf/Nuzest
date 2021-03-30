@@ -202,10 +202,76 @@ $(document).ready(() => {
     })
   }
 
+
+  function initfeaturedProductsHome(){
+    const $card = $('.home-featured-product__item')
+
+
+    $card.on('mouseenter', function(){
+      $(this).find('.btn').addClass('active')
+      $(this).find('.home-featured-product__product-options').addClass('active')
+      
+    })
+
+    $card.on('mouseleave', function(){
+      $(this).find('.btn').removeClass('active')
+      $(this).find('.home-featured-product__product-options').removeClass('active')
+    })
+
+
+    const swiper = new Swiper('.swiper-container', {
+      slidesPerView: 1.25,
+      speed: 400,
+      spaceBetween: 27,
+      // loop: true,
+      navigation: {
+        prevEl: '.slidePrev-btn',
+        nextEl: '.slideNext-btn'
+      },
+      breakpoints: {
+        400: {
+          slidesPerView: 1.45,
+          spaceBetween: 27
+        },
+        600: {
+          slidesPerView: 1.75,
+          spaceBetween: 27
+        },
+        800: {
+          slidesPerView: 1.25,
+          spaceBetween: 90
+        },
+        1100: {
+          slidesPerView: 2.25,
+          spaceBetween: 90
+        },
+        1300: {
+          slidesPerView: 2.5,
+          spaceBetween: 90
+        },
+        1500: {
+          slidesPerView: 2.75,
+          spaceBetween: 90
+        },
+        1700: {
+          slidesPerView: 3.1,
+          spaceBetween: 90
+        },
+        // when window width is >= 640px
+      }
+    });
+  }
+
+  function initHomeScrollingAnimation(){
+    console.log('asdfsdg');
+  } 
+
   /* FUNCTION CALLS */
   /* ============= */
   bindEvents();
   initFlyOutNav()
+  initfeaturedProductsHome()
+  initHomeScrollingAnimation()
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

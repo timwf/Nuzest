@@ -1,0 +1,104 @@
+.home-hero{
+
+  @include respond-to(md){
+    height: calc(100vh - 60px);
+  }
+
+  &__inner{
+    padding: 0px 40px;
+
+    @include respond-to(md){
+      display: flex;
+      height: 100%;
+      padding: 0px 68px;
+    }
+  }
+
+  &__left{
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    @include respond-to(md){
+      padding-top: 0px;
+      padding-bottom: 0px;
+      width: 50%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    p{
+      margin-top: 26px;
+      max-width: 371px;
+
+      @include respond-to(sm){
+        margin-top: 54px;
+      }
+
+      @include respond-to(xl){
+        margin-top: 75px;
+      }
+    }
+
+    h1{
+      max-width: 600px;
+    }
+  }
+
+  &__left-inner{
+    position: absolute;
+  }
+
+  &__right{
+    padding-top: 100%;
+    position: relative;
+    left: -40px;
+    width: calc(100% + 80px);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    @include respond-to(md){
+      padding-top: 0px;
+      width: 50vw;
+      right: 0;
+      left: auto;
+      position: absolute;
+      height: calc(100vh - 60px);
+    }
+  }
+
+  &__btn{
+    display: flex;
+    width: 249px;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    border: solid black;
+    border-width: 2px;
+    border-radius: 50px;
+    margin-top: 38px;
+
+    svg{
+      path{
+        transition: 0.4s;
+      }
+    }
+
+    @include hover{
+      background-color: $blue-kgs;
+      color: white;
+      
+      svg{
+        path{
+          stroke: white;
+        }
+      }
+    }
+
+    @include respond-to(xl){
+      margin-top: 60px;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<section class="home-hero" style="background-color: {{ section.settings.colour }}">  
+  <div class="home-hero__inner container">
+    <div class="home-hero__left"> 
+      <h1 class="header-xl">{{section.settings.heading}}</h1>
+      <p class="body">{{section.settings.sub-heading}}</p>     
+      <a href="{{section.settings.btn-link}}" class="home-hero__btn body">
+        {{section.settings.btn-txt}}
+        {% include 'icon-arrow-right' %} 
+      </a>  
+    </div>
+    <div class="home-hero__right" style="background-image: url({{ section.settings.img | img_url: 'master' }});">
+    </div>
+  </div>  
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "class": "hero",
+  "settings": [
+    {
+      "type": "color",
+      "id": "colour",
+      "label": "Background Colour"
+    },
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "sub-heading",
+      "label": "Sub Heading"
+    },
+    {
+      "type": "text",
+      "id": "btn-txt",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "btn-url",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Hero"
+    }
+  ]
+}
+
+{% endschema %}

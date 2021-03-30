@@ -1,0 +1,35 @@
+.usps{
+
+  &__inner{
+    display: flex;
+    justify-content: space-between;
+    padding: 42px 40px;
+    flex-wrap: wrap;
+
+    @include respond-to(md){
+      padding: 2px 40px;
+      display: flex;
+      height: 100%;
+      padding: 2px 68px;
+    }
+  }
+
+  &__item{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 12px 0px;
+
+    @include respond-to(md){
+      width: auto;
+    }
+
+    svg{
+      width: 50px;
+    }
+
+    p{
+      margin-left: 16px;
+    }
+  }
+}

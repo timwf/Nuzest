@@ -1,0 +1,162 @@
+.scrolling-animation{
+  position: relative;
+
+  &__bg-left{
+    background-color: $cream;
+    position: absolute;
+    height: calc(100% + 123px);
+    width: 15vw;
+    border-top-right-radius: 50px;
+    top: -83px;
+
+    @include respond-to(md){
+      border-top-right-radius: 123px;
+    }
+  }
+
+  &__bg-right{
+    background-color: $cream;
+    top: -83px;
+    position: absolute;
+    height: calc(100% + 123px);
+    width: 85vw;
+    right: 0;
+    border-top-left-radius: 50px;
+
+    @include respond-to(md){
+      border-top-left-radius: 123px;
+    }
+
+  }
+
+  &__inner{
+    position: relative;
+    padding-bottom: 59px;
+
+    @include respond-to(md){
+      display: flex;
+      padding-top: 17px;
+    }
+
+    @include respond-to(xl){
+      padding-top: 152px;
+    }
+  }
+
+  &__left{
+
+    @include respond-to(md){
+      width: calc(100% - 746px);
+    }
+
+    h2{      
+
+      @include respond-to(md){
+        max-width: 407px;
+        margin-left: 150px;
+      }
+
+      @include respond-to(xl){
+        margin-left: 0px;
+      }
+    }
+
+    p{
+      margin-bottom: 30px;
+      margin-top: 25px;
+
+      @include respond-to(md){
+        max-width: 358px;
+        margin-top: 43px;
+        margin-left: 150px;
+      }
+
+      @include respond-to(xl){
+        margin-left: 0px;
+      }
+    }
+  }
+
+  &__right{    
+    height: calc(100vw - 40px);
+    width: calc(100vw - 40px);
+    background-color: white;
+    border-radius: 50%;
+    position: relative;
+    max-width: 600px;
+    max-height: 600px;
+    margin: auto;
+
+    @include respond-to(md){
+      height: 600px;
+      width: 600px;
+      margin-top: -16%;
+      max-width: none;
+      max-height: none;
+    }
+
+    @include respond-to(xl){
+      height: 746px;
+      width: 746px;
+      margin-top: -30%;
+    }
+  }
+
+  &__inner-circle{
+    width: 80%;
+    height: 80%;
+    border: solid #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    border-width: 1px;
+
+    img{
+      border-radius: 50%;
+      width: 76%;
+      height: 76%;
+      position: absolute;
+      top: 12%;
+      left: 12%;
+    }
+  }
+
+  &__num-one, &__num-two, &__num-three, &__num-four{
+    position: absolute;
+    height: 58px;
+    width: 58px;
+    border: solid black;
+    border-width: 1px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.active{
+      background-color: $green;
+    }
+  }
+
+  &__num-one{
+    left: -26px;
+    top: calc(50% - 26px);
+  }
+
+  &__num-two{
+    top: -26px;
+    left: calc(50% - 26px);
+  }
+
+  &__num-three{
+    right: -26px;
+    top: calc(50% - 26px);
+  }
+
+  &__num-four{
+    bottom: -26px;
+    left: calc(50% - 26px);
+  }
+
+}

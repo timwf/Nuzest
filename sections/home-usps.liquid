@@ -1,0 +1,56 @@
+<section class="usps">  
+  <div class="usps__inner container">
+    {% for block in section.blocks %}
+      <div class="usps__item">
+        {{ block.settings.svg}}
+        <p class="body">{{ block.settings.icon-txt}}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "USP Icons",
+  "class": "usp",
+  "settings": [
+  {
+    "type": "header",
+    "content": "Instructions"
+  },
+  {
+    "type": "paragraph",
+    "content": "Click 'add icon' above and add the SVG code along with the text you would like to display"
+  }
+  ],
+  "blocks": [
+    {
+      "type": "icons",
+      "name": {
+        "en": "Icons"
+      },
+      "settings": [
+        {
+          "type": "html",
+          "id": "svg",
+          "label": {
+            "en": "SVG Code"
+          }
+        },
+        {
+          "type": "text",
+          "id": "icon-txt",
+          "label": "Icon Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "USP Icons"
+    }
+  ]
+}
+
+{% endschema %}
