@@ -1,13 +1,24 @@
 <section class="scrolling-animation">  
   <div class="scrolling-animation__bg-left"></div>
   <div class="scrolling-animation__bg-right"></div>
-
   <div class="scrolling-animation__inner container">
     <div class="scrolling-animation__left">
-      <h2 class="header-medium">Like our plants, we’re always evolving</h2>
-      <p class="body">When the science evolves, so do our formulas. Our products are plant-based, led by nature, and backed by science for maximum efficacy.
-      </p>
-
+      <div class="scrolling-animation__copy-one">
+        <h2 class="header-medium">{{ section.settings.heading-one }}</h2>
+        <p class="body">{{ section.settings.sub-heading-one }}</p>
+      </div>
+      <div class="scrolling-animation__copy-two">
+        <h2 class="header-medium">{{ section.settings.heading-two }}</h2>
+        <p class="body">{{ section.settings.sub-heading-two }}</p>
+      </div>
+      <div class="scrolling-animation__copy-three">
+        <h2 class="header-medium">{{ section.settings.heading-three }}</h2>
+        <p class="body">{{ section.settings.sub-heading-three }}</p>
+      </div>
+      <div class="scrolling-animation__copy-four">
+        <h2 class="header-medium">{{ section.settings.heading-four }}</h2>
+        <p class="body">{{ section.settings.sub-heading-four }}</p>
+      </div>
     </div>
     <div class="scrolling-animation__right">
       <div class="scrolling-animation__inner-circle">
@@ -15,13 +26,24 @@
         <div class="scrolling-animation__num-two header-small">2</div>
         <div class="scrolling-animation__num-three header-small">3</div>
         <div class="scrolling-animation__num-four header-small">4</div>
-        <img src="{{ section.settings.img-one | img_url: 'master' }}" alt="">
-      </div>
-      
+        <div class="scrolling-animation__image-one">
+          <img src="{{ section.settings.img-one | img_url: 'master' }}" alt="">
+        </div>
+        <div class="scrolling-animation__image-two">
+          <img src="{{ section.settings.img-two | img_url: 'master' }}" alt="">
+        </div>
+        <div class="scrolling-animation__image-three">
+          <img src="{{ section.settings.img-three | img_url: 'master' }}" alt="">
+        </div>
+        <div class="scrolling-animation__image-four">
+          <img src="{{ section.settings.img-four | img_url: 'master' }}" alt="">
+        </div>
+      </div>      
     </div>
   </div>
-
 </section>
+
+
 
 {% schema %}
 {
@@ -87,21 +109,21 @@
     },
     {
       "type": "header",
-      "content": "Four"
+      "content": "four"
     },
     {
       "type": "image_picker",
-      "id": "img-Four",
+      "id": "img-four",
       "label": "Image"
     },
     {
       "type": "text",
-      "id": "heading-Four",
+      "id": "heading-four",
       "label": "Heading"
     },
     {
       "type": "textarea",
-      "id": "sub-heading-Four",
+      "id": "sub-heading-four",
       "label": "Copy"
     }
   ],

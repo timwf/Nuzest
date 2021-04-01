@@ -1,0 +1,117 @@
+.home-reviews{
+  position: relative;
+  overflow-x: hidden;
+
+  &__bg-right{
+    display: none;
+
+    @include respond-to(lg){
+      display: block;
+      position: absolute;
+      width: 50%;
+      right: 0px;
+      height: 100%;
+      background-color: $cream;
+    }
+  }
+
+
+
+  &__card{
+    display: flex;
+
+  }
+
+  &__card-left{
+    width: 56%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 27px 8px 77px 20px;
+
+    @include respond-to(lg){
+      padding: 58px 0px 77px 38px;
+      width: 50%;
+    }
+
+    h2{
+      margin-bottom: 8px;
+
+      @include respond-to(lg){
+        margin-bottom: 20px;
+      }
+    }
+
+    h3{
+      margin-bottom: 22px;
+      text-transform: uppercase;
+
+      @include respond-to(lg){
+        margin-bottom: 47px;
+      }
+    }
+
+    @include respond-to(xl){
+      padding: 58px 20px 77px 130px;
+    }
+
+  }
+
+  &__card-right{
+    width: 40%;
+    padding: 57px 5px 47px 0px;
+    display: flex;
+
+    @include respond-to(lg){
+      width: 50%;
+      padding: 58px 22px 47px 0;
+    }
+
+    img{
+      height: 128px;
+      width: 128px;
+      object-fit: cover;
+      border-radius: 50%;
+
+      @include respond-to(sm){
+        height: 235px;
+        width: 235px;
+      }
+
+      @include respond-to(md){
+        height: 128px;
+        width: 128px;
+      }
+
+      @include respond-to(lg){
+        height: 235px;
+        width: 235px;
+      }
+    }
+  }
+
+  &__nav{
+    display: none;
+
+    @include respond-to(lg){      
+      display: flex;
+      justify-content: center;
+      z-index: 99;
+      position: relative;
+      bottom: 24px;
+    }
+
+
+    svg{
+      margin: 0px 50px;
+
+      g{
+        opacity: 1;
+      }
+
+      @include hover{
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,30 +1,35 @@
 .scrolling-animation{
   position: relative;
+  height: calc(100% + 323px);
 
   &__bg-left{
     background-color: $cream;
     position: absolute;
-    height: calc(100% + 123px);
+    height: calc(100% + 323px);
     width: 15vw;
     border-top-right-radius: 50px;
     top: -83px;
 
-    @include respond-to(md){
+    @include respond-to(lg){
       border-top-right-radius: 123px;
+      height: calc(100% + 123px);
     }
   }
+
+
 
   &__bg-right{
     background-color: $cream;
     top: -83px;
     position: absolute;
-    height: calc(100% + 123px);
+    height: calc(100% + 323px);
     width: 85vw;
     right: 0;
     border-top-left-radius: 50px;
 
-    @include respond-to(md){
+    @include respond-to(lg){
       border-top-left-radius: 123px;
+      height: calc(100% + 123px);
     }
 
   }
@@ -33,7 +38,7 @@
     position: relative;
     padding-bottom: 59px;
 
-    @include respond-to(md){
+    @include respond-to(lg){
       display: flex;
       padding-top: 17px;
     }
@@ -44,14 +49,25 @@
   }
 
   &__left{
+    position: relative;
 
-    @include respond-to(md){
+    & > div{
+      position: absolute;
+      top: 0px;
+    }
+
+    & > div:not(:first-child) {
+      opacity: 0;
+    }
+    
+
+    @include respond-to(lg){
       width: calc(100% - 746px);
     }
 
     h2{      
 
-      @include respond-to(md){
+      @include respond-to(lg){
         max-width: 407px;
         margin-left: 150px;
       }
@@ -65,7 +81,7 @@
       margin-bottom: 30px;
       margin-top: 25px;
 
-      @include respond-to(md){
+      @include respond-to(lg){
         max-width: 358px;
         margin-top: 43px;
         margin-left: 150px;
@@ -86,13 +102,19 @@
     max-width: 600px;
     max-height: 600px;
     margin: auto;
+    top: 271px;
 
-    @include respond-to(md){
+    img:not(:first-child) {
+      opacity: 0;
+    }
+
+    @include respond-to(lg){
       height: 600px;
       width: 600px;
       margin-top: -16%;
       max-width: none;
       max-height: none;
+      top: 0;
     }
 
     @include respond-to(xl){
@@ -117,6 +139,7 @@
       width: 76%;
       height: 76%;
       position: absolute;
+      object-fit: cover;
       top: 12%;
       left: 12%;
     }
@@ -124,8 +147,8 @@
 
   &__num-one, &__num-two, &__num-three, &__num-four{
     position: absolute;
-    height: 58px;
-    width: 58px;
+    height: 26px;
+    width: 26px;
     border: solid black;
     border-width: 1px;
     border-radius: 50%;
@@ -133,6 +156,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 16px;
+
+    @include respond-to(md){
+      font-size: 32px;
+      height: 58px;
+      width: 58px;
+    }
 
     &.active{
       background-color: $green;
@@ -140,23 +170,51 @@
   }
 
   &__num-one{
-    left: -26px;
-    top: calc(50% - 26px);
+    left: -13px;
+    top: calc(50% - 13px);
+
+    @include respond-to(md){
+      left: -26px;
+      top: calc(50% - 26px);
+    }
   }
 
   &__num-two{
-    top: -26px;
-    left: calc(50% - 26px);
+    top: -13px;
+    left: calc(50% - 13px);
+
+    @include respond-to(md){
+      top: -26px;
+      left: calc(50% - 26px);
+    }
   }
 
   &__num-three{
-    right: -26px;
-    top: calc(50% - 26px);
+    right: -13px;
+    top: calc(50% - 13px);
+
+    @include respond-to(md){
+      right: -26px;
+      top: calc(50% - 26px);
+    }
   }
 
   &__num-four{
-    bottom: -26px;
-    left: calc(50% - 26px);
+    bottom: -13px;
+    left: calc(50% - 13px);
+
+    @include respond-to(md){
+      bottom: -26px;
+      left: calc(50% - 26px);
+    }
   }
 
+  &__image-two, &__image-three, &__image-four{
+    opacity: 0;
+  } 
+
+}
+
+.pin-spacer{
+  background-color: $off-white;
 }

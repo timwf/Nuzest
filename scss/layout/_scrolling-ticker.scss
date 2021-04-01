@@ -1,0 +1,34 @@
+.scrolling-ticker{
+  margin-top: 262px;
+  overflow-x: hidden;
+
+  @include respond-to(lg){
+    margin-top: 65px;
+  }
+
+  &__item{
+    margin-right: 20px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 11px;
+
+  @include respond-to(sm){
+    margin-bottom: 22px;
+    height: 119px;
+  }
+
+  img{
+    width: 200px;
+    }
+  }  
+
+  & .swiper-wrapper{
+    transition-timing-function: linear !important;
+  }
+}
+
+
+
+
+

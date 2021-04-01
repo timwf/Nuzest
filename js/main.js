@@ -150,6 +150,13 @@ $(document).ready(() => {
   const doneResizing = debounce(() => {
     const width = $(window).width();
 
+    initFlyOutNav()
+    initfeaturedProductsHome()
+    initHomeScrollingAnimation()
+    initHomeTicker()
+    initHomeReviews()
+  
+
     if (wWidth !== width) {
       wWidth = width;
     }
@@ -207,6 +214,7 @@ $(document).ready(() => {
     const $card = $('.home-featured-product__item')
 
 
+
     $card.on('mouseenter', function(){
       $(this).find('.btn').addClass('active')
       $(this).find('.home-featured-product__product-options').addClass('active')
@@ -225,8 +233,8 @@ $(document).ready(() => {
       spaceBetween: 27,
       // loop: true,
       navigation: {
-        prevEl: '.slidePrev-btn',
-        nextEl: '.slideNext-btn'
+        prevEl: '.home-featured-product__nav .slidePrev-btn',
+        nextEl: '.home-featured-product__nav .slideNext-btn'
       },
       breakpoints: {
         400: {
@@ -264,7 +272,139 @@ $(document).ready(() => {
 
   function initHomeScrollingAnimation(){
     console.log('asdfsdg');
+    const section = $('.scrolling-animation')
+    console.log('hiya');
+    let startPoint
+    let width = $(window).width()
+
+    width >= 1280 ? startPoint = "0% 35%" : startPoint = "160px 35%"
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: startPoint,
+        // markers: true,
+        end: "250% 0%",
+        pin: true, 
+        scrub: true
+      }
+    })
+    .to(".scrolling-animation__copy-one",  { opacity: 0 }, 1)
+    .to(".scrolling-animation__image-one",  { opacity: 0 }, 1)
+    .to(".scrolling-animation__image-two",  { opacity: 1 }, 1)
+    .to(".scrolling-animation__copy-two",  { opacity: 1 }, 1)
+    .to(".scrolling-animation__num-one",  { backgroundColor:"#fff" }, 1)
+    .to(".scrolling-animation__num-two",  { backgroundColor:"#00e132" }, 1)   
+
+    .to(".scrolling-animation__image-two",  { opacity: 0 }, 2)
+    .to(".scrolling-animation__copy-two",  { opacity: 0 }, 2)
+    .to(".scrolling-animation__image-three",  { opacity: 1 }, 2)
+    .to(".scrolling-animation__copy-three",  { opacity: 1 }, 2)
+    .to(".scrolling-animation__num-two",  { backgroundColor:"#fff" }, 2)
+    .to(".scrolling-animation__num-three",  { backgroundColor:"#00e132" }, 2)
+
+    .to(".scrolling-animation__image-three",  { opacity: 0 }, 3)
+    .to(".scrolling-animation__copy-three",  { opacity: 0 }, 3)
+    .to(".scrolling-animation__image-four",  { opacity: 1 }, 3)
+    .to(".scrolling-animation__copy-four",  { opacity: 1 }, 3)
+    .to(".scrolling-animation__num-three",  { backgroundColor:"#fff" }, 3)
+    .to(".scrolling-animation__num-four",  { backgroundColor:"#00e132" }, 3)
   } 
+
+  function initHomeTicker(){
+    let numSlides
+    let width = $(window).width()
+    let $item = $('.scrolling-ticker')
+
+    width >= 1024 ? numSlides = 6 : numSlides = 3
+
+    const swiper = new Swiper('.scrolling-ticker', {
+      loop: true,
+      autoplay: {
+        delay: 1,
+        disableOnInteraction: false,
+      },
+      simulateTouch: false,
+      slidesPerView: numSlides,
+      speed: 4000,
+    });
+
+    // $item.on('mouseenter', function(){
+    //   console.log('enter');
+    //   swiper.speed = 0
+    //   swiper.autoplay.stop();
+    // })
+
+    // $item.on('mouseleave', function(){
+    //   swiper.autoplay.start();
+    //   console.log('stop');
+    // })
+  }
+
+  function initHomeReviews(){
+    let numSlides
+    let width = $(window).width()
+
+    width >= 1024 ? numSlides = 2 : numSlides = 1
+
+    const swiper = new Swiper('.home-reviews', {
+      slidesPerView: numSlides,
+      loop: true,
+      navigation: {
+        prevEl: '.home-reviews__nav .slidePrev-btn',
+        nextEl: '.home-reviews__nav .slideNext-btn'
+      },
+    });
+  }
+
+  function initHomeFeaturedBlog(){
+
+    const swiper = new Swiper('.featured-blog__inner', {
+      slidesPerView: 1.25,
+      speed: 400,
+      spaceBetween: 27,
+      // loop: true,
+      navigation: {
+        prevEl: '.featured-blog .slidePrev-btn',
+        nextEl: '.featured-blog .slideNext-btn'
+      },
+      breakpoints: {
+        400: {
+          slidesPerView: 1.1,
+          spaceBetween: 27
+        },
+        600: {
+          slidesPerView: 1.1,
+          spaceBetween: 27
+        },
+        800: {
+          slidesPerView: 1.25,
+          spaceBetween: 90
+        },
+        1100: {
+          slidesPerView: 1.7,
+          spaceBetween: 90
+        },
+        1300: {
+          slidesPerView: 1.7,
+          spaceBetween: 90
+        },
+        1500: {
+          slidesPerView: 1.7,
+          spaceBetween: 90
+        },
+        1700: {
+          slidesPerView: 2.0,
+          spaceBetween: 90
+        },
+        // when window width is >= 640px
+      }
+    });
+  }
+
+  
+
+
 
   /* FUNCTION CALLS */
   /* ============= */
@@ -272,6 +412,9 @@ $(document).ready(() => {
   initFlyOutNav()
   initfeaturedProductsHome()
   initHomeScrollingAnimation()
+  initHomeTicker()
+  initHomeReviews()
+  initHomeFeaturedBlog()
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

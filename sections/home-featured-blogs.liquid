@@ -1,0 +1,67 @@
+<section class="featured-blog">  
+  <div class="featured-blog__heading">
+    <h2 class="header-medium">{{ section.settings.heading }}</h1>
+    <div class="featured-blog__nav">
+      {% include 'icon-left-arrow' %} 
+      {% include 'icon-right-arrow' %} 
+    </div>
+  </div>
+  <div class="featured-blog__slider-wrap">
+    <div class="featured-blog__inner">
+      <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+      {% assign article = articles[block.settings.chosen_blog] %}
+        <div class="featured-blog__item swiper-slide">
+          <div class="featured-blog__item-img">
+            <img  src="{{article.image.src | img_url: '400x400'}}" alt="">
+          </div>
+          <div class="featured-blog__item-details">
+            <h3 class="caption-regular">3 min read</h3>
+            <h2 class="header-small">{{ article.title }}</h2>
+            <p class="body-small">{{ article.excerpt }}</p>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Featured Blogs",
+  "class": "featured-prd",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blog",
+      "name": {
+        "en": "Blog"
+      },
+      "settings": [
+        {
+          "type": "article",
+          "id": "chosen_blog",
+          "label": {
+            "en": "Blog"
+          }
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Featured Blogs"
+    }
+  ]
+}
+
+{% endschema %}

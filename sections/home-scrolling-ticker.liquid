@@ -1,0 +1,58 @@
+<div class="scrolling-ticker">
+  <div class="scrolling-ticker__list swiper-wrapper">
+    {% for block in section.blocks %}
+        <a class="scrolling-ticker__item swiper-slide" href="{{ block.settings.link}}">
+          <img src="{{ block.settings.img | img_url: 'master' }}" alt="">
+        </a>
+    {% endfor %}
+    {% for block in section.blocks %}
+        <a class="scrolling-ticker__item swiper-slide" href="{{ block.settings.link}}">
+          <img src="{{ block.settings.img | img_url: 'master' }}" alt="">
+        </a>
+    {% endfor %}
+
+
+  </div>
+</div>
+
+
+
+
+
+{% schema %}
+{
+  "name": "Scrolling Ticker",
+  "class": "featured-prd",
+  "settings": [
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": {
+        "en": "Brand"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": {
+            "en": "Brand"
+          }
+        },
+        {
+          "id": "link",
+          "type": "url",
+          "label": "Brand Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Scrolling Ticker"
+    }
+  ]
+}
+
+{% endschema %}
