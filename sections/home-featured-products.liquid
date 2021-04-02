@@ -1,4 +1,4 @@
-<section class="home-featured-product">  
+<section class="home-featured-product js-visibility reveal-slide">  
   <div class="home-featured-product__heading">
     <h2 class="header-medium">{{ section.settings.heading }}</h1>
     <div class="home-featured-product__nav">
@@ -7,13 +7,19 @@
     </div>
   </div>
   <div class="home-featured-product__slider-wrap">
-    <div class="home-featured-product__inner swiper-container">
+    <div class="home-featured-product__inner ">
       <div class="swiper-wrapper">
       {% for block in section.blocks %}
       {% assign product = all_products[block.settings.chosen_product] %}
         <div class="home-featured-product__item swiper-slide">
           <div class="home-featured-product__item-img">
-            <img  src="{{product.featured_image | img_url: '400x400'}}" alt="">
+            <img class="js-product-first-image active" src="{{product.featured_image | img_url: '400x400'}}" alt="">
+            {% if product.media[1] %}
+            <img class="js-product-second-image" src="{{ product.media[1] | img_url: '400x400'}}" alt="">
+            {% endif %}
+            
+            
+
           </div>
           <div class="home-featured-product__item-price">
             <p class="body-bold">{{ product.title }}</p>

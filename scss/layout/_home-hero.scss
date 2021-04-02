@@ -4,6 +4,13 @@
     height: calc(100vh - 60px);
   }
 
+  @include respond-to(xl){
+    height: calc(100vh - 132px);
+  }
+
+
+
+
   &__inner{
     padding: 0px 40px;
 
@@ -66,6 +73,11 @@
       position: absolute;
       height: calc(100vh - 60px);
     }
+
+    @include respond-to(xl){
+      height: calc(100vh - 132px);
+    }
+  
   }
 
   &__btn{

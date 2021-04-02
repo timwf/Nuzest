@@ -96,7 +96,7 @@
     @include respond-to(lg){      
       display: flex;
       justify-content: center;
-      z-index: 99;
+      z-index: 1;
       position: relative;
       bottom: 24px;
     }

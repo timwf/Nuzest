@@ -1,14 +1,3 @@
-/* Init object fit polyfill */
-/* To make it work, add 'font-family: 'object-fit: cover;';' to image */
-// if (window.objectFitImages) {
-//   window.objectFitImages();
-// }
-
-/* Init svg polyfill */
-// if (window.svg4everybody) {
-//   window.svg4everybody();
-// }
-
 $(document).ready(() => {
   // let resizeId;
   let wWidth = $(window).width();
@@ -87,37 +76,20 @@ $(document).ready(() => {
     };
   }
 
-  // function once(fn, context) {
-  //   var result;
-
-  //   return function() {
-  //     if (fn) {
-  //       result = fn.apply(context || this, arguments);
-  //       fn = null;
-  //     }
-
-  //     return result;
-  //   };
-  // }
-
-  // // Usage
-  // var canOnlyFireOnce = once(function() {
-  //   console.log('Fired!');
-  // });
 
   function disableScrolling() {
     if ($(document).height() > $(window).height()) {
       const scrollTop = $('html').scrollTop()
         ? $('html').scrollTop()
         : $('body').scrollTop(); // Works for Chrome, Firefox, IE...
-      $('html').addClass('disable-scrolling').css('top', -scrollTop);
+      $('html').addClass('disable-scrolling');
     }
   }
 
   function enableScrolling() {
     const scrollTop = parseInt($('html').css('top'), 10);
     $('html').removeClass('disable-scrolling');
-    $('html,body').scrollTop(-scrollTop);
+    // $('html,body').scrollTop(-scrollTop);
   }
 
   function bindEvents() {
@@ -213,21 +185,27 @@ $(document).ready(() => {
   function initfeaturedProductsHome(){
     const $card = $('.home-featured-product__item')
 
-
-
     $card.on('mouseenter', function(){
       $(this).find('.btn').addClass('active')
       $(this).find('.home-featured-product__product-options').addClass('active')
-      
+
+      if ($(this).find('.js-product-second-image').length) {
+        $(this).find('.js-product-first-image').removeClass('active')
+        $(this).find('.js-product-second-image').addClass('active')    
+      }
     })
 
     $card.on('mouseleave', function(){
       $(this).find('.btn').removeClass('active')
       $(this).find('.home-featured-product__product-options').removeClass('active')
+      if ($(this).find('.js-product-second-image').length) {
+        $(this).find('.js-product-first-image').addClass('active')
+        $(this).find('.js-product-second-image').removeClass('active')
+      }
     })
 
 
-    const swiper = new Swiper('.swiper-container', {
+    const swiper = new Swiper('.home-featured-product__inner', {
       slidesPerView: 1.25,
       speed: 400,
       spaceBetween: 27,
@@ -265,7 +243,6 @@ $(document).ready(() => {
           slidesPerView: 3.1,
           spaceBetween: 90
         },
-        // when window width is >= 640px
       }
     });
   }
@@ -277,7 +254,7 @@ $(document).ready(() => {
     let startPoint
     let width = $(window).width()
 
-    width >= 1280 ? startPoint = "0% 35%" : startPoint = "160px 35%"
+    width >= 1280 ? startPoint = "0% 35%" : startPoint = "-20px 0%"
 
     gsap.timeline({
       scrollTrigger: {
@@ -374,12 +351,12 @@ $(document).ready(() => {
           spaceBetween: 27
         },
         600: {
-          slidesPerView: 1.1,
-          spaceBetween: 27
+          slidesPerView: 1,
+          spaceBetween: 10
         },
         800: {
-          slidesPerView: 1.25,
-          spaceBetween: 90
+          slidesPerView: 1.2,
+          spaceBetween: 27
         },
         1100: {
           slidesPerView: 1.7,
@@ -402,6 +379,38 @@ $(document).ready(() => {
     });
   }
 
+  function initHeader(){
+    const header = $('.header');
+
+
+    var lastScrollTop = 0;
+    $(window).scroll(function(event){
+      var st = $(this).scrollTop();
+      if (st > lastScrollTop){
+          $(header).css("transform", "translate(0px, -120px)")
+      } else {
+        $(header).css("transform", "translate(0px, 0px)")
+      }
+      lastScrollTop = st;
+
+      if (st < 100){
+        $(header).css("transform", "translate(0px, 0px)")   
+      }
+    });
+  }
+
+  function initFooter(){
+    const $btn = $('.footer__column-menu-header')
+    const $containers = $('.footer__column ul')
+
+    $btn.on('click', function(){
+      $containers.each(function(){        
+        $(this).removeClass('active')
+      })
+      $(this).parent().find('ul').addClass('active')
+    })
+  }
+
   
 
 
@@ -415,6 +424,8 @@ $(document).ready(() => {
   initHomeTicker()
   initHomeReviews()
   initHomeFeaturedBlog()
+  initHeader()
+  initFooter()
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

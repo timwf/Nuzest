@@ -9,11 +9,17 @@
   }
 
   &__inner{
-    display: flex;
+
+    @include respond-to(sm){
+      display: flex;
+    }
   }
 
   &__left{
-    width: 50%;
+    
+    @include respond-to(sm){
+      width: 50%;
+    }
 
     h2, p{
       max-width: 466px;
@@ -29,25 +35,33 @@
   }
 
   &__right{
-    width: 50%;
+
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
     position: relative;
 
+    @include respond-to(sm){
+      width: 50%;
+    }
+
     input{
       border: none;
       background-color: $off-white;
       border-bottom: solid black;
-      padding: 14px 0px;
       font-family: 'Helvetica';
       font-size: 16px;
       line-height: 24px;
       font-weight: 400;
+      width: 100%;
+      margin-top: 50px;
+      padding: 5px 0;
 
 
       @include respond-to(sm){
-        width: 407px
+        width: 407px;
+        margin-top: 0px;
+        padding: 14px 0px;
       }
     }
   }

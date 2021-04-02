@@ -1,6 +1,6 @@
-<section class="home-hero" style="background-color: {{ section.settings.colour }}">  
+<section class="home-hero " style="background-color: {{ section.settings.colour }}">  
   <div class="home-hero__inner container">
-    <div class="home-hero__left"> 
+    <div class="home-hero__left js-visibility reveal-slide"> 
       <h1 class="header-xl">{{section.settings.heading}}</h1>
       <p class="body">{{section.settings.sub-heading}}</p>     
       <a href="{{section.settings.btn-link}}" class="home-hero__btn body">
@@ -8,7 +8,7 @@
         {% include 'icon-arrow-right' %} 
       </a>  
     </div>
-    <div class="home-hero__right" style="background-image: url({{ section.settings.img | img_url: 'master' }});">
+    <div class="home-hero__right js-visibility reveal-slide-right js-visibility" style="background-image: url({{ section.settings.img | img_url: 'master' }});">
     </div>
   </div>  
 </section>

@@ -100,9 +100,13 @@ html.disable-scrolling {
   }
 
   .reveal-slide-right {
-    opacity: 0;
-    transform: translateX(40px);
-    @include transition-reveal;
+
+    @include respond-to(md){
+      opacity: 0;
+      transform: translateX(40px);
+      @include transition-reveal;
+    }
+
   }
 
   .reveal-fade {
