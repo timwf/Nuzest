@@ -1,0 +1,29 @@
+.digest-header{
+  background-color: $off-white;
+
+  &__inner{
+    padding: 45px 20px;
+
+    @include respond-to(sm){
+      display: flex;
+      justify-content: space-between;
+      padding: 100px 100px;
+    }
+  }
+
+  &__right{
+    display: none;
+
+    @include respond-to(sm){
+      display: block;
+      width: 300px;
+    }
+
+  }
+
+  &__temperature-wrap{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 29px;
+  }
+}

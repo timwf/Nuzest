@@ -411,6 +411,151 @@ $(document).ready(() => {
     })
   }
 
+  function initTheDigestHeader(){
+
+    // fetch("https://community-open-weather-map.p.rapidapi.com/weather?q=London%2Cuk&lat=0&lon=0&callback=test&id=2172797&lang=null&units=%22metric%22%20or%20%22imperial%22&mode=xml%2C%20html", {
+    //   "method": "GET",
+    //   "headers": {
+    //     "x-rapidapi-key": "0b911cd569mshd39b131cb496edbp1efd51jsn53903dae144a",
+    //     "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com"
+    //   }
+    // })
+    // .then(response => {
+    //   console.log(response);
+    // })
+    // .catch(err => {
+    //   console.error(err);
+    // });
+  }
+
+  function initTheDigestSearch(){
+    const $searchBtn = $('.digest-search__search svg')
+    const $searchContainer = $('.digest-search__search')    
+    const $filterBtn = $('.digest-search__filter-item')
+    const $categories = $('.filter-results')
+    const $searchInput = $('.digest-search__search input')
+    const $articleItems = $('.article-grid__item')
+    const $searchConatiner = $('.search-results')
+
+    $searchBtn.on('click', function(){
+      $('.digest-search__filter').hide()
+      $('.filter-results__wrap').show()
+      $searchContainer.addClass('active')    
+      $categories.each(function(){ $(this).fadeOut() })
+      $searchConatiner.fadeIn()
+      $filterBtn.each(function(){$(this).removeClass('active')})
+
+          //removes active class when clicked out side
+      $(document).on('mouseup', function(e){
+        if (!$searchContainer.is(e.target) && $searchContainer.has(e.target).length === 0){
+          $('.digest-search__filter').show()
+          $searchContainer.removeClass('active')
+          $searchConatiner.fadeOut()
+          $('.filter-results__wrap').hide()
+        }
+      })
+    })
+
+
+
+
+    $searchInput.on('keyup', function(){
+      let inputVal = $(this).val().toLowerCase()
+      let anyFound = false
+      $('.filter-results__wrap').show()
+
+      $searchConatiner.each(function(){
+        let $searchItem = $(this).find('.article-grid__item')
+        let foundItem = false
+
+        $searchItem.each(function(){
+          let self = this
+          if($(this).find('h3').text().toLowerCase().includes(inputVal)){
+            $(self).show()
+            foundItem = true
+            anyFound = true
+          }
+          else{
+            $(self).hide()
+          }       
+        })
+        foundItem ? $(this).show() : $(this).hide()
+      })
+
+      if (anyFound) {
+        $('.js-no-results').hide()
+      }
+      else{
+        $('.js-no-results').text('Sorry - no results found for ' + inputVal)
+        $('.js-no-results').show()
+      }   
+    })
+
+    function filterTheCategories(handle){
+      
+      $filterBtn.each(function(){
+        if($(this).attr('data-handle') == handle){
+          $(this).addClass('active')         
+        }
+      })
+
+      $categories.each(function(){
+        if($(this).attr('data-handle') == handle){
+          let self = this
+          setTimeout(function(){ $(self).fadeIn() }, 500);            
+        }
+        else{
+          let self = this
+          $(self).fadeOut()            
+        }
+      })
+    }
+
+
+    //deals with the pagination refresh
+    if ($(location).attr('href').toString().includes('page=')) {
+      let catergoryChosen = localStorage.getItem("blogtype")
+      let originalWithoutQ = $(location).attr('href').split('?')[0]
+      filterTheCategories(catergoryChosen)       
+      $filterBtn.on('click', function(){
+        window.location.href = originalWithoutQ;
+      })
+    }
+
+    if (localStorage.getItem("blogtype")) {
+      filterTheCategories(localStorage.getItem("blogtype"))      
+    }
+
+    $filterBtn.on('click', function(){
+      localStorage.setItem("blogtype", $(this).attr('data-handle'));
+
+      if($(this).hasClass('active')){
+        $(this).removeClass('active')
+        $categories.each(function(){$(this).hide()})
+        $('.filter-results__wrap').hide()
+      }
+      else{
+        $filterBtn.each(function(){$(this).removeClass('active')})
+        $(this).addClass('active')
+        let selection = $(this).attr('data-handle')
+        $('.filter-results__wrap').show()
+
+        $categories.each(function(){
+          if($(this).attr('data-handle') == selection){
+            let self = this
+            setTimeout(function(){ $(self).fadeIn() }, 500);            
+          }
+          else{
+            let self = this
+            $(self).fadeOut()            
+          }
+        })
+      }
+    })
+  }
+
+
+
   
 
 
@@ -426,6 +571,8 @@ $(document).ready(() => {
   initHomeFeaturedBlog()
   initHeader()
   initFooter()
+  initTheDigestHeader()
+  initTheDigestSearch()
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

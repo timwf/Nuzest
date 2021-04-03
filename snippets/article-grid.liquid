@@ -1,0 +1,35 @@
+<section class="article-grid">
+  {% if title %} 
+    <h5 class="header-small container">{{chosenBlog.title}}</h5>
+  {% endif %}
+  <div class="article-grid__inner container">    
+    {%- for article in items -%}
+    <div class="article-grid__item">
+      <div class="article-grid__item-image">
+        <a href="{{article.url}}">
+          <img  src="{{article.image.src | img_url: '400x400'}}" alt="">
+        </a>        
+      </div>
+      <div class="article-grid__item-copy">
+        <h4 class="caption-regular">10 min read</h4>
+        <h3 class="header-small">{{article.title}}</h3>
+        <div class="article-grid__item-tags">
+          {% for tag in article.tags %}
+            <span class="caption-italic">{{ tag }}</span> 
+          {% endfor %}
+        </div>
+
+      </div>
+      
+     
+    </div>
+
+    {%- endfor -%}
+
+  </div>
+
+
+</section>
+
+
+

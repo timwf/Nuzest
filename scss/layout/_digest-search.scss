@@ -1,0 +1,120 @@
+.digest-search{
+  background-color: $off-white;
+
+  &__inner{
+    display: flex;
+  }
+
+  &__search{
+    position: relative;
+    width: 48px;
+    height: 44px;
+    border: solid black;
+    border-width: 1px;
+    border-radius: 68px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.4s;
+
+    @include respond-to(sm){
+      width: 68px;
+      height: 68px;
+    }
+
+    &.active{
+      width: 100%;
+    }
+
+    input{
+      position: absolute;
+      top: 10px;
+      font-size: 16px;
+      left: 33px;
+      font-family: 'Helvetica';
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      width: calc(100% - 85px);
+      border: none;
+      background-color: $off-white;
+
+      @include respond-to(md){
+        top: 20px;
+      }
+    }
+
+    svg{
+      position: absolute;
+      top: 11px;
+      right: 11px;
+
+      @include hover{
+        cursor: pointer;
+      }
+
+      @include respond-to(md){
+        top: 23px;
+        right: 21px;
+      }
+    }
+  }
+
+  &__filter{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+
+    @include respond-to(md){
+      flex-wrap: nowrap;
+    }
+  }
+
+  &__filter-item{
+    width: 43%;
+    border: solid black;
+    border-width: 1px;
+    border-radius: 63px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    margin: 0px 10px;
+    margin-bottom: 10px;
+    height: 44px;
+    transition: 0.4s;
+
+    &.active{
+      background-color: $green;
+    }
+
+    @include hover{
+      cursor: pointer;
+    }
+
+    @include respond-to(md){
+      width: 25%;   
+      margin: 0px 20px;
+      height: 68px;
+    }
+  }
+}
+
+//filtering 
+
+.filter-results{
+  display: none;
+
+  &__wrap{
+    min-height: 80vh;
+  }
+
+  &.active{
+    display: block;
+  }
+}
+
+//search
+
+.search-results{
+  display: none;
+}
