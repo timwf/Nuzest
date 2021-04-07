@@ -1,0 +1,170 @@
+{% comment %} 
+  Splits URL and creates handle    
+  {% assign linkurl =  link.url | split: "/"  %} 
+  {% assign handle =   linkurl[2] | append: '/' | append: linkurl[3]  %}
+{% endcomment %}
+    
+{% assign blogsCount =  0  %} 
+
+{% for block in section.blocks %}
+
+
+  {% if block.type == "standard-feat" %}
+    {% assign blogsCount = blogsCount | plus: 1 %}
+    <div class="featured-blogs container js-visibility reveal-slide">
+      <div class="featured-blogs__title">
+        <div class="featured-blogs__title-left">
+          <p class="body-small">{{ blogsCount }}</p>
+          <div class="featured-blogs__title-decoration"></div>
+          <p class="body-small">{{ block.settings.header }}</p>
+        </div>
+        <div class="featured-blog__nav">
+          <div id="featured-blogs__prev-{{ blogsCount }}">
+            {% include 'icon-left-arrow' %} 
+          </div>
+          <div id="featured-blogs__next-{{ blogsCount }}">
+            {% include 'icon-right-arrow' %} 
+          </div>       
+        </div>
+      </div>
+      <div class="featured-blogs__slider" id="featured-blogs__slider-{{ blogsCount }}">
+        <div class="swiper-wrapper">
+        {% for link in linklists[block.settings.link-list].links %}
+        {% assign linkurl =  link.url | split: "/"  %} 
+        {% assign handle =   linkurl[2] | append: '/' | append: linkurl[3]  %}    
+          {% assign article = articles[handle] %}
+            <div class="article-grid__item swiper-slide">
+              <div class="article-grid__item-image">
+                <a href="{{article.url}}">
+                  <img  src="{{article.image.src | img_url: '400x400'}}" alt="">
+                </a>        
+              </div>
+              <div class="article-grid__item-copy">
+                <h4 class="caption-regular">10 min read</h4>
+                <h3 class="header-small">{{article.title}}</h3>
+                <div class="article-grid__item-tags">
+                  {% for tag in article.tags %}
+                    <span class="caption-italic">{{ tag }}</span> 
+                  {% endfor %}
+                </div>
+              </div>    
+            </div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+
+  {% if block.type == "featured-blog" %}      
+    {% assign article = articles[block.settings.link-list] %}
+    <section class="full-width-featured-blog js-visibility reveal-slide">
+      <div class="full-width-featured-blog__inner container">
+        <div class="full-width-featured-blog__left">
+          <h4 class="caption-regular">10 min read</h4>
+          <h2 class="header-medium">{{article.title}}</h2>
+          <p class="body-small">{{article.excerpt}}</p>
+        </div>
+        <div class="full-width-featured-blog__right">
+          <img  src="{{article.image.src | img_url: 'master'}}" alt="">
+        </div>          
+      </div>
+    </section>
+  {% endif %}
+
+  {% if block.type == "inerviews-feat" %}
+    <section class="home-reviews js-visibility reveal-slide">
+      <div class="home-reviews__bg-right"></div>
+        <div class="home-reviews__inner swiper-wrapper ">
+        {% for link in linklists[block.settings.link-list].links %}
+          {% assign linkurl =  link.url | split: "/"  %} 
+          {% assign handle =   linkurl[2] | append: '/' | append: linkurl[3]  %}  
+          {% assign article = articles[handle] %}
+            <div class="home-reviews__card swiper-slide">
+              <div class="home-reviews__card-left">
+                <h2 class="header-small">{{ block.settings.name }}</h2>
+                <h3 class="sub-header">{{article.title}}</h3>
+                <p class="body-small">{{article.excerpt}}</p>
+              </div>
+              <div class="home-reviews__card-right">
+                <img src="{{ article.image.src | img_url: 'master' }}" alt="">
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      <div class="home-reviews__nav">
+      {% include 'icon-left-arrow' %} 
+      {% include 'icon-right-arrow' %} 
+      </div>
+      <div class="swiper-pagination"></div>
+    </section>
+  {% endif %}
+{%- endfor -%} 
+
+
+{% schema %}
+{
+  "name": {
+    "en": "Add Sections"
+  },
+  "max_blocks": 20,
+  "settings": [
+  ],
+  "blocks": [
+    {
+      "type": "standard-feat",
+      "name": {
+        "en": "Featured Carousel"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "header",
+          "label": {
+            "en": "Slider Header"
+          }
+        },
+        {
+          "type": "link_list",
+          "id": "link-list",
+          "label": "Add your link list"
+        }
+      ]
+    },
+    {
+      "type": "featured-blog",
+      "name": {
+        "en": "Single Blog"
+      },
+      "settings": [
+        {
+          "type": "article",
+          "id": "link-list",
+          "label": "Add an article"
+        }
+      ]
+    },
+    {
+      "type": "inerviews-feat",
+      "name": {
+        "en": "Featured Interviews"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "header",
+          "label": {
+            "en": "Slider Header"
+          }
+        },
+        {
+          "type": "link_list",
+          "id": "link-list",
+          "label": "Add your link list"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

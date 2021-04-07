@@ -208,7 +208,7 @@ $(document).ready(() => {
     const swiper = new Swiper('.home-featured-product__inner', {
       slidesPerView: 1.25,
       speed: 400,
-      spaceBetween: 27,
+      spaceBetween: 7,
       // loop: true,
       navigation: {
         prevEl: '.home-featured-product__nav .slidePrev-btn',
@@ -217,31 +217,31 @@ $(document).ready(() => {
       breakpoints: {
         400: {
           slidesPerView: 1.45,
-          spaceBetween: 27
+          spaceBetween: 7
         },
         600: {
           slidesPerView: 1.75,
-          spaceBetween: 27
+          spaceBetween: 7
         },
         800: {
           slidesPerView: 1.25,
-          spaceBetween: 90
+          spaceBetween: 70
         },
         1100: {
           slidesPerView: 2.25,
-          spaceBetween: 90
+          spaceBetween: 70
         },
         1300: {
           slidesPerView: 2.5,
-          spaceBetween: 90
+          spaceBetween: 70
         },
         1500: {
           slidesPerView: 2.75,
-          spaceBetween: 90
+          spaceBetween: 70
         },
         1700: {
           slidesPerView: 3.1,
-          spaceBetween: 90
+          spaceBetween: 70
         },
       }
     });
@@ -261,7 +261,7 @@ $(document).ready(() => {
         trigger: section,
         start: startPoint,
         // markers: true,
-        end: "250% 0%",
+        end: "450% 0%",
         pin: true, 
         scrub: true
       }
@@ -327,6 +327,10 @@ $(document).ready(() => {
     const swiper = new Swiper('.home-reviews', {
       slidesPerView: numSlides,
       loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+      },
       navigation: {
         prevEl: '.home-reviews__nav .slidePrev-btn',
         nextEl: '.home-reviews__nav .slideNext-btn'
@@ -402,12 +406,17 @@ $(document).ready(() => {
   function initFooter(){
     const $btn = $('.footer__column-menu-header')
     const $containers = $('.footer__column ul')
+    const $footerBannerBtn = $('.footer-banner svg')
 
     $btn.on('click', function(){
       $containers.each(function(){        
         $(this).removeClass('active')
       })
       $(this).parent().find('ul').addClass('active')
+    })
+
+    $footerBannerBtn.on('click', function(){
+      $(this).parent().hide()
     })
   }
 
@@ -440,24 +449,24 @@ $(document).ready(() => {
     $searchBtn.on('click', function(){
       $('.digest-search__filter').hide()
       $('.filter-results__wrap').show()
+      $('.digest-featured').hide()
       $searchContainer.addClass('active')    
       $categories.each(function(){ $(this).fadeOut() })
       $searchConatiner.fadeIn()
       $filterBtn.each(function(){$(this).removeClass('active')})
 
-          //removes active class when clicked out side
+      //removes active class when clicked out side
       $(document).on('mouseup', function(e){
         if (!$searchContainer.is(e.target) && $searchContainer.has(e.target).length === 0){
           $('.digest-search__filter').show()
           $searchContainer.removeClass('active')
           $searchConatiner.fadeOut()
           $('.filter-results__wrap').hide()
+          $('.digest-featured').show()
+          $(this).unbind('mouseup');
         }
       })
     })
-
-
-
 
     $searchInput.on('keyup', function(){
       let inputVal = $(this).val().toLowerCase()
@@ -492,7 +501,9 @@ $(document).ready(() => {
     })
 
     function filterTheCategories(handle){
-      
+      $('.filter-results__wrap').show()
+      $('.digest-featured').hide()
+
       $filterBtn.each(function(){
         if($(this).attr('data-handle') == handle){
           $(this).addClass('active')         
@@ -516,10 +527,13 @@ $(document).ready(() => {
     if ($(location).attr('href').toString().includes('page=')) {
       let catergoryChosen = localStorage.getItem("blogtype")
       let originalWithoutQ = $(location).attr('href').split('?')[0]
+      $('.digest-featured').hide()
       filterTheCategories(catergoryChosen)       
       $filterBtn.on('click', function(){
         window.location.href = originalWithoutQ;
       })
+    }else{
+      localStorage.setItem("blogtype", '');
     }
 
     if (localStorage.getItem("blogtype")) {
@@ -533,12 +547,14 @@ $(document).ready(() => {
         $(this).removeClass('active')
         $categories.each(function(){$(this).hide()})
         $('.filter-results__wrap').hide()
+        $('.digest-featured').show()
       }
       else{
         $filterBtn.each(function(){$(this).removeClass('active')})
         $(this).addClass('active')
         let selection = $(this).attr('data-handle')
         $('.filter-results__wrap').show()
+        $('.digest-featured').hide()
 
         $categories.each(function(){
           if($(this).attr('data-handle') == selection){
@@ -552,6 +568,30 @@ $(document).ready(() => {
         })
       }
     })
+  }
+
+  function initTheDigestFeaturedBlogs(){
+    let numSlides
+    let width = $(window).width()
+    let $item = $('.scrolling-ticker')
+    let $slider = $('.featured-blogs__slider')
+
+    width >= 749 ? numSlides = 2 : numSlides = 1
+
+
+  
+
+    $slider.each(function(i){
+      const swiper = new Swiper('#featured-blogs__slider' + "-" + (i + 1), {
+        slidesPerView: numSlides,
+        navigation: {
+          prevEl: '#featured-blogs__prev' + "-" + (i + 1),
+          nextEl: '#featured-blogs__next' + "-" + (i + 1)
+        },
+      });
+    })
+
+
   }
 
 
@@ -573,6 +613,7 @@ $(document).ready(() => {
   initFooter()
   initTheDigestHeader()
   initTheDigestSearch()
+  initTheDigestFeaturedBlogs()
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

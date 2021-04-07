@@ -110,9 +110,6 @@
         display: block;
       }
     }
-
-
-
   }
 }
 
@@ -124,4 +121,8 @@
   width: 10px;
   height: 10px;
   background-color: green;
+}
+
+.swiper-button-disabled{
+  opacity: 0.5;
 }

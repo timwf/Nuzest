@@ -1,0 +1,30 @@
+.featured-blogs{
+  padding-top: 45 px ;
+
+  @include respond-to(sm){
+    padding-top: 84px ;
+    padding-bottom: 50px;
+  }
+
+  &__title{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 84px;
+  }
+
+  &__title-left{
+    display: flex;
+    align-items: center;
+  }
+
+  &__title-decoration{
+    height: 1px;
+    width: 50px;
+    background-color: black;
+    margin: 0px 13px 0px 24px;
+  }
+
+  &__slider{
+    overflow: hidden;
+  }
+}

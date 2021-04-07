@@ -19,9 +19,9 @@
 {% for block in section.blocks %}
   {% assign chosenBlog = blogs[block.settings.blog] %}   
   <section class="filter-results" data-handle="{{ chosenBlog.handle }}">
-    {%- paginate chosenBlog.articles by 1 -%}
+    {%- paginate chosenBlog.articles by 8 -%}
     {% include 'article-grid', items: chosenBlog.articles %}
-      {%- if paginate.pages > 1 -%}
+      {%- if paginate.pages >  1-%}
         {% include 'pagination' %}
       {%- endif -%}
     {%- endpaginate -%}
