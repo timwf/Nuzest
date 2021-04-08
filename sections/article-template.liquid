@@ -1,136 +1,158 @@
-<div class="section-header text-center">
-  <h1 class="article__title" id="title-0">{{ article.title }}</h1>
-  {% if section.settings.blog_show_author %}
-    <span class="article__author">{{ 'blogs.article.by_author' | t: author: article.author }}</span>
-  {% endif %}
+<section class="single-article">
+  <div class="single-article__left">  
+    <div class="single-article__img">
+      <img  src="{{article.image.src | img_url: 'master'}}" alt="">
+    </div>
+    <div class="single-article__product">
+      {% for tag in article.tags %}
+        {% if tag contains "link-product"%}
+          {% assign productHandle = tag | split: ":" %}
+          {% assign product = all_products['clean-lean-protein-sachets'] %}
+        {% endif %}
+      {% endfor %}
 
-  {% if section.settings.blog_show_date %}
-    <span class="article__date">
-      {{ article.published_at | time_tag: format: 'date' }}
-    </span>
-  {% endif %}
+      <div class="home-featured-product__item">
+        <div class="home-featured-product__item-img">
+          <img class="js-product-first-image active" src="{{product.featured_image | img_url: '400x400'}}" alt="">
+          {% if product.media[1] %}
+          <img class="js-product-second-image" src="{{ product.media[1] | img_url: '400x400'}}" alt="">
+          {% endif %}
+        </div>
+        <div class="home-featured-product__item-price">
+          <p class="body-bold">{{ product.title }}</p>
+        </div>
+
+        <a href="">
+          <div class="btn">
+            <p>Add to Your Cart - £33.99</p>
+          </div>
+        </a>
+        <div class="home-featured-product__product-options-wrap">
+          {% for product_option in product.options_with_values %}
+          {% unless product_option.name == "Title" %}
+            <div class="home-featured-product__product-options">
+              <select class="body">
+                {% for value in product_option.values %}
+                  <option {% if product_option.selected_value == value %}selected{% endif %} style="background-image:url({{ 'vannila.png' | asset_url }});">
+                    {{ value }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endunless %}
+        {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="single-article__right">
+    <h4 class="caption-regular">3 min read</h4>
+    <h1 class="header-medium">{{ article.title }}</h1>
+    <h3 class="caption-regular"> {{ article.published_at | time_tag: format: 'date' }}</h3>
+    <div class="single-article__posted-by">
+      <h2 class="caption-regular">Posted By</h2>
+      <h2 class="sub-header">{{ article.author }}</h2>
+    </div>
+    <div class="article-grid__item-tags">
+      {% for tag in article.tags %}
+        <span class="caption-italic">{{ tag }}</span> 
+      {% endfor %}
+    </div>
+    <div class="single-article__rte">
+      {{ article.content }}
+    </div>    
+ {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+  </div>
+
+  <div class="single-article__product-mobile container">
+    <div class="home-featured-product__item">
+      <div class="home-featured-product__item-img">
+        <img class="js-product-first-image active" src="{{product.featured_image | img_url: '400x400'}}" alt="">
+        {% if product.media[1] %}
+        <img class="js-product-second-image" src="{{ product.media[1] | img_url: '400x400'}}" alt="">
+        {% endif %}
+      </div>
+      <div class="home-featured-product__item-price">
+        <p class="body-bold">{{ product.title }}</p>
+      </div>
+      <a href="">
+        <div class="btn">
+          <p>Add to Your Cart - £33.99</p>
+        </div>
+      </a>
+      <div class="home-featured-product__product-options-wrap">
+        {% for product_option in product.options_with_values %}
+        {% unless product_option.name == "Title" %}
+          <div class="home-featured-product__product-options">
+            <select class="body">
+              {% for value in product_option.values %}
+                <option {% if product_option.selected_value == value %}selected{% endif %} style="background-image:url({{ 'vannila.png' | asset_url }});">
+                  {{ value }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endunless %}
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+ 
+
+
+
+
+
+
+<div class="single-article__recomended">
+  <div class="featured-blogs container js-visibility reveal-slide">
+    <div class="featured-blogs__title">
+      <div class="featured-blogs__title-left">
+        <p class="body-bold-large single-article__reccomended-header-dot">{{ blogsCount }}</p>
+        <div class="featured-blogs__title-decoration"></div>
+        <p class="body-bold-large">Related Articles</p>
+      </div>
+      <div class="featured-blog__nav">
+        <div id="featured-blogs__prev-1}">
+          {% include 'icon-left-arrow' %} 
+        </div>
+        <div id="featured-blogs__next-1">
+          {% include 'icon-right-arrow' %} 
+        </div>       
+      </div>
+    </div>
+    <div class="featured-blogs__slider" id="featured-blogs__slider-1">
+      <div class="swiper-wrapper">
+        {% for article in blogs['nutrition'].articles %}
+        {% assign chosenBlog = blogs[block.settings.blog] %} 
+          <div class="article-grid__item swiper-slide">
+            <div class="article-grid__item-image">
+              <a href="{{article.url}}">
+                <img  src="{{article.image.src | img_url: '400x400'}}" alt="">
+              </a>        
+            </div>
+            <div class="article-grid__item-copy">
+              <h4 class="caption-regular">10 min read</h4>
+              <h3 class="header-small">{{article.title}}</h3> 
+              <div class="article-grid__item-tags">
+                <h4 class="body-small">{{ article.excerpt }}</h4>
+              </div>
+            </div>    
+          </div>
+      {% endfor %}
+      </div>
+      <a href="{{section.settings.btn-link}}" class="home-hero__btn body-small">
+        See All Articles
+        {% include 'icon-arrow-right' %} 
+      </a>  
+    </div>
+    </div>
+  </div>
 </div>
 
-<div class="rte">
-  {{ article.content }}
-</div>
-
-{% if section.settings.show_share_buttons %}
-  {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
-{% endif %}
-
-
-
-{% schema %}
-{
-  "name": {
-    "cs": "Příspěvky",
-    "da": "Opslag",
-    "de": "Posts",
-    "en": "Posts",
-    "es": "Publicaciones",
-    "fi": "Julkaisut",
-    "fr": "Articles",
-    "it": "Articoli",
-    "ja": "投稿",
-    "ko": "게시물",
-    "nb": "Innlegg",
-    "nl": "Berichten",
-    "pl": "Posty",
-    "pt-BR": "Posts",
-    "pt-PT": "Publicações",
-    "sv": "Inlägg",
-    "th": "โพสต์",
-    "tr": "Gönderiler",
-    "vi": "Bài viết",
-    "zh-CN": "文章",
-    "zh-TW": "貼文"
-  },
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "blog_show_author",
-      "label": {
-        "cs": "Zobrazit autora",
-        "da": "Vis forfatter",
-        "de": "Autor anzeigen",
-        "en": "Show author",
-        "es": "Mostrar autor",
-        "fi": "Näytä tekijä",
-        "fr": "Afficher l'auteur",
-        "it": "Mostra autore",
-        "ja": "執筆者を表示する",
-        "ko": "작성자 표시",
-        "nb": "Vis forfatter",
-        "nl": "Auteur weergeven",
-        "pl": "Pokaż autora",
-        "pt-BR": "Exibir autor",
-        "pt-PT": "Mostrar autor",
-        "sv": "Visa författare",
-        "th": "แสดงผู้เขียน",
-        "tr": "Yazarı göster",
-        "vi": "Hiển thị tác giả",
-        "zh-CN": "显示作者",
-        "zh-TW": "顯示作者"
-      },
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "blog_show_date",
-      "label": {
-        "cs": "Zobrazit datum",
-        "da": "Vis dato",
-        "de": "Datum anzeigen",
-        "en": "Show date",
-        "es": "Mostrar fecha",
-        "fi": "Näytä päivämäärä",
-        "fr": "Afficher la date",
-        "it": "Mostra data",
-        "ja": "日付を表示する",
-        "ko": "날짜 표시",
-        "nb": "Vis dato",
-        "nl": "Datum weergeven",
-        "pl": "Pokaż datę",
-        "pt-BR": "Exibir data",
-        "pt-PT": "Mostrar data",
-        "sv": "Visa datum",
-        "th": "แสดงวันที่",
-        "tr": "Tarihi göster",
-        "vi": "Hiển thị ngày",
-        "zh-CN": "显示日期",
-        "zh-TW": "顯示日期"
-      },
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_share_buttons",
-      "label": {
-        "cs": "Zobrazit tlačítka pro sdílení na sociálních sítích",
-        "da": "Vis knapper til deling på sociale medier",
-        "de": "Buttons für Social Media anzeigen",
-        "en": "Show social sharing buttons",
-        "es": "Mostrar botones para compartir en redes sociales",
-        "fi": "Näytä sosiaalisen median jakamispainikkeet",
-        "fr": "Afficher les boutons de partage sur les médias sociaux",
-        "it": "Mostra i pulsanti per la condivisione sui social",
-        "ja": "ソーシャルメディアでの共有ボタンを表示する",
-        "ko": "소셜 공유 버튼 표시",
-        "nb": "Vis knapper for deling på sosiale medier",
-        "nl": "Knoppen voor sociaal delen weergeven",
-        "pl": "Pokaż przyciski udostępniania w mediach społecznościowych",
-        "pt-BR": "Exibir botões de compartilhamento em redes sociais",
-        "pt-PT": "Mostrar botões de partilha nas redes sociais",
-        "sv": "Visa knappar för delning i sociala medier",
-        "th": "แสดงปุ่มสำหรับแชร์ลงโซเชียล",
-        "tr": "Sosyal medya paylaşım düğmelerini göster",
-        "vi": "Hiển thị nút chia sẻ qua mạng xã hội",
-        "zh-CN": "显示社交分享按钮",
-        "zh-TW": "顯示社群分享按鈕"
-      },
-      "default": true
-    }
-  ]
-}
-{% endschema %}

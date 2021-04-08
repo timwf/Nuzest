@@ -16,8 +16,8 @@
     flex-direction: column;
     transition: 0.4s;
 
-    @include respond-to(sm){
-      width: 68px;
+    @include respond-to(md){
+      width: 70px;
       height: 68px;
     }
 
@@ -45,8 +45,10 @@
 
     svg{
       position: absolute;
-      top: 11px;
-      right: 11px;
+      top: 14px;
+      right: 13px;
+      height: 15px;
+      width: 15px;
 
       @include hover{
         cursor: pointer;
@@ -55,6 +57,8 @@
       @include respond-to(md){
         top: 23px;
         right: 21px;
+        height: 21px;
+        width: 21px;
       }
     }
   }
@@ -70,7 +74,7 @@
   }
 
   &__filter-item{
-    width: 43%;
+    width: 41%;
     border: solid black;
     border-width: 1px;
     border-radius: 63px;
@@ -97,6 +101,10 @@
       height: 68px;
     }
   }
+
+  &__filter-item:last-of-type{
+    margin-right: 0px;
+  }
 }
 
 //filtering 
@@ -107,6 +115,7 @@
   &__wrap{
     min-height: 80vh;
     display: none;
+    padding-bottom: 50px;
   }
 
   &.active{
@@ -118,4 +127,14 @@
 
 .search-results{
   display: none;
+}
+
+//featured
+
+.digest-featured{
+  padding-bottom: 20px;
+
+  @include respond-to(md){
+    padding-bottom: 180px;
+  }
 }

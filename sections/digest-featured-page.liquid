@@ -14,9 +14,9 @@
     <div class="featured-blogs container js-visibility reveal-slide">
       <div class="featured-blogs__title">
         <div class="featured-blogs__title-left">
-          <p class="body-small">{{ blogsCount }}</p>
+          <p class="body-bold-large">{{ blogsCount }}</p>
           <div class="featured-blogs__title-decoration"></div>
-          <p class="body-small">{{ block.settings.header }}</p>
+          <p class="body-bold-large">{{ block.settings.header }}</p>
         </div>
         <div class="featured-blog__nav">
           <div id="featured-blogs__prev-{{ blogsCount }}">
@@ -42,11 +42,18 @@
               <div class="article-grid__item-copy">
                 <h4 class="caption-regular">10 min read</h4>
                 <h3 class="header-small">{{article.title}}</h3>
+                {% if block.settings.tags %}    
+                  <div class="article-grid__item-tags">
+                    {% for tag in article.tags %}
+                      <span class="caption-italic">{{ tag }}</span> 
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% if block.settings.excerpt %}    
                 <div class="article-grid__item-tags">
-                  {% for tag in article.tags %}
-                    <span class="caption-italic">{{ tag }}</span> 
-                  {% endfor %}
+                  <h4 class="body-small">{{ article.excerpt }}</h4>
                 </div>
+              {% endif %}
               </div>    
             </div>
         {% endfor %}
@@ -73,7 +80,7 @@
   {% endif %}
 
   {% if block.type == "inerviews-feat" %}
-    <section class="home-reviews js-visibility reveal-slide">
+    <section class="home-reviews home-reviews--digest js-visibility reveal-slide">
       <div class="home-reviews__bg-right"></div>
         <div class="home-reviews__inner swiper-wrapper ">
         {% for link in linklists[block.settings.link-list].links %}
@@ -82,8 +89,8 @@
           {% assign article = articles[handle] %}
             <div class="home-reviews__card swiper-slide">
               <div class="home-reviews__card-left">
-                <h2 class="header-small">{{ block.settings.name }}</h2>
-                <h3 class="sub-header">{{article.title}}</h3>
+                <h2 class="header-small">{{article.title}}</h2>
+                <h3 class="sub-header">Crossfit</h3>
                 <p class="body-small">{{article.excerpt}}</p>
               </div>
               <div class="home-reviews__card-right">
@@ -128,6 +135,18 @@
           "type": "link_list",
           "id": "link-list",
           "label": "Add your link list"
+        },
+        {
+          "type": "checkbox",
+          "id": "tags",
+          "label": "Show Tags?",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "excerpt",
+          "label": "Show Excerpt?",
+          "default": false
         }
       ]
     },

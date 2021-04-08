@@ -16,25 +16,36 @@
 </section>
 
 <div class="filter-results__wrap">
-{% for block in section.blocks %}
-  {% assign chosenBlog = blogs[block.settings.blog] %}   
-  <section class="filter-results" data-handle="{{ chosenBlog.handle }}">
-    {%- paginate chosenBlog.articles by 8 -%}
-    {% include 'article-grid', items: chosenBlog.articles %}
-      {%- if paginate.pages >  1-%}
-        {% include 'pagination' %}
-      {%- endif -%}
-    {%- endpaginate -%}
-  </section>
-{%- endfor -%}  
+  {% for block in section.blocks %}
+    {% assign chosenBlog = blogs[block.settings.blog] %}   
+    <section class="filter-results" data-handle="{{ chosenBlog.handle }}">
+      {%- paginate chosenBlog.articles by 8 -%}
+     
+      
 
-{% for block in section.blocks %}
-  {% assign chosenBlog = blogs[block.settings.blog] %}   
-  <section class="search-results">
-    {% include 'article-grid', items: chosenBlog.articles title: true %}
-    
-  </section>
-{%- endfor -%}
+      
+
+      {%- if block.settings.interviews -%}
+        {% include 'article-grid-interview', items: chosenBlog.articles %}
+      {% else %}
+        {% include 'article-grid', items: chosenBlog.articles %}
+      {% endif %}
+
+
+      
+        {%- if paginate.pages >  1-%}
+          {% include 'pagination' %}
+        {%- endif -%}
+      {%- endpaginate -%}
+    </section>
+  {%- endfor -%}  
+
+  {% for block in section.blocks %}
+    {% assign chosenBlog = blogs[block.settings.blog] %}   
+    <section class="search-results">
+      {% include 'article-grid', items: chosenBlog.articles title: true %}    
+    </section>
+  {%- endfor -%}
 <p class="container body-small js-no-results" style="margin-top: 50px; display: none">Sorry, no resluts found</p>
 </div>
 
@@ -59,7 +70,14 @@
           "id": "blog",
           "label": "Blog Type",
           "info": "Select a blog type that will appear as a filter"
-        }
+        },
+        {
+          "type": "checkbox",
+          "id": "interviews",
+          "label": "Interview Layout?",
+          "default": false,
+          "info": "Check this box if you would like to display results as Interviews"
+       }
       ]
     }
   ]

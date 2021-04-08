@@ -1,0 +1,17 @@
+<section class="article-grid-interview">
+  <div class="article-grid-interview__inner">
+    {%- for article in items -%}
+    <div class="article-grid-interview__item">
+      <div class="home-reviews__card-left">
+        <h2 class="header-small">{{article.title}}</h2>
+        <h3 class="sub-header">crossfit athlete</h3>
+        <p class="body-small">{{ article.excerpt }}</p>
+      </div>
+      <div class="home-reviews__card-right">
+        <img src="{{ article.image.src | img_url: 'master' }}" alt="">
+      </div>
+    </div>
+    {%- endfor -%}
+  </div>
+</section>
+

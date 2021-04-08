@@ -1,15 +1,18 @@
 .featured-blogs{
-  padding-top: 45 px ;
+  padding-top: 45px;
 
   @include respond-to(sm){
     padding-top: 84px ;
-    padding-bottom: 50px;
   }
 
   &__title{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 84px;
+    margin-bottom: 30px;
+
+    @include respond-to(sm){
+      margin-bottom: 84px;
+    }
   }
 
   &__title-left{
@@ -19,9 +22,14 @@
 
   &__title-decoration{
     height: 1px;
-    width: 50px;
+    width: 28px;
     background-color: black;
-    margin: 0px 13px 0px 24px;
+    margin: 0px 13px 0px 13px; 
+
+    @include respond-to(sm){
+      width: 50px;
+      margin: 0px 13px 0px 24px; 
+    }
   }
 
   &__slider{

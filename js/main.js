@@ -121,12 +121,14 @@ $(document).ready(() => {
 
   const doneResizing = debounce(() => {
     const width = $(window).width();
+    console.log('reinit');
 
     initFlyOutNav()
     initfeaturedProductsHome()
     initHomeScrollingAnimation()
     initHomeTicker()
     initHomeReviews()
+    initTheDigestFeaturedBlogs()
   
 
     if (wWidth !== width) {
@@ -571,27 +573,29 @@ $(document).ready(() => {
   }
 
   function initTheDigestFeaturedBlogs(){
-    let numSlides
-    let width = $(window).width()
-    let $item = $('.scrolling-ticker')
     let $slider = $('.featured-blogs__slider')
-
-    width >= 749 ? numSlides = 2 : numSlides = 1
-
-
-  
 
     $slider.each(function(i){
       const swiper = new Swiper('#featured-blogs__slider' + "-" + (i + 1), {
-        slidesPerView: numSlides,
+        slidesPerView: 1.2,
+        spaceBetween: 27,
+        breakpoints: {
+          400: {
+            slidesPerView: 1.2
+          },
+          800: {
+            slidesPerView: 1.5
+          },
+          1100: {
+            slidesPerView: 2
+          }
+        },
         navigation: {
           prevEl: '#featured-blogs__prev' + "-" + (i + 1),
           nextEl: '#featured-blogs__next' + "-" + (i + 1)
         },
       });
     })
-
-
   }
 
 

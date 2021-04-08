@@ -1,0 +1,17 @@
+.social-sharing{
+
+  &__inner{
+    display: flex;
+    align-items: center;
+    
+    p{
+      margin-right: 35px;
+    }
+
+    svg{
+      height: 14px;
+      width: 14px;
+      margin-right: 29px;
+    }
+  }
+}
