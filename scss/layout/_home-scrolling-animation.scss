@@ -209,6 +209,13 @@
     }
   }
 
+  &__num-copy{
+
+    @include respond-to(sm){
+      margin-left: 2px;
+    }
+  }
+
   &__image-two, &__image-three, &__image-four{
     opacity: 0;
   } 

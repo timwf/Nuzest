@@ -76,6 +76,37 @@
   <p class="body-bold">Free shipping on orders over £50.</p>
   {% include 'icon-close' %}
 </section>
-<section class="footer-banner" style="background-color: white;">
-  <p class="body-bold">Nutrient deficiencies rise rapidly as we age. Go against the grain, live nutritiously.</p>
+<section class="footer-banner footer-banner--animation" style="background-color: white;">
+  {% for block in section.blocks %}
+    <p class="body-bold">{{ block.settings.rotate-text}}</p>
+  {% endfor %}
+ 
 </section>
+
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "footer",
+  "settings": [
+  ],
+  "blocks": [
+    {
+      "type": "rotating-text",
+      "name": {
+        "en": "Add a line"
+      },
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "rotate-text",
+          "label": {
+            "en": "Text"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

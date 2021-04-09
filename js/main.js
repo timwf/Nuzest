@@ -420,6 +420,30 @@ $(document).ready(() => {
     $footerBannerBtn.on('click', function(){
       $(this).parent().hide()
     })
+
+    //banner animation
+    const $bannerCopy = $('.footer-banner--animation p')
+    let maxCount = $bannerCopy.length
+    let count = 0
+    console.log(count);
+    $bannerCopy.eq(0).fadeIn(); 
+
+    setInterval(changeCopy, 4000);
+
+    function changeCopy(){
+
+      if(count >= maxCount){
+        $bannerCopy.eq(count-1).fadeOut(function(){ 
+          count = 0 
+          $bannerCopy.eq(count).fadeIn(); 
+        })
+      }
+
+      $bannerCopy.eq(count-1).fadeOut(function(){ 
+        $bannerCopy.eq(count).fadeIn(); 
+        count ++ 
+      })       
+    }
   }
 
   function initTheDigestHeader(){

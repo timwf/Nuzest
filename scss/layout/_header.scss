@@ -60,7 +60,7 @@
         transition: 0.2s;
   
         @include hover{
-          text-decoration: underline;
+          color: $blue-kgs;
           cursor: pointer;
         }
       }
@@ -75,7 +75,10 @@
     svg{
       @include hover{
         cursor: pointer;
-        opacity: 0.8;
+
+        path{
+          fill: $blue-kgs;
+        }
       }
     }
   }
@@ -103,7 +106,7 @@
         cursor: pointer;
 
         *{
-          stroke: $light-blue;
+          stroke: $blue-kgs;
         }
       }
     }
