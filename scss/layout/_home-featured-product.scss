@@ -134,9 +134,9 @@
     bottom: 145px;
     width: 100%;
 
-    // select:last-child{
-    //   border: none !important
-    // }
+    .home-featured-product__product-options:last-child select{
+      border: none !important
+    }
   }
 
   &__product-options{

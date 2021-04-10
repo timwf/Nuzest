@@ -58,12 +58,15 @@
   }
 
   &__right{
-    padding-top: 100%;
     position: relative;
     left: -40px;
     width: calc(100% + 80px);
     background-size: cover;
     background-repeat: no-repeat;
+
+    @include respond-to(sm){
+      padding-top: 100%;
+    }
 
     @include respond-to(md){
       padding-top: 0px;

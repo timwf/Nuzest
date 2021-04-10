@@ -129,6 +129,7 @@ $(document).ready(() => {
     initHomeTicker()
     initHomeReviews()
     initTheDigestFeaturedBlogs()
+    initHomeHero()
   
 
     if (wWidth !== width) {
@@ -247,6 +248,17 @@ $(document).ready(() => {
         },
       }
     });
+  }
+
+  //changes height of image on hero without effecting copy so this section is always 100vh
+  function initHomeHero(){
+    const $imageContainer = $('.home-hero__right');
+    let $texxtContainerHeight = $('.home-hero__left').outerHeight() + 60 //offset for header
+    let wWidth = $(window).width()
+
+    if(wWidth < 768){
+      $imageContainer.css('height', `calc(100vh - ${$texxtContainerHeight}px)`) 
+    }
   }
 
   function initHomeScrollingAnimation(){
@@ -411,9 +423,17 @@ $(document).ready(() => {
     const $footerBannerBtn = $('.footer-banner svg')
 
     $btn.on('click', function(){
-      $containers.each(function(){        
+
+      //closes active container if already active
+      if($(this).parent().find('ul').hasClass('active')){
+        $(this).parent().find('ul').removeClass('active');
+        return;
+      }
+
+      $containers.each(function(){ 
         $(this).removeClass('active')
       })
+
       $(this).parent().find('ul').addClass('active')
     })
 
@@ -425,13 +445,12 @@ $(document).ready(() => {
     const $bannerCopy = $('.footer-banner--animation p')
     let maxCount = $bannerCopy.length
     let count = 0
-    console.log(count);
     $bannerCopy.eq(0).fadeIn(); 
 
     setInterval(changeCopy, 4000);
 
     function changeCopy(){
-
+      //starts from zero index when reaches max length
       if(count >= maxCount){
         $bannerCopy.eq(count-1).fadeOut(function(){ 
           count = 0 
@@ -634,6 +653,7 @@ $(document).ready(() => {
   initFlyOutNav()
   initfeaturedProductsHome()
   initHomeScrollingAnimation()
+  initHomeHero()
   initHomeTicker()
   initHomeReviews()
   initHomeFeaturedBlog()
