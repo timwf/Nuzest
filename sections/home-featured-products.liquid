@@ -11,47 +11,17 @@
       <div class="swiper-wrapper">
       {% for block in section.blocks %}
       {% assign product = all_products[block.settings.chosen_product] %}
-        <div class="home-featured-product__item swiper-slide">
-          <div class="home-featured-product__item-img">
-            <img class="js-product-first-image active" src="{{product.featured_image | img_url: '400x400'}}" alt="">
-            {% if product.media[1] %}
-            <img class="js-product-second-image" src="{{ product.media[1] | img_url: '400x400'}}" alt="">
-            {% endif %}
-            
-            
-
-          </div>
-          <div class="home-featured-product__item-price">
-            <p class="body-bold">{{ product.title }}</p>
-            <p class="body-small">{{ product.price | money }}</p>
-          </div>
-
-          <a href="">
-            <div class="btn">
-              <p>Add to Your Cart - £33.99</p>
-            </div>
-          </a>
-          <div class="home-featured-product__product-options-wrap">
-            {% for product_option in product.options_with_values %}
-            {% unless product_option.name == "Title" %}
-              <div class="home-featured-product__product-options">
-                <select class="body">
-                  {% for value in product_option.values %}
-                    <option {% if product_option.selected_value == value %}selected{% endif %} style="background-image:url({{ 'vannila.png' | asset_url }});">
-                      {{ value }}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
-            {% endunless %}
-          {% endfor %}
-          </div>
-        </div>
+          {% include 'product-card', product: product %}   
       {% endfor %}
       </div>
     </div>
   </div>
 </section>
+
+
+
+
+
 
 
 

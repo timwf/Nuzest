@@ -157,3 +157,7 @@ html.disable-scrolling {
     }
   }
 }
+
+.slidePrev-btn.swiper-button-disabled, .slideNext-btn.swiper-button-disabled{
+  opacity: 0.5;
+}

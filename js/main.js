@@ -186,27 +186,6 @@ $(document).ready(() => {
 
 
   function initfeaturedProductsHome(){
-    const $card = $('.home-featured-product__item')
-
-    $card.on('mouseenter', function(){
-      $(this).find('.btn').addClass('active')
-      $(this).find('.home-featured-product__product-options').addClass('active')
-
-      if ($(this).find('.js-product-second-image').length) {
-        $(this).find('.js-product-first-image').removeClass('active')
-        $(this).find('.js-product-second-image').addClass('active')    
-      }
-    })
-
-    $card.on('mouseleave', function(){
-      $(this).find('.btn').removeClass('active')
-      $(this).find('.home-featured-product__product-options').removeClass('active')
-      if ($(this).find('.js-product-second-image').length) {
-        $(this).find('.js-product-first-image').addClass('active')
-        $(this).find('.js-product-second-image').removeClass('active')
-      }
-    })
-
 
     const swiper = new Swiper('.home-featured-product__inner', {
       slidesPerView: 1.25,
@@ -641,6 +620,29 @@ $(document).ready(() => {
     })
   }
 
+  function initProductCard(){
+    const $card = $('.product-card__item')
+
+    $card.on('mouseenter', function(){
+      $(this).find('.btn').addClass('active')
+      $(this).find('.product-card__product-options').addClass('active')
+
+      if ($(this).find('.js-product-second-image').length) {
+        $(this).find('.js-product-first-image').removeClass('active')
+        $(this).find('.js-product-second-image').addClass('active')    
+      }
+    })
+
+    $card.on('mouseleave', function(){
+      $(this).find('.btn').removeClass('active')
+      $(this).find('.product-card__product-options').removeClass('active')
+      if ($(this).find('.js-product-second-image').length) {
+        $(this).find('.js-product-first-image').addClass('active')
+        $(this).find('.js-product-second-image').removeClass('active')
+      }
+    })
+  }
+
 
 
   
@@ -662,6 +664,7 @@ $(document).ready(() => {
   initTheDigestHeader()
   initTheDigestSearch()
   initTheDigestFeaturedBlogs()
+  initProductCard()
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

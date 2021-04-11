@@ -78,23 +78,23 @@
       margin-top: 50px;    
     }
 
-    .home-featured-product__item{
+    .product-card__item{
       width: 400px;
     }
 
-    .home-featured-product__item-img, .home-featured-product__item-price{
+    .product-card__item-img, .product-card__item-price{
       margin-right: 0px;
     }
 
-    .home-featured-product__product-options-wrap{
+    .product-card__product-options-wrap{
       width: 400px;
     }
 
-    .home-featured-product__product-options-wrap select{
+    .product-card__product-options-wrap select{
       width: 100%;
     }
 
-    .home-featured-product__item-price{
+    .product-card__item-price{
       margin-bottom: 20px;
       margin-top: 20px;
     }
@@ -161,24 +161,24 @@
       display: none;
     }
 
-    .home-featured-product__item{
+    .product-card__item{
       width: 100%;
       position: relative;
     }
 
-    .home-featured-product__item-img, .home-featured-product__item-price{
+    .product-card__item-img, .product-card__item-price{
       margin-right: 0px;
     }
 
-    .home-featured-product__product-options-wrap{
+    .product-card__product-options-wrap{
       width: 100%;
     }
 
-    .home-featured-product__product-options-wrap select{
+    .product-card__product-options-wrap select{
       width: 100%;
     }
 
-    .home-featured-product__item-price{
+    .product-card__item-price{
 
       p{
         margin-bottom: 20px;
