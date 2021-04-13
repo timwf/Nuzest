@@ -1,0 +1,13 @@
+<div class="breadcrumbs container">
+  <div class="breadcrumbs__inner">
+    <a href="{{ routes.root_url }}" class="breadcrumbs-font">Home&nbsp;&nbsp;</a>
+
+    {% if template.name == 'list-collections'%}
+      <a href="" class="breadcrumbs-font">/&nbsp;&nbsp;Shop All</a>
+
+    {% else %}
+      <a href="{{ pageUrl }}" class="breadcrumbs-font">/&nbsp;&nbsp;{{ page }}</a>
+    {% endif %}
+
+  </div>
+</div>

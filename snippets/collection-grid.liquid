@@ -1,0 +1,22 @@
+<section class="collection-grid">
+  <div class="collection-grid__inner container">
+    
+    <div class="collection-grid__details-card">
+      <h3 class="header-small">{{ collection.title }}</h3>
+      <p class="body-small">{{ collection.description }}</p>
+    </div>
+
+    {% assign cardCount = 1 %}
+    {% for product in collection.products %}
+
+      {% include 'product-card', product: product %}
+
+      {% assign cardCount = cardCount | plus: 1 | modulo: 3%}
+
+      {% if cardCount  == 0 %}
+        <div class="collection-grid__empty-div"></div>
+      {% endif %}
+
+    {% endfor %}
+  </div>
+</section>

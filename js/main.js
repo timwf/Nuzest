@@ -623,6 +623,10 @@ $(document).ready(() => {
   function initProductCard(){
     const $card = $('.product-card__item')
 
+    $card.each(function(){
+      initVaraintCalc(this)
+    })
+
     $card.on('mouseenter', function(){
       $(this).find('.btn').addClass('active')
       $(this).find('.product-card__product-options').addClass('active')
@@ -641,6 +645,53 @@ $(document).ready(() => {
         $(this).find('.js-product-second-image').removeClass('active')
       }
     })
+  }
+
+
+
+  function initVaraintCalc(card){
+    // console.log(card);
+    const $selects = $(card).find('.product-card__product-options select')
+    const $hiddenVars = $(card).find('.js-variant')
+    let variantString = ""
+    const $submitBtn = $(card).find('.js-product-card-add-to-cart')
+    console.log($hiddenVars);
+
+    updateVariant()
+
+    $selects.on('change', function(){
+      updateVariant()
+
+    })
+
+    function updateVariant(){
+      variantString = "";
+      let match = false;
+
+      $selects.each(function(){
+        let optionSelected = $("option:selected", this).val();
+        variantString += optionSelected
+      })
+
+      $hiddenVars.each(function(){
+        console.log(this);
+        let hiddenVarTitle = $(this).attr('data-title').replace(/\s+|[\/]/g, "")
+        let selected = variantString.replace(/\s+|[\/]/g, "")
+        console.log(hiddenVarTitle);
+
+        if(hiddenVarTitle == selected){
+          $submitBtn.attr("disabled", false)
+          $submitBtn.attr('data-variant-id', $(this).attr('data-id'))
+          $submitBtn.find('p').text('Add to Your Cart - ' + $(this).attr('data-price'))
+          match = true;
+        }
+      })
+
+      if(!match){
+          $submitBtn.find('p').text('Sorry - Out of Stock')
+          $submitBtn.attr("disabled", true)
+      }
+    }
   }
 
 
