@@ -41,6 +41,7 @@
       @include respond-to(md){
         display: block;
         margin-left: 48px;
+        white-space: nowrap;
 
         @include hover{
           text-decoration: underline;
@@ -53,6 +54,10 @@
   &__close{
     @include hover{
       cursor: pointer;
+
+      svg line{
+        stroke: $blue-kgs;
+      }
     }
   }
 
@@ -119,7 +124,7 @@
     margin-top: 55px;
 
     @include respond-to(md){
-      margin-top: 33px;
+      margin: 33px 0px;
     }
 
     h3{

@@ -16,9 +16,11 @@
   }
 
   &__left{
+    margin-bottom: 50px;
     
     @include respond-to(sm){
       width: 50%;
+      margin-bottom: 0px;
     }
 
     h2, p{
@@ -36,43 +38,23 @@
 
   &__right{
 
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    position: relative;
-
     @include respond-to(sm){
       width: 50%;
-    }
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
 
-    input{
-      border: none;
-      background-color: $off-white;
-      border-bottom: solid black;
-      font-family: 'Helvetica';
-      font-size: 16px;
-      line-height: 24px;
-      font-weight: 400;
-      width: 100%;
-      margin-top: 50px;
-      padding: 5px 0;
-
-
-      @include respond-to(sm){
-        width: 407px;
-        margin-top: 0px;
-        padding: 14px 0px;
+      input{
+        width: 300px !important;
       }
     }
-  }
 
-  &__btn{
-    position: absolute;
-    bottom: 13px;
-    right: 0;
-
-    @include hover{
-      cursor: pointer;
+    @include respond-to(md){
+      input{
+        width: 407px !important;
+      }
     }
-  }
+   }
+
+
 }

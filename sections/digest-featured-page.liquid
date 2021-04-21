@@ -40,8 +40,8 @@
                 </a>        
               </div>
               <div class="article-grid__item-copy">
-                <h4 class="caption-regular">10 min read</h4>
-                <h3 class="header-small">{{article.title}}</h3>
+                <h4 class="caption-regular"><a href="{{article.url}}">10 min read</a></h4>
+                <h3 class="header-small"><a href="{{article.url}}">{{article.title}}</a></h3>
                 {% if block.settings.tags %}    
                   <div class="article-grid__item-tags">
                     {% for tag in article.tags %}
@@ -68,12 +68,14 @@
     <section class="full-width-featured-blog js-visibility reveal-slide">
       <div class="full-width-featured-blog__inner container">
         <div class="full-width-featured-blog__left">
-          <h4 class="caption-regular">10 min read</h4>
-          <h2 class="header-medium">{{article.title}}</h2>
+          <h4 class="caption-regular"><a href="{{article.url}}">10 min read</a></h4>
+          <h2 class="header-medium"><a href="{{article.url}}">{{article.title}}</a></h2>
           <p class="body-small">{{article.excerpt}}</p>
         </div>
         <div class="full-width-featured-blog__right">
-          <img  src="{{article.image.src | img_url: 'master'}}" alt="">
+          <a href="{{article.url}}">
+            <img  src="{{article.image.src | img_url: 'master'}}" alt="">
+          </a>
         </div>          
       </div>
     </section>

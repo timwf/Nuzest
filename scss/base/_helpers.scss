@@ -158,6 +158,21 @@ html.disable-scrolling {
   }
 }
 
+
+.slidePrev-btn, .slideNext-btn{
+  @include hover{
+    svg path{
+      stroke: $blue-kgs;
+    }
+  }  
+}
+
 .slidePrev-btn.swiper-button-disabled, .slideNext-btn.swiper-button-disabled{
   opacity: 0.5;
+  svg path{
+    stroke: $blue-kgs;
+  }
 }
+
+
+

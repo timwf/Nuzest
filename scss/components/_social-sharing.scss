@@ -13,5 +13,13 @@
       width: 14px;
       margin-right: 29px;
     }
+
+    a{
+      @include hover{
+        svg path{
+          fill: $blue-kgs;
+        }
+      }
+    }
   }
 }

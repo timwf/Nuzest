@@ -33,6 +33,10 @@
 
     @include hover{
       cursor: pointer;
+
+      .header__hamburger-line{
+        background-color: $blue-kgs;
+      }
     }
 
     @include respond-to(lg){

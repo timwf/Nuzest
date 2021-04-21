@@ -39,7 +39,7 @@
     li{
 
       @include hover{
-        text-decoration: underline;
+        color: $blue-kgs;
       }
     }
 
@@ -106,14 +106,27 @@
     @include respond-to(sm){
       width: 40%;
       margin-bottom: 0px;
+      padding-right: 50px;
     }
   }
 
   &__logo{
+    margin-bottom: 24px;
+
+    @include respond-to(sm){
+      margin-bottom: 0px;
+    }
 
     p{
-      margin-bottom: 90px;
       font-size: 16px;
+      font-size: 16px !important;
+      font-family: Helvetica !important;
+      text-transform: none !important;
+      margin: 0px 0 24px;
+
+      @include respond-to(sm){
+        margin: 55px 0 6px;
+      }
     }
 
     svg{
@@ -147,7 +160,7 @@
     }
   }
 
-  &__mobile-only{
+  &__mobile-only{   
 
     li{
       margin-top: 8px;
@@ -180,6 +193,11 @@
 
     @include hover{
       cursor: pointer;
+
+      line{
+        stroke: $blue-kgs;
+      }
+
     }
   }
 }

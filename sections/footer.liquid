@@ -2,8 +2,11 @@
   <div class="footer__inner container js-visibility reveal-slide">
     <div class="footer__column">
       <div class="footer__logo">
-        <a href="">{% include 'nav-logo' %}</a>  
-        <p class="body-small footer__mobile-only">Nuzest in your smoothie and your inbox.</p>
+        <a href="">{% include 'nav-logo' %}</a> 
+        {% if template != 'index' %}
+          <p class="body-small">Nuzest in your smoothie and your inbox.</p>
+          {% include 'signup-form' %}
+        {% endif %}
       </div>      
       <div class="footer__social">
         <a href="">{% include 'icon-facebook' %}</a>  

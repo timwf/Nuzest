@@ -130,7 +130,7 @@
     margin-left: 16px;
     top: -29px;
 
-    @include respond-to(md){
+    @include respond-to(lg){
       display: none;
     }
 
