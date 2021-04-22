@@ -4,9 +4,9 @@
       <div class="header__hamburger-line"></div>
       <div class="header__hamburger-line"></div>
     </div>
-    <a href=""><p class="caption-regular">Shop All</p></a>
-    <a href=""><p class="caption-regular">Who We Are</p></a>
-    <a href="https://nuzest-staging.myshopify.com/pages/the-digest"><p class="caption-regular">The Digest</p></a>
+    {% for link in linklists.main-menu.links %}
+      <a href="{{ link.url }}"><p class="caption-regular">{{ link.title }}</p></a>
+    {% endfor %}
   </div>
   <div class="header__center">
     <a href="https://nuzest-staging.myshopify.com/">{% include 'nav-logo' %}</a>  
@@ -25,18 +25,21 @@
       <div class="fly-out-nav__close">
         {% include 'icon-close' %}
       </div>
-      <a href=""><p class="caption-regular">Shop All</p></a>
-      <a href=""><p class="caption-regular">Who We Are</p></a>
-      <a href=""><p class="caption-regular">The Digest</p></a>
+      {% for link in linklists.main-menu.links %}
+        <a href="{{ link.url }}"><p class="caption-regular">{{ link.title }}</p></a>
+      {% endfor %}
       <div class="fly-out-nav__header-icons">
         <a href="">{% include 'icon-lang' %}</a>
         <a href="">{% include 'icon-bag' %}  </a>  
       </div>
     </div>
     <div class="fly-out-nav__collections">
+      <a href="/collections" >
+        <h2 class="header-small">Shop All</h2>
+      </a>
       {% for block in section.blocks %}
         {% if block.type == 'logo_image' %}
-        <a href="javascript:void(0);" data-collection="{{ collections[block.settings.collection].handle }}">
+        <a href="{{ collections[block.settings.collection].url }}" data-collection="{{ collections[block.settings.collection].handle }}">
           <h2 class="header-small">{{ collections[block.settings.collection].title }}</h2>
         </a>
         {% endif %}

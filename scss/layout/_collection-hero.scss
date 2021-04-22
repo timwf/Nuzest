@@ -42,7 +42,7 @@
     }
 
     h2{
-      padding: 20px 14px;
+      padding: 29px 14px;
 
       @include respond-to(md){
         margin-bottom: 20px;
@@ -96,9 +96,12 @@
 
   &__image{
     position: relative;
+    width: calc(100% - 40px);
+    margin: auto;
 
     @include respond-to(md){
       width: 500px;
+      margin: initial;
     }
 
     img{

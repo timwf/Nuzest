@@ -1,5 +1,9 @@
 .collection-grid{
-  margin-top: 80px;
+  margin-top: 23px;
+
+  @include respond-to(sm){
+    margin-top: 80px;
+  }
 
   &__inner{
 

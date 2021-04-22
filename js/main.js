@@ -121,8 +121,6 @@ $(document).ready(() => {
 
   const doneResizing = debounce(() => {
     const width = $(window).width();
-    console.log('reinit');
-
     initFlyOutNav()
     initfeaturedProductsHome()
     initHomeScrollingAnimation()
@@ -175,7 +173,6 @@ $(document).ready(() => {
 
     $productListItems.on('mouseenter', function(){
       let imageSrc = $(this).find('img').attr('src') 
-      console.log($(this).parent());
       $(this).parent().parent().find('.js-header-product-image').attr('src', imageSrc)    
     })
 
@@ -241,9 +238,7 @@ $(document).ready(() => {
   }
 
   function initHomeScrollingAnimation(){
-    console.log('asdfsdg');
     const section = $('.scrolling-animation')
-    console.log('hiya');
     let startPoint
     let width = $(window).width()
 
@@ -650,18 +645,22 @@ $(document).ready(() => {
 
 
   function initVaraintCalc(card){
-    // console.log(card);
+
     const $selects = $(card).find('.product-card__product-options select')
     const $hiddenVars = $(card).find('.js-variant')
     let variantString = ""
     const $submitBtn = $(card).find('.js-product-card-add-to-cart')
-    console.log($hiddenVars);
-
     updateVariant()
+
 
     $selects.on('change', function(){
       updateVariant()
+    })
 
+    $submitBtn.on('click', function(){
+      let id = $(this).attr('data-variant-id')
+      let qty = 1
+      addToCart(id, qty)
     })
 
     function updateVariant(){
@@ -674,10 +673,8 @@ $(document).ready(() => {
       })
 
       $hiddenVars.each(function(){
-        console.log(this);
         let hiddenVarTitle = $(this).attr('data-title').replace(/\s+|[\/]/g, "")
         let selected = variantString.replace(/\s+|[\/]/g, "")
-        console.log(hiddenVarTitle);
 
         if(hiddenVarTitle == selected){
           $submitBtn.attr("disabled", false)
@@ -691,6 +688,78 @@ $(document).ready(() => {
           $submitBtn.find('p').text('Sorry - Out of Stock')
           $submitBtn.attr("disabled", true)
       }
+    }
+  }
+
+
+  function addToCart(id, qty){
+
+    //TODO remove after testing!!! (also sort out scroll to top on disable!)
+    $('.cart-drawer').addClass('active')
+    disableScrolling()
+
+    $.ajax({
+      type: 'POST', 
+      url: '/cart/add.js',
+      dataType: 'json', 
+      data: {
+        'items': [{
+          'id': id,
+          'quantity': qty
+          }]
+      },
+      success: addToCartOk,
+      error: addToCartFail
+   }); 
+  }
+
+  function addToCartOk(){
+    $('.cart-drawer').addClass('active')
+    disableScrolling()
+    initCartDrawer()
+    console.log('okay!');
+  }
+
+  function addToCartFail(){
+    console.log(' not okay!');
+
+    //TODO add 402 inventry error toast?
+  }
+
+  function initCartDrawer(){   
+    const $closeBtn = $('.cart-drawer__header svg')     
+
+    $closeBtn.on('click', function(){
+      $('.cart-drawer').removeClass('active')
+      enableScrolling()
+    })
+
+    //get the cart and update the items
+    jQuery.getJSON('/cart.js', function(cart) {
+      updateCartDrawer(cart)
+    })
+
+    function updateCartDrawer(cart){
+      $('.cart-drawer__items').empty()
+
+      $(cart.items).each(function(){
+        $('.cart-drawer__items').append(
+          `
+          <div class="cart-drawer__item">
+            <div class="cart-drawer__item-left">
+              <img src="${this.image }" alt="">
+              <p class="body-small">Remove</p>
+            </div>
+            <div class="cart-drawer__item-right">
+              <h3 class="body-bold">${this.product_title}</h3>
+              <h4 class="body-small">${this.final_price / 100 }</h4>
+              <h5 class="body-small">${this.variant_options[0]}</h5>
+              <h5 class="body-small">${this.variant_options[1]}</h5>
+            </div>
+          </div>             
+          `
+        )
+      })
     }
   }
 
@@ -716,6 +785,7 @@ $(document).ready(() => {
   initTheDigestSearch()
   initTheDigestFeaturedBlogs()
   initProductCard()
+  initCartDrawer()
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

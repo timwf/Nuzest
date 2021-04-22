@@ -134,13 +134,15 @@
     }
   </script>
 
-  {{ content_for_header }}
+  {{ content_for_header }}  
 </head>
 
 <body class="template-{{ request.page_type | handle }}">
 
 
   {% section 'header' %}
+  {% section 'cart-drawer' %}
+
 
   <div class="page-container drawer-page-content" id="PageContainer">
 

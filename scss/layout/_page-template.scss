@@ -1,0 +1,20 @@
+.page-template{
+
+  &__inner{
+    margin-top: 46px;
+
+    @include respond-to(sm){
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 99px;
+    }
+  }
+
+  .single-article__rte{
+    margin: 33px 0 33px;
+
+    @include respond-to(sm){
+      margin: 130px 0px 180px 0px;
+    }
+  }
+}
