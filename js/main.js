@@ -373,6 +373,11 @@ $(document).ready(() => {
 
   function initHeader(){
     const header = $('.header');
+    const $bag = $('.js-open-cart')
+
+    $bag.on('click', function(){
+      $('.cart-drawer').addClass('active')
+    })
 
 
     var lastScrollTop = 0;
@@ -661,6 +666,7 @@ $(document).ready(() => {
       let id = $(this).attr('data-variant-id')
       let qty = 1
       addToCart(id, qty)
+      $('.loader').fadeIn()
     })
 
     function updateVariant(){
@@ -694,10 +700,6 @@ $(document).ready(() => {
 
   function addToCart(id, qty){
 
-    //TODO remove after testing!!! (also sort out scroll to top on disable!)
-    $('.cart-drawer').addClass('active')
-    disableScrolling()
-
     $.ajax({
       type: 'POST', 
       url: '/cart/add.js',
@@ -713,17 +715,35 @@ $(document).ready(() => {
    }); 
   }
 
+  function updateCartQty(id, qty){
+
+    //TODO find a way to show 422 error when item out of stock (shows on add but not change!!!)
+
+    $.ajax({
+      type: 'POST', 
+      headers: {
+        'X-Requested-With':'XMLHttpRequest'
+      },
+      url: '/cart/change.js',
+      dataType: 'json', 
+      data: {'id': id,'quantity': qty},
+      success: addToCartOk,
+      error: addToCartFail
+    }); 
+  }
+
+
   function addToCartOk(){
     $('.cart-drawer').addClass('active')
-    disableScrolling()
     initCartDrawer()
-    console.log('okay!');
+    $('.loader').fadeOut()
   }
 
   function addToCartFail(){
     console.log(' not okay!');
-
     //TODO add 402 inventry error toast?
+    $('.loader').fadeOut()
+    toastActive("hh")
   }
 
   function initCartDrawer(){   
@@ -731,7 +751,6 @@ $(document).ready(() => {
 
     $closeBtn.on('click', function(){
       $('.cart-drawer').removeClass('active')
-      enableScrolling()
     })
 
     //get the cart and update the items
@@ -739,28 +758,109 @@ $(document).ready(() => {
       updateCartDrawer(cart)
     })
 
-    function updateCartDrawer(cart){
-      $('.cart-drawer__items').empty()
-
-      $(cart.items).each(function(){
+    function updateCartDrawer(cart){      
+      
+      if(!cart.items.length){
+        //removal all and append empty cart message
+        $('.cart-drawer__checkout').hide()
+        $('.cart-drawer__items').empty()  
         $('.cart-drawer__items').append(
-          `
-          <div class="cart-drawer__item">
-            <div class="cart-drawer__item-left">
-              <img src="${this.image }" alt="">
-              <p class="body-small">Remove</p>
-            </div>
-            <div class="cart-drawer__item-right">
-              <h3 class="body-bold">${this.product_title}</h3>
-              <h4 class="body-small">${this.final_price / 100 }</h4>
-              <h5 class="body-small">${this.variant_options[0]}</h5>
-              <h5 class="body-small">${this.variant_options[1]}</h5>
-            </div>
-          </div>             
-          `
+          `<p class="body-bold" style="margin-top: 20px">Nothing in your bag</p>`
         )
+      }
+      else{
+        //apend cart items to drawer
+        $('.cart-drawer__items').empty()  
+        $('.cart-drawer__checkout').show()
+        $(cart.items).each(function(){
+          $('.cart-drawer__items').append(
+            `
+            <div class="cart-drawer__item">
+              <div class="cart-drawer__item-left">
+                <img src="${this.image }" alt="">
+                <p class="body-small js-cart-drawer__remove" data-variant-id="${this.variant_id}">Remove</p>
+              </div>
+              <div class="cart-drawer__item-right">
+                <h3 class="body-bold">${this.product_title}</h3>
+                <h4 class="body-small">£${this.final_price / 100 }</h4>
+                <h5 class="body-small">${this.variant_options[0]}</h5>
+                <h5 class="body-small">${this.variant_options[1]}</h5>
+                <div class="cart-drawer__qty-selector-wrap">
+                  <div class="cart-drawer__qty-selector-copy">
+                    <p class="body-small">Qty.</p>
+                  </div>
+                  <div class="cart-drawer__qty-selector">
+                    <div class="cart-drawer__qty-selector-btn js-cart-drawer__qty-minus" data-variant-id="${this.variant_id}" data-qty="${this.quantity}">
+                      <svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="1" y1="1" x2="13" y2="0.999999" stroke="#07272D" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <p>${this.quantity }</p>
+                    <div class="cart-drawer__qty-selector-btn js-cart-drawer__qty-plus" data-variant-id="${this.variant_id}" data-qty="${this.quantity}">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="1" y1="7" x2="13" y2="7" stroke="#07272D" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="7" y1="1" x2="7" y2="13" stroke="#07272D" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>     
+            `
+          )
+        })
+      }
+
+      //update bag totals header
+      console.log(cart.item_count);
+      if(cart.item_count){
+        $('.header__cart-total').each(function(){
+          $(this).text(cart.item_count)
+        })
+      }
+      else{
+        $('.header__cart-total').each(function(){
+          $(this).text("")
+        })
+      }
+
+
+      //update cart total
+      $('.js-cart-drawer-total').text("£" + cart.total_price / 100)
+
+
+      //qty add/minus cart drawer
+      let $minusBtn = $('.js-cart-drawer__qty-minus')
+      let $plusBtn = $('.js-cart-drawer__qty-plus')
+      let $removeItem = $('.js-cart-drawer__remove')
+  
+      $minusBtn.on('click', function(){
+        let id = parseInt($(this).attr('data-variant-id'))
+        let qty = parseInt($(this).attr('data-qty')) - 1
+        updateCartQty(id, qty)
+        $('.loader').fadeIn()
+      })
+  
+      $plusBtn.on('click', function(){
+        let id = parseInt($(this).attr('data-variant-id'))
+        let qty = parseInt($(this).attr('data-qty')) + 1
+        updateCartQty(id, qty)
+        $('.loader').fadeIn()     
+      })
+
+      $removeItem.on('click', function(){
+        let id = parseInt($(this).attr('data-variant-id'))
+        let qty = 0
+        updateCartQty(id, qty)
+        $('.loader').fadeIn()
       })
     }
+  }
+
+  //genral toas - TODO make dynanmic messaging
+  function toastActive(text){
+    $('.toast').addClass('active')    
+    setTimeout(function(){ $('.toast').removeClass('active')}, 3000);
   }
 
 
@@ -786,6 +886,7 @@ $(document).ready(() => {
   initTheDigestFeaturedBlogs()
   initProductCard()
   initCartDrawer()
+
 
   if (isObserver) {
     $('.js-visibility').each((i, el) => {

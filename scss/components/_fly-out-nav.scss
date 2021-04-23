@@ -71,6 +71,10 @@
       margin-left: 20px;
     }
 
+    a{
+      position: relative;
+    }
+
     @include respond-to(md){
       display: none;
     }

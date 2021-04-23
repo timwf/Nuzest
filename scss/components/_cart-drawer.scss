@@ -2,12 +2,16 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 500px;
+  width: 100%;
   height: 100%;
   background-color: white;
   z-index: 99;
   transform: translateX(100%);
   transition: 0.5s;
+
+  @include respond-to(sm){
+    width: 375px;
+  }
 
   &.active{
     transform: translateX(0%);
@@ -20,11 +24,23 @@
   &__header{
     display: flex;
     justify-content: space-between;
+
+    svg{
+      margin-right: -18px;
+
+      @include hover{
+        cursor: pointer;
+
+        line{
+          stroke: $blue-kgs;
+        }
+      }
+    }
   }
 
   &__items{
     overflow: scroll;
-    height: calc(100vh - 166px);
+    height: calc(100vh - 216px);
     -ms-overflow-style: none;  
     scrollbar-width: none; 
 
@@ -42,21 +58,28 @@
   }
 
   &__item-left{
-    width: 128px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
     img{
       width: 80px;
+      max-width: none;
     }
 
     p{
       text-decoration: underline;
+
+      @include hover{
+        cursor: pointer;
+        color: $blue-kgs;
+      }
     }
   }
 
   &__item-right{
+    width: 100%;
+    margin-left: 38px;
 
     h3{
       font-size: 14px;
@@ -68,5 +91,57 @@
     h5{
       opacity: 0.5;
     }
+
+    h4{
+      margin-bottom: 5px;
+    }
+  }
+
+  &__qty-selector-wrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  &__qty-selector{
+    display: flex;
+    align-items: center;
+
+    p{
+      font-family: 'Helvetica';
+      font-size: 21px;
+      line-height: 28px;
+      font-weight: 400;
+      margin: 0px 20px;
+    }
+  }
+
+  &__qty-selector-btn{
+    height: 28px;
+    width: 39px;
+    background-color: $cream;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+
+    @include hover{
+      cursor: pointer;
+      background-color: $blue-kgs;
+
+      svg line{
+        stroke: white;
+      }
+    }
+  }
+
+  &__checkout-totals{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 31px;
+    margin-top: 31px;
+    align-items: center;
   }
 }

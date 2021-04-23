@@ -7,7 +7,7 @@
     {% for link in linklists.main-menu.links %}
       <a href="{{ link.url }}"><p class="caption-regular">{{ link.title }}</p></a>
     {% endfor %}
-  </div>
+  </div>  
   <div class="header__center">
     <a href="https://nuzest-staging.myshopify.com/">{% include 'nav-logo' %}</a>  
   </div>
@@ -15,7 +15,7 @@
     <a href="">{% include 'icon-search' %}</a>
     <a href="">{% include 'icon-lang' %}</a>
     <a href="">{% include 'icon-my-account' %}</a>
-    <a href="">{% include 'icon-bag' %}  </a>  
+    <a href="javascript:void(0)" class="js-open-cart">{% include 'icon-bag' %}<p class="header__cart-total"></p></a>  
   </div>
 </header>
 
@@ -30,7 +30,7 @@
       {% endfor %}
       <div class="fly-out-nav__header-icons">
         <a href="">{% include 'icon-lang' %}</a>
-        <a href="">{% include 'icon-bag' %}  </a>  
+        <a href="javascript:void(0)" class="js-open-cart">{% include 'icon-bag' %} <p class="header__cart-total"></p> </a>  
       </div>
     </div>
     <div class="fly-out-nav__collections">
@@ -39,7 +39,7 @@
       </a>
       {% for block in section.blocks %}
         {% if block.type == 'logo_image' %}
-        <a href="{{ collections[block.settings.collection].url }}" data-collection="{{ collections[block.settings.collection].handle }}">
+        <a href="javascript:void(0)" data-collection="{{ collections[block.settings.collection].handle }}">
           <h2 class="header-small">{{ collections[block.settings.collection].title }}</h2>
         </a>
         {% endif %}

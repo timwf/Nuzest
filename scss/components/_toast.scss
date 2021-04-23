@@ -1,0 +1,25 @@
+.toast{
+  position: fixed;
+  bottom: -50px;
+  z-index: 999;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transition: 0.5s;
+
+  &.active{
+    bottom: 40px;
+  }
+
+  &__inner{
+    background-color: #85a5a6;
+    border-radius: 6px;
+
+    p{
+      padding: 4px 57px;
+      color: white;
+    }
+  }
+}
+
+
