@@ -1,0 +1,27 @@
+<div class="product-card__product-options-wrap">
+  {% for product_option in product.options_with_values %}
+  {% unless product_option.name == "Title" %}
+    <div class="product-card__product-options">
+      <select class="body js-product-varient-select">
+        {% for value in product_option.values %}
+          <option {% if product_option.selected_value == value %}selected{% endif %} style="background-image:url({{ 'vannila.png' | asset_url }});">
+            {{ value }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  {% endunless %}
+{% endfor %}
+</div>
+{% for variant in product.variants %}
+  {% if variant.available %}
+    <div class="hidden-vars">
+      <div class="js-variant" 
+      data-id="{{ variant.id }}" 
+      data-price="{{ variant.price | money}}"
+      data-title="{{ variant.title}}"
+      data-image="{{ variant.image.src | product_img_url: '500x' }}"
+      ></div>
+    </div>
+  {% endif %}
+{% endfor %}

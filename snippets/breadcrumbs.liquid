@@ -4,10 +4,16 @@
 
     {% if template.name == 'list-collections'%}
       <a href="" class="breadcrumbs-font">/&nbsp;&nbsp;Shop All</a>
-
-    {% else %}
+    {% endif %}
+    
+    {% if template.name == 'collection' %}
       <a href="{{ pageUrl }}" class="breadcrumbs-font">/&nbsp;&nbsp;{{ page }}</a>
     {% endif %}
 
+    {% if template.name == 'product' %}
+      <a href="{{ product.collections[0].url }}" class="breadcrumbs-font">/&nbsp;&nbsp;{{ product.collections[0].title }}</a>
+      <a href="{{ product.url }}" class="breadcrumbs-font">/&nbsp;&nbsp;{{ product.title }}</a>
+    {% endif %}
+    
   </div>
 </div>

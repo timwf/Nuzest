@@ -651,7 +651,7 @@ $(document).ready(() => {
 
   function initVaraintCalc(card){
 
-    const $selects = $(card).find('.product-card__product-options select')
+    const $selects = $(card).find('.js-product-varient-select')
     const $hiddenVars = $(card).find('.js-variant')
     let variantString = ""
     const $submitBtn = $(card).find('.js-product-card-add-to-cart')
@@ -664,7 +664,8 @@ $(document).ready(() => {
 
     $submitBtn.on('click', function(){
       let id = $(this).attr('data-variant-id')
-      let qty = 1
+      let qty
+      $(this).attr('data-quantity') ? qty = $(this).attr('data-quantity') : qty = 1
       addToCart(id, qty)
       $('.loader').fadeIn()
     })
@@ -672,6 +673,12 @@ $(document).ready(() => {
     function updateVariant(){
       variantString = "";
       let match = false;
+      console.log('updating vars?');
+
+      //if no options return
+      if(!$selects.length){
+        return;
+      }
 
       $selects.each(function(){
         let optionSelected = $("option:selected", this).val();
@@ -686,7 +693,33 @@ $(document).ready(() => {
           $submitBtn.attr("disabled", false)
           $submitBtn.attr('data-variant-id', $(this).attr('data-id'))
           $submitBtn.find('p').text('Add to Your Cart - ' + $(this).attr('data-price'))
+          let varImage = $(this).attr('data-image')
           match = true;
+
+          if($('.product-template__right').length){               
+            //product page slider - var selects
+            const productTemplateSlider = new Swiper('.product-template__right', {
+              slidesPerView: 1.65,
+              spaceBetween: 70,
+              navigation: {
+                prevEl: '.product-template__slider-arrows .slidePrev-btn',
+                nextEl: '.product-template__slider-arrows .slideNext-btn'
+              },
+              breakpoints: {
+                1700: {
+                  slidesPerView: 2.55,
+                  spaceBetween: 70
+                }
+              }
+            });
+
+            //moves slider to correct variant
+            $('.swiper-slide').each(function (i){
+              if(varImage == $(this).find('img').attr('src')){
+                productTemplateSlider.slideTo(i)
+              }
+            })
+          }
         }
       })
 
@@ -783,7 +816,7 @@ $(document).ready(() => {
               <div class="cart-drawer__item-right">
                 <h3 class="body-bold">${this.product_title}</h3>
                 <h4 class="body-small">£${this.final_price / 100 }</h4>
-                <h5 class="body-small">${this.variant_options[0]}</h5>
+                <h5 class="body-small">${this.variant_options[0] }</h5>
                 <h5 class="body-small">${this.variant_options[1]}</h5>
                 <div class="cart-drawer__qty-selector-wrap">
                   <div class="cart-drawer__qty-selector-copy">
@@ -812,7 +845,6 @@ $(document).ready(() => {
       }
 
       //update bag totals header
-      console.log(cart.item_count);
       if(cart.item_count){
         $('.header__cart-total').each(function(){
           $(this).text(cart.item_count)
@@ -865,6 +897,34 @@ $(document).ready(() => {
 
 
 
+  //for product page
+  function initProductBuyBtn(){
+    const $product = $('.product-template__left')
+    const $plusBtn = $('.js-product-template-qty-plus')
+    const $minusBtn = $('.js-product-template-qty-minus')
+    const $qtyInput = $('.js-product-template-qty-amount')
+    let qty = $qtyInput.text()
+
+    $plusBtn.on('click', function(){
+      qty ++
+      $qtyInput.text(qty)
+      $('.js-product-card-add-to-cart').attr('data-quantity', qty)
+    })
+
+    $minusBtn.on('click', function(){
+      if(qty > 1){
+        qty --
+        $qtyInput.text(qty)
+        $('.js-product-card-add-to-cart').attr('data-quantity', qty)
+      }
+    })
+
+    // sort out the variants! (also images changed on select)
+    initVaraintCalc($product)
+  }
+
+
+
   
 
 
@@ -886,6 +946,8 @@ $(document).ready(() => {
   initTheDigestFeaturedBlogs()
   initProductCard()
   initCartDrawer()
+
+  initProductBuyBtn()
 
 
   if (isObserver) {
