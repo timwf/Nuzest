@@ -740,7 +740,12 @@ $(document).ready(() => {
       data: {
         'items': [{
           'id': id,
-          'quantity': qty
+          'quantity': qty,
+          "properties": {
+            "shipping_interval_unit_type": "Weeks",
+            "shipping_interval_frequency": "2",
+            "test": "this",
+          },
           }]
       },
       success: addToCartOk,
@@ -769,7 +774,6 @@ $(document).ready(() => {
   function addToCartOk(){
     $('.cart-drawer').addClass('active')
     initCartDrawer()
-    $('.loader').fadeOut()
   }
 
   function addToCartFail(){
@@ -800,6 +804,7 @@ $(document).ready(() => {
         $('.cart-drawer__items').append(
           `<p class="body-bold" style="margin-top: 20px">Nothing in your bag</p>`
         )
+        $('.loader').fadeOut()
       }
       else{
         //apend cart items to drawer
@@ -810,7 +815,9 @@ $(document).ready(() => {
             `
             <div class="cart-drawer__item">
               <div class="cart-drawer__item-left">
-                <img src="${this.image }" alt="">
+                <a href="${this.url }">
+                  <img src="${this.image }" alt="">
+                </a>
                 <p class="body-small js-cart-drawer__remove" data-variant-id="${this.variant_id}">Remove</p>
               </div>
               <div class="cart-drawer__item-right">
@@ -842,6 +849,8 @@ $(document).ready(() => {
             `
           )
         })
+
+        $('.loader').fadeOut()
       }
 
       //update bag totals header

@@ -12,10 +12,258 @@
         <h4 class="header-small js-cart-drawer-total">£33.99</h4>
       </div>
       <div class="cart-drawer__checkout-button">
-        <a href="/checkout">
+        <a onClick="ReChargeCartSubmit()" >
           <button class="btn"><p>Checkout</p></button>
         </a>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  
+//redirect to recharge checkout if properities have subscriptions
+
+function buildCheckoutUrl() {
+    // Build the Checkout URL
+    var checkout_url = 'https://checkout.rechargeapps.com/r/checkout?',
+        url_params = [
+            'myshopify_domain=' + Shopify.shop,
+        ];
+    url_params = url_params
+        .concat(get_cart_token())
+        .concat(get_ga_linker());
+    return checkout_url + url_params.join('&');
+}
+function filterVisible(elems) {
+    // Return visible elements
+    return elems.filter(function(elem) {
+        return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
+    });
+}
+function filterValues(elems) {
+    // Return inputs with valid values
+    return elems.filter(function(elem) {
+        var is_active_checkbox = elem.getAttribute('type') === 'radio' && elem.checked,
+            is_active_radio = elem.getAttribute('type') === 'checkbox' && elem.checked,
+            is_input = elem.getAttribute('type') !== 'checkbox' && elem.getAttribute('type') !== 'radio';
+        return !!elem.value && (is_input || is_active_checkbox || is_active_radio);
+    });
+}
+function getCartJSON() {
+    // Fetch the latest cart data from the /cart.js endpoint
+    return fetch('/cart.js')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+            return ({ cart: JSON.stringify(json) });
+        })
+        .catch(function(error) {
+            console.error('Error retreiving cart: ', error);
+            return ({ cart: {}});
+        });
+}
+function getTermsAndConditions() {
+    // Find and return concacted terms and conditions values
+    var condition_selectors = [
+            '#terms',
+            '#agree',
+        ],
+        conditions = document.querySelectorAll(condition_selectors.join(',')),
+        conditions_to_update = Array.prototype.slice.apply(conditions),
+        conditions_filtered = filterValues(conditions_to_update),
+        condition_values = conditions_filtered.map(function(elem) {
+            return elem.value;
+        });
+    if (!condition_values.length) { return {}; }
+    return {
+        terms_and_conditions: condition_values.join(', ')
+    };
+}
+function getNotes() {
+    // Find and return concatenated note values if visible
+    var note_selectors = [
+            '[name="note"]',
+        ],
+        notes = document.querySelectorAll(note_selectors.join(',')),
+        notes_to_update = Array.prototype.slice.apply(notes),
+        notes_filtered = filterVisible(notes_to_update),
+        note_values = notes_filtered.map(function(elem) { return elem.value; });
+    var urlParams = new URLSearchParams(decodeURIComponent(window.location.search)),
+        noteFromUrl = urlParams.get('note');
+    if (noteFromUrl) {
+        note_values.push(noteFromUrl);
+    }
+    if (!note_values.length) return '';
+    var uniqueNoteValues = note_values.filter(function(element, index, array) {
+        return array.indexOf(element) === index;
+    });
+    return { note: uniqueNoteValues.join(', ') };
+}
+function getUTMAttributes() {
+    // Retrieve UTMAttributes from Shopify cookie
+    var shopifyCookieRegEx = /^_shopify_sa_p/;
+    var utmRegEx = /^utm_/;
+    var timestampRegEx = /^_shopify_sa_t/;
+    var utmParams = {};
+    var shopifyCookie = "";
+    var timestamp = "";
+    document.cookie.split(";")
+        .map(function(s){
+            return s.trim();
+        })
+        .forEach(function(s){
+            if (shopifyCookieRegEx.test(s)) {
+                shopifyCookie = s;
+            }
+            if (timestampRegEx.test(s)) {
+                timestamp = decodeURIComponent(s.split("=")[1]);
+            }
+            return;
+        });
+    var utmValuesFromCookie = shopifyCookie.split("=")[1];
+    decodeURIComponent(utmValuesFromCookie)
+        .split("&")
+        .forEach(function(s){
+            var key = s.split("=")[0];
+            var val = s.split("=")[1];
+            if (utmRegEx.test(key)) {
+                return utmParams[key] = val;
+            }
+            return;
+        });
+    if (!Object.keys(utmParams).length) {
+        return undefined;
+    }
+    utmParams.utm_timestamp = timestamp;
+    utmParams.utm_data_source = "shopify_cookie";
+    return utmParams;
+}
+function getAttributes() {
+    // Find and return cart attributes
+    var attributeRegEx = /attributes\[(.*?)\]/,
+        attributeNameRegex = /\[(.*?)\]/,
+        attribute_selectors = [
+            '[name*="attributes"]',
+        ],
+        attributes = document.querySelectorAll(attribute_selectors.join(',')),
+        attributes_to_update = Array.prototype.slice.apply(attributes),
+        attributes_filtered = filterValues(attributes_to_update);
+    var attribute_data = {},
+        utm_attributes = getUTMAttributes(),
+        attributes_from_url = new URLSearchParams(decodeURIComponent(window.location.search));
+    for (let pair of attributes_from_url) {
+        if (attributeRegEx.test(pair[0])) {
+            var attributeName = pair[0]
+                .match(attributeNameRegex)[0];
+            attributeName = attributeName.substring(1, attributeName.length -1);
+            attribute_data[attributeName] = attributes_from_url.get(pair[0]);
+        }
+    }
+    attributes_filtered.forEach(function(attribute) {
+        var name = attribute.getAttribute('name'),
+            value = attribute.value;
+        if (attributeRegEx.test(name)) {
+            var extractedName = name.match(attributeNameRegex)[0];
+            extractedName = extractedName.substring(1, extractedName.length -1);
+            return attribute_data[extractedName] = value;
+        }
+        return attribute_data[name] = value;
+    });
+    if (utm_attributes) {
+        Object.keys(utm_attributes).forEach(function(key) {
+            attribute_data[key] = utm_attributes[key];
+        });
+    }
+    if (!Object.keys(attribute_data).length) return {};
+    return { attributes: Object.assign({}, attribute_data) };
+}
+function getCartData() {
+    // Return cart attributes and data
+    return getCartJSON().then(function(cartDataJSON) {
+        var cart_data = {},
+                termsAndConditions = getTermsAndConditions(),
+                notes = getNotes(),
+                attributes = getAttributes(),
+            cart_data = cartDataJSON;
+        [termsAndConditions, notes, attributes, cart_data].forEach(function(obj) {
+                Object.assign(cart_data, obj);
+        });
+        return cart_data;
+    });
+}
+function get_cart_token() {
+    // Build the cart_token param for the URL generator
+    try {
+        return ['cart_token=' + (document.cookie.match('(^|; )cart=([^;]*)')||0)[2]];
+    } catch (e) {
+        return [];
+    }
+}
+function get_ga_linker() {
+    // Build the ga_linker param for the URL generator
+    try {
+        return [ga.getAll()[0].get('linkerParam')];
+    } catch (e) {
+        return [];
+    }
+}
+function buildInputs(form, obj) {
+    // Build input fields for key, value pairs
+    Object.keys(obj).forEach(function(key) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', key);
+        input.setAttribute('value', typeof(obj[key]) === 'object' ? JSON.stringify(obj[key]) : obj[key]);
+        form.appendChild(input);
+    });
+}
+function buildForm(data, url) {
+    // Build a virtual form
+    var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', url);
+    form.setAttribute('id', 'rc_form');
+    form.style.display = 'none';
+    buildInputs(form, data);
+    return form;
+}
+function hasSubscription(data) {
+    // Check if subscription items are found in cart data
+    const cart = JSON.parse(data.cart);
+    return [...cart.items].some(item => item.properties && item.properties.shipping_interval_unit_type);
+}
+function ReChargeCartSubmit() {
+    // Build and submit cart
+    return getCartData().then(function(cart_data) {
+        if (!hasSubscription(cart_data)) {
+            // Send user to Shopify's checkout if no subscription products are found
+            window.location.href = '/checkout';
+            return;
+        };
+        
+        var checkout_url = buildCheckoutUrl();
+        if (!cart_data) {
+            // Cart data not found, fallback to token method
+            window.location.href = checkout_url;
+            return;
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/cart/update.js');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                window.console.log('done', JSON.parse(xhr.responseText));
+            } else if (xhr.status !== 200) {
+                window.console.log('fail', JSON.parse(xhr.responseText));
+            }
+            var form = buildForm(cart_data, checkout_url);
+            document.body.appendChild(form);
+            form.submit();
+        };
+        xhr.send(JSON.stringify(cart_data));
+    });
+}
+
+</script>

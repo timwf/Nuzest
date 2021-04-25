@@ -1,0 +1,27 @@
+{% assign discount = selling_plan_group.selling_plans[0].price_adjustments[0].value %}
+
+<div class="subscription-options">
+  <div class="subscription-options__radio">
+    <input type="radio" id="onetime" name="subscription-option"  value="onetime">
+    <label class="body-small" for="onetime">One-time purchase</label><br>
+  </div>
+  <div class="subscription-options__radio">
+    <input type="radio" id="subscribe" name="subscription-option" value="subscribe">
+    <label class="body-small" for="subscribe">Subscribe and save {{ discount }}%</label><br>
+  </div>
+
+
+  <div class="subscription-options__option">
+    <label class="body-small" for="">Delivery Every</label>
+    {% for option in selling_plan_group.options %}
+      <select class="body-small">
+        {% for value in option.values %}
+        <option  class="body-small" {% if value == option.selected_value %}selected{% endif %}>
+          {{ value }}
+        </option>
+        {% endfor %}
+      </select>
+    {% endfor %}
+  </div>
+
+ </div>

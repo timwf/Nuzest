@@ -8,9 +8,14 @@
       </div>
       <h4 class="body-small">{{ product.description }}</h4>
       {% include 'product-options' %}
-      <div class="product-template__reviews">
-        Subscriptions will go here
-      </div>
+
+      {% for selling_plan_group in product.selling_plan_groups %}
+        {% if selling_plan_group %}
+        {% include 'subscription-options' %}
+        {% endif %}
+      {% endfor %}
+
+
       <div class="product-template__buy-wrap">
         <div class="product-template__qty-select">
           <div class="product-template__qty-btn js-product-template-qty-minus">

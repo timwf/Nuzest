@@ -1,0 +1,51 @@
+.subscription-options{
+  margin-bottom: 30px;
+
+  &__radio{
+    display: flex;
+    background-color: white;
+    padding: 0px 20px;
+  }
+
+  label, input{
+    background-color: transparent;
+    height: 61px;
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+  }
+
+  label{
+    width: 100%;
+    padding: 0px 10px;
+  }
+  
+  &__option{
+    display: flex;
+    background-color: $cream;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+
+    label, select{
+      margin-bottom: 20px;
+    }
+
+    label{
+      width: auto;
+      padding-left: 20px;
+    }
+
+    select{
+      height: 44px;
+      border-radius: 100px;
+      border: none;
+      background-color: white;
+      padding: 0px 20px;
+      margin-right: 20px;
+    }
+  }
+
+
+
+}
