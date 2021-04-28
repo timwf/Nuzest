@@ -1,0 +1,64 @@
+.about-hero{
+
+  &__inner{
+
+    @include respond-to(md){
+      display: flex;
+    }
+  }
+
+  &__left{
+    position: relative;
+    padding-top: 100%;
+
+    @include respond-to(md){
+      width: 50%;
+      padding-top: 0px;
+    }
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+    }
+  }
+
+  &__right{
+
+    @include respond-to(md){
+      width: 50%;
+    }
+  }
+
+  &__text-wrap{
+    padding: 39px 20px 22px;
+
+    @include respond-to(md){
+      padding: 145px 108px 145px 111px;
+      max-width: 756px;
+    }
+
+    h1{
+      margin-bottom: 30px;
+
+      @include respond-to(sm){
+        margin-bottom: 36px;
+      }
+    }
+
+    p{
+      font-family: 'Helvetica';
+      font-size: 16px;
+      line-height: 28px;
+      font-weight: 400;
+      margin-bottom: 20px;
+    
+      @include respond-to(sm){
+        font-size: 21px;  
+        margin-bottom: 24px;
+      }
+    }
+  }
+}

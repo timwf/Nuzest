@@ -1,0 +1,59 @@
+<section class="about-environment">
+  <div class="about-environment__inner container">
+    <div class="about-environment__left">
+
+      <h2 class="header-medium">{{ section.settings.title }}</h2>
+
+      {% for block in section.blocks %}
+        <div class="about-environment__accordian-item">
+          <div class="about-environment__accordian-item-header">
+            <h4 class="sub-header">{{ block.settings.heading }}</h4> 
+            {% include 'icon-qty-plus' %}
+          </div>
+          {{ block.settings.copy }}
+        </div>
+
+      {% endfor %}
+
+    </div>
+    <div class="about-environment__right">
+      <img src="{{ section.settings.image | img_url: 'master' }}" alt="">     
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Enviroment",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "richtext",
+        "id": "title",
+        "label": "Accordian Title"
+      }
+    ],
+    "blocks":[
+      {
+        "type": "science",
+        "name": "Accordian Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "copy",
+            "label": "Copy"
+          }
+        ]
+      }       
+    ]
+  }
+{% endschema %}

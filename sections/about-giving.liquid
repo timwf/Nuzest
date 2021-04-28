@@ -1,0 +1,34 @@
+<section class="about-science-based">
+  <div class="about-science-based__inner about-science-based__inner--giving container">
+    <div class="about-science-based__left">
+      <img src="{{ section.settings.image | img_url: 'master' }}" alt=""> 
+    </div>
+    <div class="about-science-based__right about-giving-copy">
+      <h2 class="header-medium">{{ section.settings.title}}</h2>      
+      {{ section.settings.copy}}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Giving",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Facts Title"
+      },
+      {
+        "type": "richtext",
+        "id": "copy",
+        "label": "copy"
+      }
+    ]
+  }
+{% endschema %}

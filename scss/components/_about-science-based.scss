@@ -1,0 +1,110 @@
+.about-science-based{
+
+  &__inner{
+    padding-top: 45px;
+    padding-bottom: 0px;
+
+
+    @include respond-to(md){
+      display: flex;
+      padding-top: 100px;
+      padding-bottom: 103px;
+
+    }
+  }
+
+  &__left{
+    @include respond-to(md){
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 112px;
+
+      img{
+        width: 494px;
+        height: 494px;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__right{
+
+    h2{
+      margin-bottom: 45px;
+      margin-top: 37px;
+
+      @include respond-to(md){
+        margin-top: 0px;
+      }
+    }
+
+    p{
+      max-width: 476px;
+    }
+
+
+    @include respond-to(md){
+      width: 50%;
+    }
+  }
+
+  &__item{
+    display: flex;
+    margin-bottom: 41px;
+    opacity: 0.2;
+
+    &:last-of-type{
+      .about-science-based__item-svg:after {
+        display: none;
+      }
+    }
+
+    &.active{
+      .about-science-based__item-svg:after {
+        height: calc(100% - 3px);
+      }
+    }
+
+  }
+
+
+
+  &__item-svg{
+    position: relative;
+
+    svg{
+      fill: white;
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  &__item-svg:after{
+    content: "";
+    width: 1px;
+    height: 0%;
+    background-color: #000;
+    position: absolute;
+    left: 24px;
+    top: 46px;
+    transition: 0.4s;
+  }
+
+
+
+  &__item-svg:last-child{
+    display: none;
+  }
+
+
+
+  &__item-copy{
+    margin-left: 42px;
+
+    h4{
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+  }
+}

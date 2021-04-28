@@ -1,5 +1,7 @@
 {% assign discount = selling_plan_group.selling_plans[0].price_adjustments[0].value %}
 
+{{product.selling_plan_groups[0].selling_plans[0].id}}
+
 <div class="subscription-options">
   <div class="subscription-options__radio">
     <input type="radio" id="onetime" name="subscription-option"  value="onetime">

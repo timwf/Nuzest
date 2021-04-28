@@ -1,0 +1,44 @@
+<section class="about-hero">
+  <div class="about-hero__inner">
+    <div class="about-hero__left">  
+      <img src="{{ section.settings.image | img_url: 'master' }}" alt="">      
+    </div>
+    <div class="about-hero__right" style="background-color: {{ section.settings.background_color }};">
+      <div class="about-hero__text-wrap">
+        <h1 class="header-large">{{ section.settings.header }}</h1>
+        {{ section.settings.copy }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": {
+    "en": "About Hero"
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+    "type": "text",
+    "id": "header",
+    "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "copy",
+      "label": "Copy"
+    }
+  ]
+}
+{% endschema %}

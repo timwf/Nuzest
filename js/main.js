@@ -741,11 +741,12 @@ $(document).ready(() => {
         'items': [{
           'id': id,
           'quantity': qty,
-          "properties": {
-            "shipping_interval_unit_type": "Weeks",
-            "shipping_interval_frequency": "2",
-            "test": "this",
-          },
+          // "selling_plan": "401932495"          
+          // "properties": {
+          //   "shipping_interval_unit_type": "Weeks",
+          //   "shipping_interval_frequency": "2",
+          //   "test": "this",
+          // },
           }]
       },
       success: addToCartOk,
@@ -932,6 +933,37 @@ $(document).ready(() => {
     initVaraintCalc($product)
   }
 
+  function initAboutSecience(){
+    const $items = $('.about-science-based__item')
+
+    $items.each(function(){
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: this,
+          start: "75% center",
+          end: "90%",
+          // markers: true,
+        }
+      })
+      .to(this,  { opacity: 1 })
+      .set(this, { className: "about-science-based__item active"})
+    })
+  }
+
+  function initAboutEnvironment(){
+    const $accordianBtn = $('.about-environment__accordian-item')
+
+    $accordianBtn.on('click', function(){
+      if ($(this).hasClass('active')) {
+        $(this).removeClass('active')
+      }
+      else{        
+        $accordianBtn.each(function(){$(this).removeClass('active')})
+        $(this).addClass('active') 
+      }
+    })
+  }
+
 
 
   
@@ -955,8 +987,9 @@ $(document).ready(() => {
   initTheDigestFeaturedBlogs()
   initProductCard()
   initCartDrawer()
-
   initProductBuyBtn()
+  initAboutSecience()
+  initAboutEnvironment()
 
 
   if (isObserver) {
