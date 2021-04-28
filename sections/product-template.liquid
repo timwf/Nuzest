@@ -8,14 +8,11 @@
       </div>
       <h4 class="body-small">{{ product.description }}</h4>
       {% include 'product-options' %}
-
       {% for selling_plan_group in product.selling_plan_groups %}
         {% if selling_plan_group %}
         {% include 'subscription-options' %}
         {% endif %}
       {% endfor %}
-
-
       <div class="product-template__buy-wrap">
         <div class="product-template__qty-select">
           <div class="product-template__qty-btn js-product-template-qty-minus">
@@ -27,12 +24,15 @@
           </div>
         </div>
         <div class="product-template__buy-btn">
-          <button class="btn js-product-card-add-to-cart" data-quantity="1" data-variant-id="{{product.selected_or_first_available_variant.id}}"><p>Add to Your Cart - {{product.price | money}}</p></button>
+          <button class="btn js-product-card-add-to-cart" 
+          data-quantity="1" 
+          data-variant-id="{{product.selected_or_first_available_variant.id}}"
+          data-selling-plan-id=""
+          data-price="{{product.price }}"
+          ><p>Add to Your Cart - {{product.price | money}}</p></button>
         </div>
       </div>
     </div>
-
-
     <div class="product-template__right">
       <div class="swiper-wrapper">
         {% for image in product.images %}
@@ -40,8 +40,7 @@
             <img src="{{ image.src | product_img_url: '500x' }}">
           </div>
         {% endfor %}
-        <div class=" swiper-slide">
-          
+        <div class="swiper-slide">          
         </div>
       </div>
     </div>
@@ -51,8 +50,3 @@
     </div>
   </div>
 </div>
-
-
-<script>
-  console.log('{{ product.title }}');
-</script>

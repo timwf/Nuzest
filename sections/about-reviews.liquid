@@ -1,6 +1,10 @@
+<div class="home-reviews__header container">
+  <h2 class="header-medium">{{ section.settings.header }}</h2>
+</div>
+
 <section class="home-reviews js-visibility reveal-slide">
   <div class="home-reviews__bg-right"></div>
-  <div class="home-reviews__inner swiper-wrapper ">
+  <div class="home-reviews__inner swiper-wrapper">
     {% for block in section.blocks %}
       <div class="home-reviews__card swiper-slide">
         <div class="home-reviews__card-left">
@@ -28,6 +32,11 @@
   "name": "Reviews",
   "class": "featured-prd",
   "settings": [
+    {
+    "type": "text",
+    "id": "header",
+    "label": "Heading"
+    }
   ],
   "blocks": [
     {

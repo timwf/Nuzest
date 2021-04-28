@@ -4,10 +4,18 @@
   &__inner{
     display: flex;
     position: relative;
+    flex-direction: column-reverse;
+
+    @include respond-to(md){
+
+    }
   }
 
   &__left{
-    width: 408px;
+
+    @include respond-to(md){
+      width: 408px;
+    }
 
     h4{
       margin-bottom: 30px;
@@ -15,10 +23,19 @@
   }
 
   &__right{
-    width: calc(100% - 500px);
-    position: absolute;
     overflow: hidden;
-    left: 530px;
+    margin-top: 46px;
+    margin-bottom: 46px;
+    margin-right: -20px;
+
+    @include respond-to(md){
+      width: calc(100% - 500px);
+      position: absolute;
+      left: 530px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      margin-right: 0px;
+    }
 
     @include respond-to(xl){
       width: calc(100% - 50px);
@@ -27,11 +44,18 @@
 
   &__image{
     // width: 498px !important;
+    
 
     img{
-      width: 498px;
-      height: 658px;
+      width: 275px;
+      height: 362px;
       object-fit: cover;
+
+      @include respond-to(md){
+        width: 498px;
+        height: 658px;
+        object-fit: cover;
+      }
     }
   }
 
@@ -89,8 +113,12 @@
       font-size: 21px;
       line-height: 28px;
       font-weight: 400;
-      margin: 0px 20px;
       user-select: none;
+      margin: 0 6px;
+
+      @include respond-to(md){
+        margin: 0px 20px;
+      }
     }
   }
 
@@ -121,10 +149,13 @@
   }
 
   &__buy-btn{
-    width: 257px;
+
+    @include respond-to(sm){
+      width: 257px;
+    }
 
     p{
-      padding: 10px 10px !important;
+      padding: 10px 14px!important;
       user-select: none;      
     }
   }

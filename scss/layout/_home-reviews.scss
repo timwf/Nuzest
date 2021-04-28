@@ -8,6 +8,14 @@
       margin-top: 90px;
     }
   }
+
+  &__header{
+    padding-bottom: 45px;
+
+    @include respond-to(md){
+      padding-bottom: 80px;
+    }
+  }
   
 
   &__bg-right{

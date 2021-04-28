@@ -665,8 +665,9 @@ $(document).ready(() => {
     $submitBtn.on('click', function(){
       let id = $(this).attr('data-variant-id')
       let qty
+      let sellingplan = $(this).attr('data-selling-plan-id')
       $(this).attr('data-quantity') ? qty = $(this).attr('data-quantity') : qty = 1
-      addToCart(id, qty)
+      addToCart(id, qty, sellingplan)
       $('.loader').fadeIn()
     })
 
@@ -699,13 +700,17 @@ $(document).ready(() => {
           if($('.product-template__right').length){               
             //product page slider - var selects
             const productTemplateSlider = new Swiper('.product-template__right', {
-              slidesPerView: 1.65,
-              spaceBetween: 70,
+              slidesPerView: 1.25,
+              spaceBetween: 19,
               navigation: {
                 prevEl: '.product-template__slider-arrows .slidePrev-btn',
                 nextEl: '.product-template__slider-arrows .slideNext-btn'
               },
               breakpoints: {
+                900: {
+                  slidesPerView: 1.65,
+                  spaceBetween: 70
+                },
                 1700: {
                   slidesPerView: 2.55,
                   spaceBetween: 70
@@ -731,7 +736,7 @@ $(document).ready(() => {
   }
 
 
-  function addToCart(id, qty){
+  function addToCart(id, qty, sellingplan){
 
     $.ajax({
       type: 'POST', 
@@ -741,7 +746,7 @@ $(document).ready(() => {
         'items': [{
           'id': id,
           'quantity': qty,
-          // "selling_plan": "401932495"          
+          "selling_plan": sellingplan        
           // "properties": {
           //   "shipping_interval_unit_type": "Weeks",
           //   "shipping_interval_frequency": "2",
@@ -812,6 +817,7 @@ $(document).ready(() => {
         $('.cart-drawer__items').empty()  
         $('.cart-drawer__checkout').show()
         $(cart.items).each(function(){
+          // console.log(this.selling_plan_allocation.selling_plan.name);
           $('.cart-drawer__items').append(
             `
             <div class="cart-drawer__item">
@@ -823,10 +829,23 @@ $(document).ready(() => {
               </div>
               <div class="cart-drawer__item-right">
                 <h3 class="body-bold">${this.product_title}</h3>
-                <h4 class="body-small">£${this.final_price / 100 }</h4>
-                <h5 class="body-small">${this.variant_options[0] }</h5>
-                <h5 class="body-small">${this.variant_options[1]}</h5>
-                <div class="cart-drawer__qty-selector-wrap">
+                <h4 class="body-small">£${this.final_price / 100 }</h4>` +
+                (this.variant_options[0] ? `<h5 class="body-small">${this.variant_options[0]}</h5>` : "") +
+                (this.variant_options[1] ? `<h5 class="body-small">${this.variant_options[1]}</h5>` : "") +
+                (this.variant_options[2] ? `<h5 class="body-small">${this.variant_options[2]}</h5>` : "") +
+                (this.selling_plan_allocation ? `
+                <div style="display: flex; " >
+                  <svg style="margin-right: 10px; margin-top: 3px" width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g opacity="0.5">
+                    <path d="M17.0004 2.17969V6.54332H12.6367" stroke="#07272D" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M1 13.816V9.45239H5.36364" stroke="#07272D" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2.82545 5.81577C3.1943 4.77343 3.82119 3.84152 4.64761 3.10699C5.47404 2.37245 6.47307 1.85924 7.55148 1.61523C8.6299 1.37123 9.75255 1.40438 10.8147 1.71161C11.8768 2.01883 12.8438 2.59011 13.6255 3.37214L17 6.54305M1 9.45214L4.37455 12.623C5.15618 13.4051 6.12318 13.9764 7.18532 14.2836C8.24745 14.5908 9.3701 14.624 10.4485 14.3799C11.5269 14.1359 12.526 13.6227 13.3524 12.8882C14.1788 12.1537 14.8057 11.2217 15.1745 10.1794" stroke="#07272D" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                  </svg>                 
+                  <h5 class="body-small">${this.selling_plan_allocation.selling_plan.name}</h5>
+                </div>
+                ` : "") +
+                `<div class="cart-drawer__qty-selector-wrap">
                   <div class="cart-drawer__qty-selector-copy">
                     <p class="body-small">Qty.</p>
                   </div>
@@ -964,9 +983,79 @@ $(document).ready(() => {
     })
   }
 
+  function initAboutPeople(){
 
+    const swiper = new Swiper('.about-people__inner', {
+      slidesPerView: 1.25,
+      spaceBetween: 10,
+      navigation: {
+        prevEl: '.about-people__nav .slidePrev-btn',
+        nextEl: '.about-people__nav .slideNext-btn'
+      },
+      breakpoints: {
+        700: {
+          slidesPerView: 1.95,
+          spaceBetween: 50
+        },
+        1100: {
+          slidesPerView: 3,
+          spaceBetween: 137
+        }
+      }
+    });
+  } 
 
-  
+  function initSubscriptionOptions(){
+    const $subOptions = $('.subscription-options__radio input')
+    const $durationOptions = $('.subscription-options__option')
+    const $sellingPlanOption = $('.subscription-options__option select')
+    const $buyBtn = $('.js-product-card-add-to-cart')
+    let $originalPrice = $('.js-product-card-add-to-cart').attr('data-price')
+    const $tooltipTrigger = $('.js-tooltip')
+    const $tooltip = $('.subscription-options__tooltip')
+
+    $tooltipTrigger.on('mouseenter', function(){
+      $tooltip.addClass('active')
+
+      $(document).mousemove(function(event) {
+        let x = event.pageX;        
+        let y = event.pageY;   
+        $tooltip.css({"top": `${y - 140}px`, "left": `${x - 205}px`});
+      });  
+    })
+
+    $tooltipTrigger.on('mouseleave', function(){
+      $tooltip.removeClass('active')
+    })
+
+    $subOptions.on('change', function(){   
+
+      $subOptions.each(function(){
+        $(this).prop('checked', false);
+        $(this).parent().removeClass('active')
+      })
+
+      $(this).prop('checked', true);
+      $(this).parent().addClass('active')
+
+      if ($(this).prop('value') == 'subscribe') {
+        $durationOptions.css("display", "flex")
+        $buyBtn.attr('data-selling-plan-id', $sellingPlanOption.find(":selected").attr('data-selling-plan-id'))
+        let discount = $sellingPlanOption.find(":selected").attr('data-discount')
+        let discountedPrice = $originalPrice / 100 -  ($originalPrice /100) * (discount /100)
+        $buyBtn.find('p').text(`Add to Your Cart - £${discountedPrice}`)
+      }
+      else{
+        $durationOptions.hide()
+        $buyBtn.attr('data-selling-plan-id', "")
+        $buyBtn.find('p').text(`Add to Your Cart - £${$originalPrice/100}`)
+      }
+    })
+
+    $sellingPlanOption.on('change', function(){
+      $buyBtn.attr('data-selling-plan-id', $sellingPlanOption.find(":selected").attr('data-selling-plan-id'))
+    })
+  }
 
 
 
@@ -990,6 +1079,8 @@ $(document).ready(() => {
   initProductBuyBtn()
   initAboutSecience()
   initAboutEnvironment()
+  initAboutPeople()
+  initSubscriptionOptions()
 
 
   if (isObserver) {

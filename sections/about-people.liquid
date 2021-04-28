@@ -1,0 +1,77 @@
+
+
+<section class="about-people js-visibility reveal-slide">
+  <div class="about-people__bg-left"></div>
+  <div class="about-people__bg-right"></div>
+  <div class="about-people__inner container">
+    <div class="about-people__head">
+      <h2 class="header-medium">{{ section.settings.header }}</h2>
+      <div class="about-people__nav">
+        {% include 'icon-left-arrow' %} 
+        {% include 'icon-right-arrow' %} 
+      </div>
+    </div>
+    <div class="about-people__swiper swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="about-people__item swiper-slide">
+          <img src="{{ block.settings.img | img_url: 'master' }}" alt="">
+          <h2 class="header-small">{{ block.settings.name }}</h2>
+          <p class="sub-header">{{ block.settings.position }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "About People",
+  "class": "featured-prd",
+  "settings": [
+    {
+    "type": "text",
+    "id": "header",
+    "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "people",
+      "name": {
+        "en": "Person"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": {
+            "en": "Name"
+          }
+        },
+        {
+          "type": "text",
+          "id": "position",
+          "label": {
+            "en": "Position"
+          }
+        },
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": {
+            "en": "Image"
+          }
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Reviews",
+      "name": "People"
+    }
+  ]
+}
+
+{% endschema %}

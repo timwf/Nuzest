@@ -2,6 +2,8 @@
 
 
   &__inner{
+    
+    padding-bottom: 45px;
 
     @include respond-to(md){
       display: flex;

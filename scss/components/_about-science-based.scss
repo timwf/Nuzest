@@ -4,7 +4,6 @@
     padding-top: 45px;
     padding-bottom: 0px;
 
-
     @include respond-to(md){
       display: flex;
       padding-top: 100px;
@@ -43,7 +42,6 @@
       max-width: 476px;
     }
 
-
     @include respond-to(md){
       width: 50%;
     }
@@ -60,12 +58,17 @@
       }
     }
 
+    &:nth-of-type(2){
+      .about-science-based__item-svg:after {
+        transition-delay: 0.4s;
+      }
+    }
+
     &.active{
       .about-science-based__item-svg:after {
         height: calc(100% - 3px);
       }
     }
-
   }
 
 
@@ -96,7 +99,6 @@
   &__item-svg:last-child{
     display: none;
   }
-
 
 
   &__item-copy{

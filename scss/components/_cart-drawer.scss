@@ -10,7 +10,7 @@
   transition: 0.5s;
 
   @include respond-to(sm){
-    width: 375px;
+    width: 395px;
   }
 
   &.active{

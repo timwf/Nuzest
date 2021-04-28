@@ -1,29 +1,37 @@
 {% assign discount = selling_plan_group.selling_plans[0].price_adjustments[0].value %}
 
-{{product.selling_plan_groups[0].selling_plans[0].id}}
-
 <div class="subscription-options">
-  <div class="subscription-options__radio">
-    <input type="radio" id="onetime" name="subscription-option"  value="onetime">
+  <div class="subscription-options__radio active">
+    <input type="radio" id="onetime" name="subscription-option"  value="onetime" checked>
     <label class="body-small" for="onetime">One-time purchase</label><br>
   </div>
   <div class="subscription-options__radio">
     <input type="radio" id="subscribe" name="subscription-option" value="subscribe">
-    <label class="body-small" for="subscribe">Subscribe and save {{ discount }}%</label><br>
+    <label class="body-small js-tooltip" for="subscribe">Subscribe and save {{ discount }}%</label><br>
   </div>
 
-
-  <div class="subscription-options__option">
+  <div class="subscription-options__option active">
     <label class="body-small" for="">Delivery Every</label>
     {% for option in selling_plan_group.options %}
       <select class="body-small">
         {% for value in option.values %}
-        <option  class="body-small" {% if value == option.selected_value %}selected{% endif %}>
+        <option data-discount="{{ discount }}" data-selling-plan-id="{{selling_plan_group.selling_plans[forloop.index0].id}}"  class="body-small" {% if value == option.selected_value %}selected{% endif %}>
           {{ value }}
         </option>
         {% endfor %}
       </select>
     {% endfor %}
   </div>
+ </div>
 
+ <div class="subscription-options__tooltip">
+  <div class="subscription-options__tooltip-inner">
+    <h4 class="header-small">How Subscriptions Work</h4>
+    <ul>
+      <li class="body-small">Select your product(s).</li>
+      <li class="body-small">Select your delivery frequency.</li>
+      <li class="body-small">Receive 10% off your first subscription delivery and 10% off all repeat deliveries.</li>
+      <li class="body-small"> Never run out of your favorite plant-based products again!</li>
+    </ul>
+  </div>
  </div>

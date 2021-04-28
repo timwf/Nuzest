@@ -5,6 +5,10 @@
     display: flex;
     background-color: white;
     padding: 0px 20px;
+
+    &.active{
+      background-color: $cream;
+    }
   }
 
   label, input{
@@ -21,7 +25,7 @@
   }
   
   &__option{
-    display: flex;
+    display: none;
     background-color: $cream;
     justify-content: space-between;
     align-items: center;
@@ -43,6 +47,29 @@
       background-color: white;
       padding: 0px 20px;
       margin-right: 20px;
+    }
+  }
+
+  &__tooltip{
+    position: absolute;
+    display: none;
+    z-index: 999;
+
+    &.active{
+      display: block;
+    }
+    
+  }
+
+  &__tooltip-inner{   
+    background-color: #07272D;
+    padding: 29px 36px;
+    color: white;
+
+    li{
+      max-width: 350px;
+      list-style: outside;
+      margin-bottom: 10px;
     }
   }
 

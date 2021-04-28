@@ -13,11 +13,10 @@
     <p class="body-bold">{{ product.title }}</p>
     <p class="body-small">From {{ product.price | money }}</p>
   </div>
-  <button class="btn js-product-card-add-to-cart" data-variant-id="{{product.selected_or_first_available_variant.id}}">
+  <button class="btn js-product-card-add-to-cart"  data-variant-id="{{product.selected_or_first_available_variant.id}}">
     <p>Add to Your Cart - {{ product.price | money }}</p>
   </button>
   {% include 'product-options' %}
-
 </div>
 
 

@@ -1,0 +1,89 @@
+.about-people{
+  position: relative;
+
+  &__bg-left{
+    background-color: white;
+    position: absolute;
+    height: calc(100% - 323px);
+    width: 15vw;
+    border-top-right-radius: 50px;
+    top: 0;
+
+    @include respond-to(lg){
+      border-top-right-radius: 123px;
+      height: calc(100% - 290px);
+    }
+  }
+
+  &__bg-right{
+    background-color: white;
+    top: 0;
+    position: absolute;
+    height: calc(100% - 323px);
+    width: 85vw;
+    right: 0;
+    border-top-left-radius: 50px;
+
+    @include respond-to(lg){
+      border-top-left-radius: 123px;
+      height: calc(100% - 290px);
+    }
+  }
+
+  &__inner{
+    overflow: hidden;
+    position: relative;
+    padding-top: 72px;
+    padding-bottom: 65px;
+
+    @include respond-to(md){
+      padding-top: 140px;
+      padding-bottom: 140px;
+    }
+  }
+
+  &__head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  &__nav{
+
+    display: none;
+
+    @include respond-to(sm){
+      display: flex;
+    }
+
+    @include hover{
+      cursor: pointer;
+    }
+
+    svg{
+      margin-left: 73px;
+
+      g{
+        opacity: 1;
+      }
+    }
+  }
+
+  &__item{
+
+    img{
+      width: 100%;
+    }
+
+    h2{
+      margin-top: 18px;
+      margin-bottom: 18px;
+    }
+
+    p{
+      text-transform: uppercase;
+    }
+  }
+
+}
