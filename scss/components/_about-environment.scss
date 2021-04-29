@@ -1,8 +1,6 @@
 .about-environment{
 
-
-  &__inner{
-    
+  &__inner{    
     padding-bottom: 45px;
 
     @include respond-to(md){
@@ -29,55 +27,6 @@
 
     @include respond-to(xl){
       padding-top: 100px;
-    }
-  }
-
-  &__accordian-item{
-    max-height: 60px;
-    overflow: hidden;
-    border-bottom: solid black;
-    border-width: 1px; 
-    transition: 0.4s;     
-    
-    p{
-      font-family: 'Helvetica';
-      font-size: 16px;
-      line-height: 28px;
-      font-weight: 400;
-      margin-bottom: 20px;
-    }
-    
-    &.active{
-      max-height: 1200px;
-      transition: 0.4s;  
-
-      svg{
-        transform: rotate(45deg);
-        transition: 0.4s;  
-      }
-    }
-  }
-
-  &__accordian-item-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px 0px;
-
-    @include respond-to(md){
-      padding: 15px 0px;
-    }
-
-    @include hover{
-      cursor: pointer;
-
-      svg line{
-        stroke: $blue-kgs;
-      }
-    }
-
-    h4{
-      text-transform: uppercase;
     }
   }
 

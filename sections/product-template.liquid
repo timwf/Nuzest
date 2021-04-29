@@ -1,5 +1,5 @@
 
-<div class="product-template" style="margin-bottom: 200px">
+<div class="product-template">
   <div class="product-template__inner container">
     <div class="product-template__left">
       <h1 class="header-medium">{{ product.title }}</h1>
@@ -31,7 +31,8 @@
           data-price="{{product.price }}"
           ><p>Add to Your Cart - {{product.price | money}}</p></button>
         </div>
-      </div>
+      </div>      
+      {% include 'product-deatalis-accordian' %}      
     </div>
     <div class="product-template__right">
       <div class="swiper-wrapper">

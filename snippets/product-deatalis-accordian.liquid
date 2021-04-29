@@ -1,0 +1,39 @@
+<div class="" style="margin-top: 20px;">
+  {% if product.metafields.accentuate.accordion_description %}
+    <div class="accordian__accordian-item">
+      <div class="accordian__accordian-item-header">
+        <h4 class="sub-header">Description</h4> 
+        {% include 'icon-qty-plus' %}
+      </div>
+      <p>{{ product.metafields.accentuate.accordion_description }}</p>
+    </div>
+  {% endif %}
+
+  {% if product.metafields.accentuate.accordion_benefits %}
+    <div class="accordian__accordian-item">
+      <div class="accordian__accordian-item-header">
+        <h4 class="sub-header">Product Benefits</h4> 
+        {% include 'icon-qty-plus' %}
+      </div>
+      <p>{{ product.metafields.accentuate.accordion_benefits }}</p>
+    </div>
+  {% endif %}
+
+  {% if product.metafields.accentuate.accordian_nutrition_facts %}
+    <div class="accordian__accordian-item">
+      <div class="accordian__accordian-item-header">
+        <h4 class="sub-header">Nutrition Facts</h4> 
+        {% include 'icon-qty-plus' %}
+      </div>
+      <p>{{ product.metafields.accentuate.accordian_nutrition_facts }}</p>
+    </div>
+  {% endif %}
+</div>
+
+
+
+
+
+
+
+

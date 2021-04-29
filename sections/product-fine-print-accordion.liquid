@@ -1,9 +1,7 @@
 <section class="about-environment">
   <div class="about-environment__inner container">
     <div class="about-environment__left js-visibility reveal-slide">
-
       <h2 class="header-medium">{{ section.settings.title }}</h2>
-
       {% for block in section.blocks %}
         <div class="accordian__accordian-item">
           <div class="accordian__accordian-item-header">
@@ -12,9 +10,7 @@
           </div>
           {{ block.settings.copy }}
         </div>
-
       {% endfor %}
-
     </div>
     <div class="about-environment__right js-visibility reveal-slide-right">
       <img src="{{ section.settings.image | img_url: 'master' }}" alt="">     
@@ -24,7 +20,7 @@
 
 {% schema %}
   {
-    "name": "Enviroment",
+    "name": "Fine Print",
     "settings": [
       {
         "type": "image_picker",

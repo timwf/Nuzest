@@ -5,9 +5,10 @@
     display: flex;
     position: relative;
     flex-direction: column-reverse;
+    padding-bottom: 45px;
 
     @include respond-to(md){
-
+      padding-bottom: 67px;
     }
   }
 
@@ -32,6 +33,7 @@
       width: calc(100% - 500px);
       position: absolute;
       left: 530px;
+      top: 0;
       margin-top: 0px;
       margin-bottom: 0px;
       margin-right: 0px;

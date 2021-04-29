@@ -1,0 +1,63 @@
+
+{% assign benefits = product.metafields.accentuate.benefits | split: "|" %}
+
+<section class="usps">  
+  <div class="usps__inner container ">
+    {% for benefit in benefits %}
+      <div class="usps__item">
+        {% for block in section.blocks %}
+          {% if block.settings.icon-txt ==  benefit%}
+           {{ block.settings.svg}}
+          {% endif %}
+        {% endfor %}
+        <p class="body-small">{{ benefit }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "USP Icons",
+  "class": "usp",
+  "settings": [  
+  {
+    "type": "header",
+    "content": "Instructions"
+  },
+  {
+    "type": "paragraph",
+    "content": "To attach a SVG icon to a benefit Add an icon above - copy and pase the benefit name and caopy, paste the SVG code - the SVG will automativcally appear"
+  }
+  ],
+  "blocks": [
+    {
+      "type": "icons",
+      "name": {
+        "en": "Icons"
+      },
+      "settings": [
+        {
+          "type": "html",
+          "id": "svg",
+          "label": {
+            "en": "SVG Code"
+          }
+        },
+        {
+          "type": "text",
+          "id": "icon-txt",
+          "label": "Icon Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "USP Icons"
+    }
+  ]
+}
+
+{% endschema %}

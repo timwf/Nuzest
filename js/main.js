@@ -969,8 +969,8 @@ $(document).ready(() => {
     })
   }
 
-  function initAboutEnvironment(){
-    const $accordianBtn = $('.about-environment__accordian-item')
+  function initAccordian(){
+    const $accordianBtn = $('.accordian__accordian-item')
 
     $accordianBtn.on('click', function(){
       if ($(this).hasClass('active')) {
@@ -1078,7 +1078,7 @@ $(document).ready(() => {
   initCartDrawer()
   initProductBuyBtn()
   initAboutSecience()
-  initAboutEnvironment()
+  initAccordian()
   initAboutPeople()
   initSubscriptionOptions()
 
