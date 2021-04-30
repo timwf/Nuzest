@@ -1,0 +1,82 @@
+<section class="product-comparison js-visibility reveal-slide">
+  <div class="product-comparison__bg-left"></div>
+  <div class="product-comparison__bg-right"></div>
+  <div class="product-comparison__inner container">
+    <div class="product-comparison__heading">
+      <h2 class="header-medium">Making the unusual, usual</h2>
+    </div>
+    <div class="product-comparison__left js-visibility reveal-slide-left">
+      <img src="{{ section.settings.img | img_url: 'master' }}" alt="">    
+    </div>
+    <div class="product-comparison__right js-visibility reveal-slide">
+      <div class="product-comparison__grid">
+      <div class="product-comparison__grid-line">
+        <div class=""></div>
+          <h4 class="sub-header">nuzest</h4>
+          <h4 class="sub-header">others</h4>
+        </div>
+      </div>
+        <div class="product-comparison__grid-line">
+          <p class="body-small">Lorem ipsum dolor sit amet</p>
+          <div class="product-comparison__grid-dot">
+            <div></div>
+          </div>
+          <div class="product-comparison__grid-dot-empty">
+            <div></div>
+          </div>
+        </div>
+        <div class="product-comparison__grid-line">
+          <p class="body-small">Lorem ipsum dolor sit amet</p>
+          <div class="product-comparison__grid-dot">
+            <div></div>
+          </div>
+          <div class="product-comparison__grid-dot-empty">
+            <div></div>
+          </div>
+        </div>
+        <div class="product-comparison__grid-line">
+          <p class="body-small">Lorem ipsum dolor sit amet</p>
+          <div class="product-comparison__grid-dot">
+            <div></div>
+          </div>
+          <div class="product-comparison__grid-dot-empty">
+            <div></div>
+          </div>
+        </div>
+        <div class="product-comparison__grid-line">
+          <p class="body-small">Lorem ipsum dolor sit amet</p>
+          <div class="product-comparison__grid-dot">
+            <div></div>
+          </div>
+          <div class="product-comparison__grid-dot-empty">
+            <div></div>
+          </div>
+        </div>
+        <div class="product-comparison__grid-line">
+          <p class="body-small">Lorem ipsum dolor sit amet</p>
+          <div class="product-comparison__grid-dot">
+            <div></div>
+          </div>
+          <div class="product-comparison__grid-dot-empty">
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Product Comparison",
+  "class": "hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Image"
+    }
+  ]
+}
+{% endschema %}

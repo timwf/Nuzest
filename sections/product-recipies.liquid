@@ -1,0 +1,36 @@
+<div class="container">Product reviews will go here once we move to the live site!</div>
+
+{% assign recepes = product.metafields.accentuate.recipes-  | split: "|" %}
+
+<section class="featured-blog js-visibility reveal-slide">  
+  <div class="featured-blog__heading">
+    <h2 class="header-medium">Shake, Blend, Bake</h1>
+    <div class="featured-blog__nav">
+      {% include 'icon-left-arrow' %} 
+      {% include 'icon-right-arrow' %} 
+    </div>
+  </div>
+  <div class="featured-blog__slider-wrap">
+    <div class="featured-blog__inner">
+      <div class="swiper-wrapper">
+      {% for recepe in recepes %}
+      {% assign article = articles[recepe] %}
+        <div class="featured-blog__item swiper-slide">
+          <div class="featured-blog__item-img">
+            <img  src="{{article.image.src | img_url: '400x400'}}" alt="">
+          </div>
+          <div class="featured-blog__item-details">
+            <h3 class="caption-regular">3 min read</h3>
+            <h2 class="header-small" style="margin-bottom: 10px;">{{ article.title }}</h2>  
+            <div class="article-grid__item-tags">
+              {% for tag in article.tags %}
+                <span class="caption-italic">{{ tag }}</span> 
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

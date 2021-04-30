@@ -1,14 +1,30 @@
+
+{% assign flavours = shop.metafields.globals.add_a_flavour %}
+
+
+
 <div class="product-card__product-options-wrap">
   {% for product_option in product.options_with_values %}
+  {% assign hasFlavour = false%}
   {% unless product_option.name == "Title" %}
     <div class="product-card__product-options">
       <select class="body js-product-varient-select">
-        {% for value in product_option.values %}
-          <option {% if product_option.selected_value == value %}selected{% endif %} style="background-image:url({{ 'vannila.png' | asset_url }});">
+        {% for value in product_option.values %}        
+          <option {% if product_option.selected_value == value %}selected{% endif %}   
+            {% for flavour in flavours %}
+              {% if flavour contains value%}
+                {% assign hasFlavour = true%}
+                data-color="#{{ flavour | split: "#" | last }}"
+              {% endif %}
+            {% endfor %}
+          >
             {{ value }}
-          </option>
-        {% endfor %}
+          </option>          
+        {% endfor %}        
       </select>
+      {% if hasFlavour %}
+        <div class="product-card__product-options-colour"></div>
+      {% endif %}
     </div>
   {% endunless %}
 {% endfor %}

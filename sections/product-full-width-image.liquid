@@ -1,0 +1,28 @@
+<section class="full-width-image js-visibility reveal-slide">
+  <div class="full-width-image__inner container">
+    <h2 class="header-medium">{{ section.settings.title }}</h2>
+    <img src="{{ section.settings.img | img_url: 'master' }}" alt="">    
+  </div>
+
+</section>
+
+
+{% schema %}
+{
+  "name": "Full Width Image",
+  "class": "hero",
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Title"
+    },
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Image"
+    }
+  ]
+}
+
+{% endschema %}

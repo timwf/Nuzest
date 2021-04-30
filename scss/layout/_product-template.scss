@@ -29,6 +29,10 @@
     margin-bottom: 46px;
     margin-right: -20px;
 
+    @include respond-to(sm){
+      margin-right: -40px;
+    }
+
     @include respond-to(md){
       width: calc(100% - 500px);
       position: absolute;
@@ -66,7 +70,7 @@
 
     display: none;
 
-    @include respond-to(sm){
+    @include respond-to(md){
       display: flex;
       position: absolute;
       top: 694px;

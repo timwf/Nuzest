@@ -707,7 +707,15 @@ $(document).ready(() => {
                 nextEl: '.product-template__slider-arrows .slideNext-btn'
               },
               breakpoints: {
+                600: {
+                  slidesPerView: 2.25,
+                  spaceBetween: 20
+                },
                 900: {
+                  slidesPerView: 1.1,
+                  spaceBetween: 20
+                },
+                1200: {
                   slidesPerView: 1.65,
                   spaceBetween: 70
                 },

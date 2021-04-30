@@ -7,7 +7,7 @@
     padding: 42px 40px;
     flex-wrap: wrap;
 
-    @include respond-to(sm){
+    @include respond-to(lg){
       flex-wrap: nowrap;
     }
 
