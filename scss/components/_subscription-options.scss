@@ -45,9 +45,41 @@
       border-radius: 100px;
       border: none;
       background-color: white;
-      padding: 0px 20px;
+      padding: 0px 40px 0 20px;
       margin-right: 20px;
     }
+  }
+
+  &__select-wrap{
+    position: relative;
+
+    &:after {
+      display: block;
+      content: " ";
+      background-image: url(../assets/down-arrow.svg);
+      background-size: 18px 18px;
+      background-color: #ffffff;
+      background-repeat: no-repeat;
+      height: 28px;
+      position: absolute; 
+      right: 0px;
+      width: 37px;
+      position: absolute;
+      top: 13px;
+
+      top: 15px;
+      width: 33px;
+      right: 24px;
+      height: 18px;
+
+      @include respond-to(sm){
+        top: 15px;
+        width: 33px;
+        right: 24px;
+        height: 18px;
+      }
+    }
+
   }
 
   &__tooltip{

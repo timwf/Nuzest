@@ -118,6 +118,57 @@
         }
       }
     }
+
+    form{
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      svg{
+        z-index: 999;
+        cursor: pointer;
+      }
+
+      button{
+        z-index: 9;
+      }
+
+    }
+  }
+
+  &__right-search-input{
+    position: absolute;
+    right: -14px;
+    height: 40px;
+    border-radius: 20px;
+    border: solid transparent;
+    border-width: 1px;
+    background-color: transparent;
+    padding: 0px;
+    width: 0px;
+    transition: 0.4s;
+    opacity: 0;
+    font-family: 'Helvetica';
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    @include hover{
+      width: 300px;
+      padding: 0px 20px;
+      border: solid black;
+      border-width: 1px;
+      opacity: 1;
+    }
+
+    &.active{
+      width: 300px;
+      padding: 0px 20px;
+      border: solid black;
+      border-width: 1px;
+      opacity: 1;
+    }
+
   }
 
   &__cart-total{

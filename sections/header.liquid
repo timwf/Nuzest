@@ -12,7 +12,29 @@
     <a href="https://nuzest-staging.myshopify.com/">{% include 'nav-logo' %}</a>  
   </div>
   <div class="header__right ">
-    <a href="">{% include 'icon-search' %}</a>
+    <form class="" action="{{ routes.search_url }}" method="get" role="search">
+      <input
+        type="text"
+        name="q"
+        placeholder="{{ 'general.search.placeholder' | t }}"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-owns="predictive-search-results"
+        aria-expanded="false"
+        aria-label="{{ 'general.search.placeholder' | t }}"
+        aria-haspopup="listbox"
+        class="header__right-search-input"
+        data-predictive-search-drawer-input
+        data-base-url="{{ routes.search_url }}"
+      />
+      <input type="hidden" name="options[prefix]" value="last" aria-hidden="true" />
+
+      <button class="header__right-search-icon"
+        type="submit"
+        data-search-form-submit>
+        {% include 'icon-search' %}
+      </button>
+    </form> 
     <a href="">{% include 'icon-lang' %}</a>
     <a href="">{% include 'icon-my-account' %}</a>
     <a href="javascript:void(0)" class="js-open-cart">{% include 'icon-bag' %}<p class="header__cart-total"></p></a>  

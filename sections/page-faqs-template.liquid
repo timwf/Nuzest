@@ -1,0 +1,76 @@
+{% assign obj = section.blocks | map: 'settings'  %}
+{% assign topicArray = obj | map: 'topic' | uniq | join: "|" | split: "|"%}
+
+<section class="page-template js-visibility reveal-slide">
+  <div class="page-template__header container">
+    <h1 class="header-medium">{{ page.title }}</h1>
+  </div>
+  <div class="page-template__inner container"> 
+    <div class="page-template__left">
+      <div class="collection-hero__nav collection-hero__nav--faqs"  >
+        <div class="collection-hero__nav-inner collection-hero__nav-inner--faq">
+          <h2 class="body-bold-large active" data-topic="General">General</h2>
+          {% for topic in topicArray%}
+            <h2 class="body-bold-large" data-topic="{{topic}}">{{topic}}</h2>
+          {% endfor %}
+        </div>
+      </div>          
+    </div>
+    <div class="page-template__right">
+      {% for block in section.blocks %}
+        <div class="accordian__accordian-item" data-topic="{{ block.settings.topic }}">
+          <div class="accordian__accordian-item-header">
+            <h4 class="sub-header">{{ block.settings.question}}</h4> 
+            {% include 'icon-qty-plus' %}
+          </div>
+          <p>{{ block.settings.answer }}</p>
+        </div>
+    {% endfor %}
+    <p class="body-small" style="margin-top: 40px; margin-bottom: 20px;">Can’t find what you are looking for? <a style="text-decoration: underline;" href="./contact-us">Contacts us</a>.</p>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "FAQs",
+  "class": "usp",
+  "settings": [
+  {
+    "type": "header",
+    "content": "Instructions"
+  },
+  {
+    "type": "paragraph",
+    "content": "Add a faq - the topic will appear on the left, and the relating Q & As on the right - TIP! - make sure the topic added is spelt the same otherwise you'll get two topics with slightly different spellings! Also all Qs will apear under general - you do NOT need to add 'General' as a topic (If you do it will apear as another topic called General!)"
+  }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": {
+        "en": "FAQ"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "topic",
+          "label": "Topic"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

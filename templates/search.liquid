@@ -1,111 +1,102 @@
-{% paginate search.results by 10 %}
 
-<div class="page-width">
-  {% if search.performed == false %}
-    <div class="text-center">
-      <h1 class="h2">{{ 'general.search.title' | t }}</h1>
-  {% else %}
-    <div class="text-center">
-      <h1 class="h2">
-        <span class="visually-hidden">{{ 'general.search.heading' | t: count: search.results_count }}:</span>
-        {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
-      </h1>
-  {% endif %}
-      <div class="grid">
-        <div class="grid__item medium-up--six-tenths medium-up--push-two-tenths">
-          {% if search.performed and search.results_count == 0 %}
-            <div class="rte search--no-results-found">
-              <p>{{ 'general.search.no_results' | t }}</p>
-            </div>
-          {% endif %}
-          <form action="{{ routes.search_url }}" method="get" role="search" class="search-form search-page-form">
-            <div class="input-group input-group--nowrap">
-              <div class="input-group__field input-group__field--connected search-form__input-wrapper">
-                <input
-                  type="search"
-                  name="q"
-                  value="{{ search.terms | escape }}"
-                  placeholder="{{ 'general.search.placeholder' | t }}"
-                  role="combobox"
-                  aria-autocomplete="list"
-                  aria-owns="predictive-search-results"
-                  aria-expanded="false"
-                  aria-label="{{ 'general.search.placeholder' | t }}"
-                  aria-haspopup="listbox"
-                  class="search-form__input"
-                  data-search-page-predictive-search-input
-                  data-base-url="{{ routes.search_url }}"
-                />
-
-                <input type="hidden" name="options[prefix]" value="last" aria-hidden="true" />
-
-                <button type="reset" class="search-form__clear-action" aria-label="{{ 'general.search.clear_search_term' | t }}" data-search-page-predictive-search-clear>
-                  {% include 'icon-close' %}
-                </button>
-
-                <div class="predictive-search-wrapper" data-predictive-search-mount="default"></div>
-              </div>
-
-              <button type="submit" class="search-form__connected-submit" aria-label="{{ 'general.search.submit' | t }}" data-search-page-predictive-search-submit>
-                {% include 'icon-search' %}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-  </div>
-</div>
 
 
 {% if search.performed %}
-  {% if search.results_count > 0 %}
-    <hr aria-hidden="true" />
+
+{% assign productsAvalible = false %}
+{% assign blogsAvalible = false %}
+
+{% for item in search.results %}
+  {% if item.object_type == 'product' %}
+    {% assign productsAvalible = true %}
   {% endif %}
+  {% if item.object_type == 'article' %}
+    {% assign blogsAvalible = true %}
+  {% endif %}
+{% endfor %}
+ 
 
-  <h2 class="visually-hidden">{{ 'general.search.heading' | t: count: search.results_count }}</h2>
+ 
+  <section class="page-template js-visibility reveal-slide">
+    <div class="page-template__header container">
+      <h1 class="header-small" style="line-height: 50px; margin-bottom: 50px;">Search results for: {{ search.terms }}</h1>
+    </div>
+  </section>
 
-  <ul class="page-width list-view-items">
-    {% for item in search.results %}
-      <li class="list-view-item">
-        {% if item.object_type == 'product' %}
-          {% include 'product-card-list', product: item %}
-        {% else %}
-          <div class="product-card product-card--list">
-            <a href="{{ item.url }}" class="full-width-link">
-              <span class="visually-hidden">{{ item.title }}</span>
+{% if productsAvalible %}
+  <section style="padding-bottom: 0px; padding-top: 40px;" class="home-featured-product js-visibility reveal-slide">  
+    <div class="home-featured-product__heading">
+      <h2 class="header-medium">Products</h1>
+      <div class="home-featured-product__nav">
+        {% include 'icon-left-arrow' %} 
+        {% include 'icon-right-arrow' %} 
+      </div>
+    </div>
+    <div class="home-featured-product__slider-wrap">
+      <div class="home-featured-product__inner ">
+        <div class="swiper-wrapper">    
+          
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}
+              {% include 'product-card', product: item %}   
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}    
+
+
+{% if blogsAvalible %}
+<section style="padding-bottom: 0px; padding-top: 40px;" class="featured-blog js-visibility reveal-slide">  
+  <div class="featured-blog__heading">
+    <h2 class="header-medium">Blogs</h1>
+    <div class="featured-blog__nav">
+      {% include 'icon-left-arrow' %} 
+      {% include 'icon-right-arrow' %} 
+    </div>
+  </div>
+  <div class="featured-blog__slider-wrap">
+    <div class="featured-blog__inner">
+      <div class="swiper-wrapper">
+        {% for item in search.results %}
+        {% if item.object_type == 'article' %}
+        {% assign article = item %}
+        <div class="featured-blog__item swiper-slide">
+          <div class="featured-blog__item-img">
+            <a href="{{article.url}}">
+            <img  src="{{article.image.src | img_url: '400x400'}}" alt="">
             </a>
-            <div class="list-view-item__link">
-              <div class="list-view-item__image-column">
-                <div class="list-view-item__image-wrapper product-card__image-wrapper">
-                  {% unless item.image == null %}
-                    <img class="list-view-item__image" src="{{ item.image.src | img_url: '600x600' }}" alt="{{ item.image.alt | escape }}">
-                  {% endunless %}
-                </div>
-              </div>
-
-              <div class="list-view-item__title-column">
-                <div class="list-view-item__title" aria-hidden="true">
-                  <span class="product-card__title">{{ item.title }}</span>
-                </div>
-                <div>
-                  {% if item.published_at %}{{ item.published_at | date: format: "date" }} &#8212; {% endif %}
-                  {{ item.content | strip_html | truncate: 200 }}
-                </div>
-              </div>
-            </div>
           </div>
+          <div class="featured-blog__item-details">
+            <h3 class="caption-regular">3 min read</h3>
+            <h2 class="header-small">{{ article.title }}</h2>
+            <p class="body-small">{{ article.excerpt }}</p>
+          </div>
+        </div>
         {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
-
-  {%- if paginate.pages > 1 -%}
-    {% include 'pagination', paginate: paginate %}
-  {%- endif -%}
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
 {% endif %}
 
-{% if search.results_count < 2  %}
-  <div class="search--less-than-2-results"></div>
 {% endif %}
 
-{% endpaginate %}
+{% if search.results_count < 1  %}
+
+<section class="page-template js-visibility reveal-slide" style="height: 100vh;">
+  <div class="page-template__header container">
+    <h1 class="header-small" style="line-height: 50px;">No search results found - please try again</h1>
+  </div>
+</section>
+{% endif %}
+
+
+
+
+
+
+

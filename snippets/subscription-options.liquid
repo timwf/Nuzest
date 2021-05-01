@@ -13,6 +13,8 @@
   <div class="subscription-options__option active">
     <label class="body-small" for="">Delivery Every</label>
     {% for option in selling_plan_group.options %}
+    
+    <div class="subscription-options__select-wrap">
       <select class="body-small">
         {% for value in option.values %}
         <option data-discount="{{ discount }}" data-selling-plan-id="{{selling_plan_group.selling_plans[forloop.index0].id}}"  class="body-small" {% if value == option.selected_value %}selected{% endif %}>
@@ -20,6 +22,8 @@
         </option>
         {% endfor %}
       </select>
+    </div>
+
     {% endfor %}
   </div>
  </div>

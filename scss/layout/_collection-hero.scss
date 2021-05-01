@@ -53,6 +53,39 @@
         text-decoration: underline;
       }
     }
+
+    &--faqs{
+      background-color: #fcf8f4;
+      margin-top: -33px;
+      margin-bottom: -11px; 
+
+      @include respond-to(sm){
+        margin-top: 0px;
+        margin-bottom: 0px; 
+      }
+
+      @media (min-width: 1580px){
+        margin-left: 0px;
+      }
+
+      h2{
+
+        @include hover{
+          cursor: pointer;
+          color: $blue-kgs;
+        }
+
+        @include respond-to(sm){
+          margin-bottom: 20px;
+          padding: 0px;
+          padding-left: 40px;
+        }
+
+        @include respond-to(md){
+          padding-left: 0px;
+        }
+      }
+    }
   }
 
   &__nav-inner{
@@ -66,6 +99,15 @@
       display: block;
       overflow: hidden;
       padding: 0px;
+    }
+
+    &--faq{
+      @include respond-to(sm){
+        display: block;
+        overflow: hidden;
+        padding: 0px;
+      }
+
     }
   }
 

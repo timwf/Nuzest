@@ -1,20 +1,117 @@
 .page-template{
 
-  &__inner{
+  &__header{
     margin-top: 46px;
 
     @include respond-to(sm){
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       margin-top: 99px;
     }
   }
 
-  .single-article__rte{
-    margin: 33px 0 33px;
+  &__inner{
+    margin-top: 33px;
+    margin-bottom: 33px;
 
+    
     @include respond-to(sm){
-      margin: 130px 0px 180px 0px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 130px;
+      margin-bottom: 180px;
     }
   }
+
+  .single-article__rte{
+    margin: 0px 0 0px;
+
+    @include respond-to(sm){
+      margin: 0px 0px 0px 0px;
+    }
+  }
+
+  &__left{
+
+    &--contact{
+      .single-article__rte{
+    
+        @include respond-to(sm){
+          max-width: 321px;
+        }
+      }
+    }
+  }
+
+  &__right{
+
+    &--contact{
+      margin-top: 39px;
+
+      @include respond-to(sm){
+        margin-top: 0px;
+      }
+
+      form{
+        display: flex;
+        flex-direction: column;
+
+        input{
+          margin-bottom: 28px;
+        }
+
+        input, textarea{
+          border: none;
+          padding: 20px 20px;
+          margin-bottom: 28px;
+        }
+      }
+
+      .btn{
+        font-family: Helvetica;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        padding: 10px 20px;
+        margin-top: 20px;
+
+        @include respond-to(sm){
+          width: 300px;
+        }
+
+        @include hover{
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.shopify-challenge__button{
+  font-family: Helvetica;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 10px 20px;
+  margin-top: 20px;
+  margin-top: 20px !important;
+  margin-bottom: 100px !important;
+
+  @include respond-to(sm){
+    width: 300px !important;
+  }
+
+  @include hover{
+    cursor: pointer;
+  }
+}
+
+.shopify-challenge__container{
+  margin-top: 100px !important;
+}
+
+.shopify-challenge__message, .form-message--success{
+  font-family: 'Helvetica';
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  margin-bottom: 20px;
 }

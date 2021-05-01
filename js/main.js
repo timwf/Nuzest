@@ -374,6 +374,18 @@ $(document).ready(() => {
   function initHeader(){
     const header = $('.header');
     const $bag = $('.js-open-cart')
+    const $searchIcon = $('.header__right-search-icon')
+    const $searchInput = $('.header__right-search-input')
+
+    $searchIcon.on('mouseenter', function(){
+      console.log('entered');
+      $searchInput.addClass('active')
+    })
+
+    $searchIcon.on('mouseleave', function(){
+      console.log('entered');
+      $searchInput.removeClass('active')
+    })
 
     $bag.on('click', function(){
       $('.cart-drawer').addClass('active')
@@ -676,14 +688,33 @@ $(document).ready(() => {
       let match = false;
       console.log('updating vars?');
 
+
       //if no options return
       if(!$selects.length){
         return;
       }
 
       $selects.each(function(){
+
+        // gets value of selected and appends to varString
         let optionSelected = $("option:selected", this).val();
         variantString += optionSelected
+
+        // if it has color data - show as color else hide
+        let colorHex = $("option:selected", this).attr('data-color')        
+        let colorNameWidth = $("option:selected", this).val().length
+        let thisColorSwatch = $(this).parent().find('.product-card__product-options-colour')
+
+        if(colorHex){
+          $(thisColorSwatch).show()
+          $(thisColorSwatch).css('background-color', colorHex)
+          //rougly move color swatch over by getting length of string!
+          $(thisColorSwatch).css({"background-color": colorHex, "left": `${colorNameWidth * 12}px`});
+        }
+        else{
+          $(thisColorSwatch).hide()
+        }
+    
       })
 
       $hiddenVars.each(function(){
@@ -1065,6 +1096,37 @@ $(document).ready(() => {
     })
   }
 
+  function initFaqsFilter(){
+    const $filterBtn = $('.page-template__left h2')
+    const $qAndAs = $('.accordian__accordian-item')
+
+    $filterBtn.on('click', function(){
+      let topic = $(this).attr("data-topic")
+      $filterBtn.each(function(){$(this).removeClass('active')})
+      $(this).addClass('active')
+
+      if (topic == "General") {
+        $qAndAs.each(function(){  
+
+          $(this).show(); 
+        })
+        return;
+      }
+
+      $qAndAs.each(function(){
+        let thisTopic = $(this).attr("data-topic")
+        let self = this
+
+        if(thisTopic != topic){
+          $(self).hide()
+        }
+        else{
+          $(self).show()
+        }
+      })
+    })
+  }
+
 
 
   /* FUNCTION CALLS */
@@ -1089,6 +1151,7 @@ $(document).ready(() => {
   initAccordian()
   initAboutPeople()
   initSubscriptionOptions()
+  initFaqsFilter()
 
 
   if (isObserver) {
