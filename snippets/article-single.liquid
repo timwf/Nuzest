@@ -1,0 +1,41 @@
+
+<section class="single-article js-visibility reveal-slide">
+  <div class="single-article__left">  
+    <div class="single-article__img">
+      <img  src="{{article.image.src | img_url: 'master'}}" alt="">
+    </div>
+    {% if article.metafields.accentuate.product %}   
+      {% assign product = all_products[article.metafields.accentuate.product] %}
+      <div class="single-article__product">
+        {% include 'product-card', product: product %}  
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="single-article__right">
+    <h4 class="caption-regular">3 min read</h4>
+    <h1 class="header-medium">{{ article.title }}</h1>
+    <h3 class="caption-regular"> {{ article.published_at | time_tag: format: 'date' }}</h3>
+    <div class="single-article__posted-by">
+      <h2 class="caption-regular">Posted By</h2>
+      <h2 class="sub-header">{{ article.author }}</h2>
+    </div>
+    <div class="article-grid__item-tags">
+      {% for tag in article.tags %}
+        <span class="caption-italic">{{ tag }}</span> 
+      {% endfor %}
+    </div>
+    <div class="single-article__rte">
+      {{ article.content }}
+    </div>    
+ {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+  </div>
+    {% if article.metafields.accentuate.product %}   
+      <div class="single-article__product-mobile container">      
+        {% include 'product-card', product: product %}  
+      </div>
+    {% endif %}
+</section>
+
+
+{% include 'articles-reccomended' %}

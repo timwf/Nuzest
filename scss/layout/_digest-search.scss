@@ -1,5 +1,10 @@
 .digest-search{
   background-color: $off-white;
+  margin-bottom: 19px;
+
+  @include respond-to(sm){
+    margin-bottom: 53px;
+  }
 
   &__inner{
     display: flex;
@@ -118,12 +123,9 @@
 //filtering 
 
 .filter-results{
-  display: none;
 
-  &__wrap{
-    min-height: 80vh;
-    display: none;
-    padding-bottom: 50px;
+  &__wrap{    
+ 
   }
 
   &.active{
@@ -135,6 +137,7 @@
 
 .search-results{
   display: none;
+  padding-top: 50px;
 }
 
 //featured
@@ -144,5 +147,70 @@
 
   @include respond-to(md){
     padding-bottom: 180px;
+  }
+}
+
+.digest-filter{
+
+  &__inner{
+    display: flex;
+
+    h5{
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      padding-left: 20px;
+
+      @include respond-to(md){
+        padding-left: 0px;
+      }
+    }
+  }
+
+  &__title{
+    margin-right: 42px;
+    display: none;
+
+    @include respond-to(md){
+      display: block;
+    }
+
+    h4{
+      margin-top: 3px;
+    }
+  }
+
+  &__wrap{
+    margin-left: -20px;
+    width: calc(100% + 40px);
+  }
+
+  &__filters-wrap{
+    display: flex;
+    margin-bottom: 26px;
+    white-space: nowrap;
+    overflow: scroll;
+    overflow-x: scroll;
+    padding: 0 20px;
+
+    @include respond-to(md){
+      padding: 0px; 
+      overflow: auto;
+    }
+
+    a{
+      margin-right: 10px;
+      background-color: $cream;
+      padding: 10px 20px;
+      border-radius: 20px;
+
+      &.active{
+        background-color: #00e132;
+      }
+
+      @include hover{
+        background-color: #0d5257;
+        color: #fff;
+      }
+    }
   }
 }

@@ -1,3 +1,7 @@
+{% assign blogUrl = article.url | split: "/" %}
+{% if blogUrl[2] == "recipes"%}
+<H1>redipies</H1>
+
 <section class="single-article">
   <div class="single-article__left">  
     <div class="single-article__img">
@@ -24,14 +28,19 @@
     </div>
     <div class="article-grid__item-tags">
       {% for tag in article.tags %}
-        <span class="caption-italic">{{ tag }}</span> 
-      {% endfor %}
+        <span class="caption-italic"><a href="/{{ blogUrl[1] }}/{{ blogUrl[2] }}/tagged/{{ tag | handle }}">{{ tag }}</a></span> 
+      {% endfor %}      
     </div>
-    <div class="single-article__rte">
-      {{ article.content }}
-    </div>    
- {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+    <h5 class="body-small" style="max-width: 580px; margin-top: 20px;">{{ article.excerpt }}</h5>
+
+      {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
   </div>
+
+ {% section 'product-benefits-banner' %}
+
+  <div class="single-article__rte">
+    {{ article.content }}
+  </div>    
 
   <div class="single-article__product-mobile container">
       {% for tag in article.tags %}
@@ -93,3 +102,6 @@
   </div>
 </div>
 
+{% else %}
+{% include 'article-single' %}
+{% endif %}

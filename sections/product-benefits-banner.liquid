@@ -1,6 +1,16 @@
 
 {% assign benefits = product.metafields.accentuate.benefits | split: "|" %}
 
+
+
+{% if benefits.size > 1 %}
+
+{% else %}
+  {% assign benefits = article.metafields.accentuate.benefits | split: "|" %}
+{% endif %}
+
+
+
 <section class="usps">  
   <div class="usps__inner container ">
     {% for benefit in benefits %}

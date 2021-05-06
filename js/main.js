@@ -481,15 +481,40 @@ $(document).ready(() => {
     const $searchInput = $('.digest-search__search input')
     const $articleItems = $('.article-grid__item')
     const $searchConatiner = $('.search-results')
+    let url = $(location).attr('href')
+    let parts = url.split("/")
+    let tagLink = parts[parts.length-1];
+    const $tagFilterBtns = $('.digest-filter__filters-wrap a')
+    const $tagFiltersWrap = $('.digest-filter')
+
+    if(tagLink.includes("?")){
+      tagLink = tagLink.split("?")[0]
+    }
+
+    $tagFilterBtns.on('click', function(e){
+      if($(this).hasClass('active')){
+        e.preventDefault()
+        window.location.href = parts[0] + "//" + parts[2] + "/" + parts[3] + "/" + parts[4] 
+      }
+    })
+
+    $tagFilterBtns.each(function(){
+      self = this    
+
+      if($(this).attr('data-tag-handle') == tagLink){
+        $(self).addClass('active')
+      }
+    })
+
 
     $searchBtn.on('click', function(){
       $('.digest-search__filter').hide()
       $('.filter-results__wrap').show()
       $('.digest-featured').hide()
       $searchContainer.addClass('active')    
-      $categories.each(function(){ $(this).fadeOut() })
       $searchConatiner.fadeIn()
-      $filterBtn.each(function(){$(this).removeClass('active')})
+      $categories.hide()
+      $tagFiltersWrap.hide()
 
       //removes active class when clicked out side
       $(document).on('mouseup', function(e){
@@ -497,9 +522,11 @@ $(document).ready(() => {
           $('.digest-search__filter').show()
           $searchContainer.removeClass('active')
           $searchConatiner.fadeOut()
-          $('.filter-results__wrap').hide()
+          $('.digest-search__filter').show()
           $('.digest-featured').show()
           $(this).unbind('mouseup');
+          $categories.show()
+          $tagFiltersWrap.show()
         }
       })
     })
@@ -536,73 +563,81 @@ $(document).ready(() => {
       }   
     })
 
-    function filterTheCategories(handle){
-      $('.filter-results__wrap').show()
-      $('.digest-featured').hide()
+    // function filterTheCategories(handle){
+    //   $('.filter-results__wrap').show()
+    //   $('.digest-featured').hide()
 
-      $filterBtn.each(function(){
-        if($(this).attr('data-handle') == handle){
-          $(this).addClass('active')         
-        }
-      })
+    //   $filterBtn.each(function(){
+    //     if($(this).attr('data-handle') == handle){
+    //       $(this).addClass('active')         
+    //     }
+    //   })
 
-      $categories.each(function(){
-        if($(this).attr('data-handle') == handle){
-          let self = this
-          setTimeout(function(){ $(self).fadeIn() }, 500);            
-        }
-        else{
-          let self = this
-          $(self).fadeOut()            
-        }
-      })
-    }
+    //   $categories.each(function(){
+    //     if($(this).attr('data-handle') == handle){
+    //       let self = this
+    //       setTimeout(function(){ $(self).fadeIn() }, 500);            
+    //     }
+    //     else{
+    //       let self = this
+    //       $(self).fadeOut()            
+    //     }
+    //   })
+    // }
 
 
     //deals with the pagination refresh
-    if ($(location).attr('href').toString().includes('page=')) {
-      let catergoryChosen = localStorage.getItem("blogtype")
-      let originalWithoutQ = $(location).attr('href').split('?')[0]
-      $('.digest-featured').hide()
-      filterTheCategories(catergoryChosen)       
-      $filterBtn.on('click', function(){
-        window.location.href = originalWithoutQ;
-      })
-    }else{
-      localStorage.setItem("blogtype", '');
-    }
+    // if ($(location).attr('href').toString().includes('page=')) {
+    //   let catergoryChosen = localStorage.getItem("blogtype")
+    //   let originalWithoutQ = $(location).attr('href').split('?')[0]
+    //   $('.digest-featured').hide()
+    //   filterTheCategories(catergoryChosen)       
+    //   $filterBtn.on('click', function(){
+    //     window.location.href = originalWithoutQ;
+    //   })
+    // }else{
+    //   localStorage.setItem("blogtype", '');
+    // }
 
-    if (localStorage.getItem("blogtype")) {
-      filterTheCategories(localStorage.getItem("blogtype"))      
-    }
+    // if (localStorage.getItem("blogtype")) {
+    //   filterTheCategories(localStorage.getItem("blogtype"))      
+    // }
 
-    $filterBtn.on('click', function(){
-      localStorage.setItem("blogtype", $(this).attr('data-handle'));
+    $filterBtn.on('click', function(e){
+
 
       if($(this).hasClass('active')){
-        $(this).removeClass('active')
-        $categories.each(function(){$(this).hide()})
-        $('.filter-results__wrap').hide()
-        $('.digest-featured').show()
+        e.preventDefault()
       }
-      else{
-        $filterBtn.each(function(){$(this).removeClass('active')})
-        $(this).addClass('active')
-        let selection = $(this).attr('data-handle')
-        $('.filter-results__wrap').show()
-        $('.digest-featured').hide()
 
-        $categories.each(function(){
-          if($(this).attr('data-handle') == selection){
-            let self = this
-            setTimeout(function(){ $(self).fadeIn() }, 500);            
-          }
-          else{
-            let self = this
-            $(self).fadeOut()            
-          }
-        })
-      }
+
+
+      // localStorage.setItem("blogtype", $(this).attr('data-handle'));
+
+      // if($(this).hasClass('active')){
+      //   $(this).removeClass('active')
+      //   $categories.each(function(){$(this).hide()})
+      //   $('.filter-results__wrap').hide()
+      //   $('.digest-featured').show()
+      // }
+      // else{
+      //   $filterBtn.each(function(){$(this).removeClass('active')})
+      //   $(this).addClass('active')
+      //   let selection = $(this).attr('data-handle')
+      //   $('.filter-results__wrap').show()
+      //   $('.digest-featured').hide()
+
+      //   $categories.each(function(){
+      //     if($(this).attr('data-handle') == selection){
+      //       let self = this
+      //       setTimeout(function(){ $(self).fadeIn() }, 500);            
+      //     }
+      //     else{
+      //       let self = this
+      //       $(self).fadeOut()            
+      //     }
+      //   })
+      // }
     })
   }
 
@@ -1127,6 +1162,53 @@ $(document).ready(() => {
     })
   }
 
+  function initSingleArticleSlider(){
+
+
+      const swiper = new Swiper('.single-article__recipes-slider-inner', {
+        slidesPerView: 1.25,
+        speed: 400,
+        spaceBetween: 27,
+        // loop: true,
+        navigation: {
+          prevEl: '.single-article__recipes-nav .slidePrev-btn',
+          nextEl: '.single-article__recipes-nav .slideNext-btn'
+        },
+        breakpoints: {
+          400: {
+            slidesPerView: 1.1,
+            spaceBetween: 27
+          },
+          600: {
+            slidesPerView: 1,
+            spaceBetween: 10
+          },
+          800: {
+            slidesPerView: 1.2,
+            spaceBetween: 27
+          },
+          1100: {
+            slidesPerView: 1.7,
+            spaceBetween: 90
+          },
+          1300: {
+            slidesPerView: 2.5,
+            spaceBetween: 20
+          },
+          1500: {
+            slidesPerView: 3.5,
+            spaceBetween: 20
+          },
+          1700: {
+            slidesPerView: 3.5,
+            spaceBetween: 20
+          },
+          // when window width is >= 640px
+        }
+      });
+
+  }
+
 
 
   /* FUNCTION CALLS */
@@ -1152,6 +1234,7 @@ $(document).ready(() => {
   initAboutPeople()
   initSubscriptionOptions()
   initFaqsFilter()
+  initSingleArticleSlider()
 
 
   if (isObserver) {

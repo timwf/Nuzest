@@ -1,15 +1,14 @@
 .article-grid{
   background-color: $off-white;
-  padding-top: 50px;
+  margin-bottom: 100px;
 
   h5{
     margin-bottom: 20px;
     margin-top: -20px;
   }
 
-
   @include respond-to(sm){
-    padding-top: 80px;
+    margin-top: 60px;
   }
 
   &__inner{
@@ -92,12 +91,11 @@
 }
 
 .article-grid-interview{
-  margin-top: 45px;
   margin-bottom: 50px;
 
   @include respond-to(sm){
-    margin-top: 80px;
     margin-bottom: 100px;
+    margin-top: 60px;
   }
 
   &__inner{

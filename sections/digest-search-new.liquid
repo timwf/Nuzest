@@ -1,0 +1,108 @@
+<section class="digest-search">
+  <div class="digest-search__inner container js-visibility reveal-slide">  
+    <div class="digest-search__search"> 
+      <input type="text" placeholder="Search The Digest...">
+      {% include 'icon-search' %}
+    </div>  
+    <div class="digest-search__filter">      
+      {% for block in section.blocks %}
+        {% assign chosenBlog = blogs[block.settings.blog] %}
+        <a href="{{ chosenBlog.url }} "></a>
+          <a href="{{ chosenBlog.url }} " class="digest-search__filter-item sub-header
+          {% if  blog.handle  ==  chosenBlog.handle  %}
+          active
+          {% endif %}            
+          " data-handle="{{ chosenBlog.handle }}">           
+            {{ chosenBlog.title }}    
+        </a>     
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% assign filtersThere = false %}
+{% assign topicArray = blog | map: 'all_tags' | uniq   %}
+
+{%- for tags in topicArray -%}
+  {% if tags contains ":" %}  
+  {% assign filtersThere = true %}
+  {% endif %}  
+{%- endfor -%}
+{% if filtersThere %}
+<div class="digest-filter js-visibility reveal-slide">
+  <div class="digest-filter__inner container">
+    <div class="digest-filter__title">
+      <h4 class="body-bold-large">Filter</h4>
+    </div>    
+    <div class="digest-filter__wrap">
+      {%- for tags in topicArray -%}
+        {% if tags contains ":" %}  
+        {% assign number = forloop.index | plus: 0 %} 
+        {% assign lastOne = topicArray[number] | split: ":" | first | json%}
+        {% assign thisOne = tags  | split: ":" | first | json %} 
+        {% assign variable = tags  | split: ":" | first  %} 
+        {% if thisOne != lastOne  %}
+        <div class="digest-filter__category-wrap">
+          <h5 class="sub-header">{{ variable }}</h5>
+          <div class="digest-filter__filters-wrap">
+            {%- for tag in blog.all_tags -%}
+              {% assign newTagName = tag | split: ":" | last %}
+              {% if tag contains variable and newTagName != variable%}     
+                  <a href="{{ blog.url }}/tagged/{{ tag | handle }}" data-tag-handle="{{ tag | handle }}"><p class="body-small">{{ newTagName}}</p></a>
+              {% endif %}     
+            {%- endfor -%}     
+          </div> 
+        </div>
+        {% endif %}
+      {% endif %}  
+    {%- endfor -%}
+  </div>
+</div>
+{% endif %}
+</div>
+
+<div class="filter-results__wrap">
+  {% for block in section.blocks %}    
+    {% assign chosenBlog = blogs[block.settings.blog] %}   
+    <section class="search-results">
+      {% include 'article-grid', items: chosenBlog.articles title: true %}    
+    </section>
+  {%- endfor -%}
+
+<p class="container body-small js-no-results" style="margin-top: 50px; display: none">Sorry, no resluts found</p>
+</div>
+
+{% schema %}
+{
+  "name": "Search",
+  "class": "blog-search",
+  "settings": [
+  ],
+  "blocks": [
+    {
+      "type": "blog",
+      "name": {
+        "en": "Blog"
+      },
+      "settings": [
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Blog Type",
+          "info": "Select a blog type that will appear as a filter"
+        },
+        {
+          "type": "checkbox",
+          "id": "interviews",
+          "label": "Interview Layout?",
+          "default": false,
+          "info": "Check this box if you would like to display results as Interviews"
+       }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
+
+

@@ -1,0 +1,53 @@
+<div class="single-article__recomended">
+  <div class="featured-blogs container js-visibility reveal-slide">
+    <div class="featured-blogs__title">
+      <div class="featured-blogs__title-left">
+        <p class="body-bold-large single-article__reccomended-header-dot">{{ blogsCount }}</p>
+        <div class="featured-blogs__title-decoration"></div>
+        <p class="body-bold-large" style="text-transform: capitalize;">Related {{ blogUrl[2] }}</p>
+      </div>
+      <div class="featured-blog__nav">
+        <div id="featured-blogs__prev-1">
+          {% include 'icon-left-arrow' %} 
+        </div>
+        <div id="featured-blogs__next-1">
+          {% include 'icon-right-arrow' %} 
+        </div>       
+      </div>
+    </div>
+    <div class="featured-blogs__slider" id="featured-blogs__slider-1">
+      <div class="swiper-wrapper">
+        <h1>
+          {% assign thisArticle = article.title %}
+        </h1>
+
+        {% for article in blogs[blogUrl[2]].articles %}
+   
+        {% if thisArticle !=  article.title%}
+          
+        
+          <div class="article-grid__item swiper-slide">
+            <div class="article-grid__item-image">
+              <a href="{{article.url}}">
+                <img  src="{{article.image.src | img_url: '400x400'}}" alt="">
+              </a>        
+            </div>
+            <div class="article-grid__item-copy">
+              <h4 class="caption-regular"><a href="{{article.url}}">10 min read</a></h4>
+              <h3 class="header-small"><a href="{{article.url}}">{{article.title}}</a></h3> 
+              <div class="article-grid__item-tags">
+                <h4 class="body-small">{{ article.excerpt }}</h4>
+              </div>
+            </div>    
+          </div>
+          {% endif %}
+      {% endfor %}
+      </div>
+      <a href="{{ shop.url }}/blogs/{{blogUrl[2]}}" class="home-hero__btn body-small" style="text-transform: capitalize;">
+        See All {{ blogUrl[2] }}
+        {% include 'icon-arrow-right' %} 
+      </a>  
+    </div>
+    </div>
+  </div>
+</div>
