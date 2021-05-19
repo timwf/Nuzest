@@ -8,6 +8,10 @@
 
   .breadcrumbs__inner{
 
+    @include respond-to(lg){
+      margin-left: -50px;
+    }
+
     @media (min-width: 1580px){
       margin-left: -90px;
     }
@@ -37,12 +41,16 @@
       width: auto;
     }
 
+    @include respond-to(lg){
+      margin-left: -50px;
+    }
+
     @media (min-width: 1580px){
       margin-left: -90px;
     }
 
     h2{
-      padding: 29px 14px;
+      padding: 24px 14px 22px 14px;
 
       @include respond-to(md){
         margin-bottom: 20px;
@@ -58,17 +66,23 @@
       background-color: #fcf8f4;
       margin-top: -33px;
       margin-bottom: -11px; 
+      margin-left: -23px;
 
       @include respond-to(sm){
-        margin-top: 0px;
+        margin-top: 63px;
         margin-bottom: 0px; 
+        margin-left: 0;
       }
 
       @media (min-width: 1580px){
         margin-left: 0px;
       }
 
-      h2{
+      h2{       
+
+        @include respond-to(sm){
+          padding-left: 0px !important;
+        }
 
         @include hover{
           cursor: pointer;

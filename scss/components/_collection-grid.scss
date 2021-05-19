@@ -16,10 +16,13 @@
 
     @include respond-to(md){
       grid-template-columns: 1fr 1fr 1fr;
-
     }
 
     @include respond-to(lg){
+      column-gap: 78px;
+    }
+
+    @include respond-to(xl){
       column-gap: 111px;
     }
 

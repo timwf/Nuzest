@@ -2,6 +2,14 @@
   position: relative;
   max-width: 407px;
 
+  @include respond-to(sm){
+    max-width: 88%;
+  }
+
+  @include respond-to(xl){
+    max-width: 407px;
+  }
+
   input{
     border: none;
     background-color: transparent;

@@ -1,17 +1,18 @@
 <section class="page-template js-visibility reveal-slide">
-  <div class="page-template__header container">
-    <h1 class="header-medium">{{ page.title }}</h1>
-  </div>
-  <div class="page-template__inner container"> 
+
+  <div class="page-template__inner container">     
     <div class="page-template__left page-template__left--contact">
-      <div class="single-article__rte">
-        {{ page.content }}
+      <div class="page-template__left-wrap">
+        <h1 class="header-medium">{{ page.title }}</h1>
+        <div class="single-article__rte">
+          {{ page.content }}
+        </div>
       </div>
     </div>
     <div class="page-template__right page-template__right--contact ">
 
         {% form 'contact', id: formId %}
-          {% include 'form-status', form: form, form_id: formId %}
+              {% include 'form-status', form: form, form_id: formId %}
 
               <label class="body-small" for="{{ formId }}-name">Full name</label>
               <input  class="body-small"type="text" id="{{ formId }}-name" name="contact[{{ 'contact.form.name' | t }}]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
@@ -34,6 +35,7 @@
 
               <label class="body-small" for="{{ formId }}-email">{{ 'contact.form.email' | t }} <span aria-hidden="true"></span>*</span></label>
               <input
+              style="position: relative;"
                 class="body-small"
                 type="email"
                 id="{{ formId }}-email"
@@ -51,8 +53,8 @@
               {%- if form.errors contains 'email' -%}
                 <span id="{{ formId}}-email-error" class="input-error-message">
                   <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
-                  {% include 'icon-error' %}
-                  <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                  <p class="body-small" 
+                  style="color: #FF7F32; margin-top: -20px; margin-bottom: 20px;">Invalid Email</p>
                 </span>
               {%- endif -%}
 

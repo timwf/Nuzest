@@ -7,7 +7,7 @@
 
   &__inner{
     padding-top: 42px;
-    padding-bottom: 26px;
+    padding-bottom: 42px;
 
     @include respond-to(sm){
       display: flex;
@@ -20,7 +20,7 @@
   &__column{
 
     @include respond-to(sm){
-      width: 20%;
+      width: 14%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -191,13 +191,16 @@
     top: 25%;
     right: 7px;
 
+    @include respond-to(sm){
+      right: 15px;
+    }
+
     @include hover{
       cursor: pointer;
 
       line{
         stroke: $blue-kgs;
       }
-
     }
   }
 }

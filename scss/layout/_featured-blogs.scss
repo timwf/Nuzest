@@ -4,6 +4,18 @@
   padding-bottom: 20px;
   overflow-x: hidden;
 
+  &--product-page{
+    .featured-blog__item{
+        padding-bottom: 20px;
+    
+    
+        @include respond-to(sm){
+          display: flex;
+
+      }
+    }
+  }
+
 
   @include respond-to(sm){
     padding-top: 180px;

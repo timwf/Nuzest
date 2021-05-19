@@ -1,11 +1,13 @@
 .about-environment{
 
   &__inner{    
-    padding-bottom: 45px;
+    padding-bottom: 50px;
+    margin-top: -13px;
 
     @include respond-to(md){
       display: flex;
       padding-bottom: 109px;
+      margin-top: 0px;
     }
   }
 

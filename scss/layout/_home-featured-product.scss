@@ -4,7 +4,6 @@
   padding-bottom: 112px;
   overflow-x: hidden;
 
-
   @include respond-to(sm){
     padding-top: 180px;
     padding-bottom: 373px;
@@ -74,11 +73,36 @@
   }
 
   select{
-    width: calc(100% - 50px) !important;
+    width: calc(100% - 56px) !important;
   }
 
   .btn{
     width: calc(100% - 20px) !important;
+  }
+}
+
+#shopify-section-about-featured-products{
+  .home-featured-product{
+    padding-top: 50px;
+    padding-bottom: 0px;
+
+    @include respond-to(md){
+      padding-top: 180px;
+      padding-bottom: 170px;
+    }
+
+    .product-card__item{
+      padding-bottom: 61px;
+    }
+
+    .product-card__product-options-wrap{
+      bottom: 157px;
+    }
+
+    .product-card__product-options:after{
+      right: 20px;
+    }
+
   }
 }
 

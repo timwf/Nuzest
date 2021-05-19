@@ -4,19 +4,53 @@
   &__radio{
     display: flex;
     background-color: white;
-    padding: 0px 20px;
+    padding: 11px 20px;
+    padding-top: 26px;
 
     &.active{
       background-color: $cream;
+    }
+
+      input[type='radio']:after {
+        width: 13px;
+        height: 13px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: white;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 1px solid #00000075;
+    }
+
+    input[type='radio']:checked:after {
+        width: 13px;
+        height: 13px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #A5E44C;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 1px solid #00000075;
     }
   }
 
   label, input{
     background-color: transparent;
-    height: 61px;
+    height: 0px;
+    width: 17px;
     display: flex;
     align-items: center;
     padding: 0px 20px;
+
+    @include respond-to(sm){
+      height: 0px;
+    }
   }
 
   label{
@@ -29,10 +63,10 @@
     background-color: $cream;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 74px;
 
     label, select{
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     label{

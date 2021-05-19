@@ -19,12 +19,12 @@
  
   <section class="page-template js-visibility reveal-slide">
     <div class="page-template__header container">
-      <h1 class="header-small" style="line-height: 50px; margin-bottom: 50px;">Search results for: {{ search.terms }}</h1>
+      <h1 class="sub-header search__header" ><span>Search results for</span>&nbsp; {{ search.terms }}</h1>
     </div>
   </section>
 
 {% if productsAvalible %}
-  <section style="padding-bottom: 0px; padding-top: 40px;" class="home-featured-product js-visibility reveal-slide">  
+  <section style="padding-bottom: 0px;" class="home-featured-product js-visibility reveal-slide search__category">  
     <div class="home-featured-product__heading">
       <h2 class="header-medium">Products</h1>
       <div class="home-featured-product__nav">
@@ -49,9 +49,9 @@
 
 
 {% if blogsAvalible %}
-<section style="padding-bottom: 0px; padding-top: 40px;" class="featured-blog js-visibility reveal-slide">  
+<section style="padding-bottom: 0px; " class="featured-blog js-visibility reveal-slide search__category">  
   <div class="featured-blog__heading">
-    <h2 class="header-medium">Blogs</h1>
+    <h2 class="header-medium">Articles</h1>
     <div class="featured-blog__nav">
       {% include 'icon-left-arrow' %} 
       {% include 'icon-right-arrow' %} 

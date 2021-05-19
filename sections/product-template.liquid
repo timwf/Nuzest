@@ -24,10 +24,12 @@
           </div>
         </div>
         <div class="product-template__buy-btn">
-          <button class="btn js-product-card-add-to-cart" 
+          <button class="btn js-product-card-add-to-cart js-product-card-add-to-cart--subscription" 
           data-quantity="1" 
           data-variant-id="{{product.selected_or_first_available_variant.id}}"
           data-selling-plan-id=""
+          data-discounted-price=""
+          data-discount=""
           data-price="{{product.price }}"
           ><p>Add to Your Cart - {{product.price | money}}</p></button>
         </div>
@@ -51,3 +53,30 @@
     </div>
   </div>
 </div>
+
+<section class="sticky-product-bar">
+  <div class="sticky-product-bar__inner">
+    <div class="sticky-product-bar__title-options">
+      <h4 class="body">{{ product.title }}</h4>
+      {% include 'product-options' %}
+    </div>
+    <div class="sticky-product-bar__qty-btn">
+      <h4 class="body">Quantity</h4>
+      <div class="product-template__qty-select">
+        <div class="product-template__qty-btn js-product-template-qty-minus js-product-template-qty-minus--sticky">
+          {% include 'icon-qty-minus' %}
+        </div>
+        <p class="js-product-template-qty-amount js-product-template-qty-amount--sticky">1</p>
+        <div class="product-template__qty-btn js-product-template-qty-plus js-product-template-qty-plus--sticky">
+          {% include 'icon-qty-plus' %}
+        </div>
+      </div>
+      <button class="btn js-product-card-add-to-cart--sticky" 
+      data-quantity="1" 
+      data-variant-id="{{product.selected_or_first_available_variant.id}}"
+      data-selling-plan-id=""
+      data-price="{{product.price }}"
+      ><p>Add to Your Cart - {{product.price | money}}</p></button>
+    </div>
+  </div>
+</section>

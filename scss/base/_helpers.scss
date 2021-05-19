@@ -31,6 +31,29 @@
   }
 }
 
+.template-list-collections .container, .footer .container{
+  @include respond-to(lg){
+    padding-left: 129px; /* 3 */
+    padding-right: 129px; /* 3 */
+  }
+}
+
+.template-product .container{
+  @include respond-to(lg){
+    padding-left: 100px; /* 3 */
+    padding-right: 100px; /* 3 */
+  }
+}
+
+.about-people__inner.container, .about-science-based__inner.container,
+.bout-science-based__inner.container, .about-environment__inner.container,
+.page-template .container{
+  @include respond-to(lg){
+    padding-left: 100px; /* 3 */
+    padding-right: 100px; /* 3 */
+  }
+}
+
 .hidden{
   display: none !important;
 }

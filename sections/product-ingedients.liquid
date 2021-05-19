@@ -1,0 +1,75 @@
+<section class="product-ingredients">
+  <div class="product-comparison__bg-left"></div>
+  <div class="product-comparison__bg-right"></div>
+  <div class="product-ingredients__inner container">
+    <h2 class="header-medium">The best the planet has to offer</h2>
+    <h3 class="body">Get to know our down-to-earth ingredients.</h3>  
+
+    <div class="product-ingredients__grid">
+
+      {% for block in section.blocks %}
+          <div class="product-ingredients__item">
+              <div class="product-ingredients__image-wrap">
+                <img src="{{ block.settings.img | img_url: 'master' }}" alt="">
+              </div>
+              
+              <div class="product-ingredients__item-hidden">
+                <h4 class="header-small">{{ block.settings.header }}</h4>
+                <h5 class="sub-header">{{ block.settings.sub-header }}</h4>
+                <p class="body-small">{{ block.settings.copy}}</p>
+              </div>
+          </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredients",
+  "class": "ingredients",
+  "settings": [
+  {
+    "type": "header",
+    "content": "Instructions"
+  },
+  {
+    "type": "paragraph",
+    "content": "Add a faq - the topic will appear on the left, and the relating Q & As on the right - TIP! - make sure the topic added is spelt the same otherwise you'll get two topics with slightly different spellings! Also all Qs will apear under general - you do NOT need to add 'General' as a topic (If you do it will apear as another topic called General!)"
+  }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": {
+        "en": "Ingredient"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "header",
+          "label": "Header"
+        },
+        {
+          "type": "text",
+          "id": "sub-header",
+          "label": "Sub Header"
+        },
+        {
+          "type": "textarea",
+          "id": "copy",
+          "label": "Copy"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

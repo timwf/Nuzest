@@ -3,6 +3,10 @@
   &__header{
     margin-top: 46px;
 
+    h1{
+      margin-left: -1px;
+    }
+
     @include respond-to(sm){
       margin-top: 99px;
     }
@@ -16,7 +20,7 @@
     @include respond-to(sm){
       display: grid;
       grid-template-columns: 1fr 1fr;
-      margin-top: 130px;
+      margin-top: 50px;
       margin-bottom: 180px;
     }
   }
@@ -31,8 +35,13 @@
 
   &__left{
 
+    h1{
+      margin-top: 44px;
+      margin-bottom: 40px;      
+    }
+
     &--contact{
-      .single-article__rte{
+      .single-article__rte{ 
     
         @include respond-to(sm){
           max-width: 321px;
@@ -41,13 +50,27 @@
     }
   }
 
+  &__left-wrap{
+    position: sticky;
+    top: 67px;
+  }
+
   &__right{
+    margin-top: 42px;
+
+    @include respond-to(md){
+      margin-top: 156px;
+    }
+
+    &--faq{
+      margin-top: 16px;
+      z-index: 9;
+    }
 
     &--contact{
-      margin-top: 39px;
 
-      @include respond-to(sm){
-        margin-top: 0px;
+      @include respond-to(md){
+        margin-top: 150px;
       }
 
       form{

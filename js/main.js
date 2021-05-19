@@ -7,6 +7,11 @@ $(document).ready(() => {
   let observer;
   let isTouch;
 
+  //price formater
+  function GBPFormatter(n) {
+     return("£" + (Math.round(n * 100) / 100).toFixed(2));  
+  }
+
   if (
     !('IntersectionObserver' in window) ||
     !('IntersectionObserverEntry' in window) ||
@@ -382,6 +387,14 @@ $(document).ready(() => {
       $searchInput.addClass('active')
     })
 
+    $searchIcon.on('click', function(e){ 
+      if($searchInput.val() == ""){       
+        e.preventDefault()
+      }else{
+        return;
+      }
+    })
+
     $searchIcon.on('mouseleave', function(){
       console.log('entered');
       $searchInput.removeClass('active')
@@ -706,6 +719,7 @@ $(document).ready(() => {
 
 
     $selects.on('change', function(){
+      console.log('selects changed');
       updateVariant()
     })
 
@@ -725,10 +739,9 @@ $(document).ready(() => {
 
 
       //if no options return
-      if(!$selects.length){
+      if(!$selects.length){     
         return;
       }
-
       $selects.each(function(){
 
         // gets value of selected and appends to varString
@@ -757,9 +770,34 @@ $(document).ready(() => {
         let selected = variantString.replace(/\s+|[\/]/g, "")
 
         if(hiddenVarTitle == selected){
+          let qty = $submitBtn.attr('data-quantity')
+          let formatedPrice
+
+          if(qty){
+            if($submitBtn.attr('data-discounted-price') == ""){  
+              formatedPrice = GBPFormatter(($(this).attr('data-price') / 100) * qty)  
+              console.log('no sub data');
+              console.log(formatedPrice);
+              
+            }else{     
+              console.log('sub data');
+              $submitBtn.attr('data-price', $(this).attr('data-price')) 
+              let discount = $submitBtn.attr('data-discount')
+              let $originalPrice = $submitBtn.attr('data-price') * qty
+              let discountedPrice = $originalPrice / 100 -  ($originalPrice /100) * (discount /100)
+              formatedPrice = GBPFormatter(discountedPrice) 
+              console.log(formatedPrice);
+            }         
+          }
+          else{
+            formatedPrice = GBPFormatter($(this).attr('data-price') / 100 * 1)         
+          }         
+          
           $submitBtn.attr("disabled", false)
           $submitBtn.attr('data-variant-id', $(this).attr('data-id'))
-          $submitBtn.find('p').text('Add to Your Cart - ' + $(this).attr('data-price'))
+          $submitBtn.attr('data-price', $(this).attr('data-price')) 
+          $submitBtn.find('p').text('Add to Your Cart - ' + formatedPrice)
+
           let varImage = $(this).attr('data-image')
           match = true;
 
@@ -783,11 +821,11 @@ $(document).ready(() => {
                 },
                 1200: {
                   slidesPerView: 1.65,
-                  spaceBetween: 70
+                  spaceBetween: 25
                 },
                 1700: {
-                  slidesPerView: 2.55,
-                  spaceBetween: 70
+                  slidesPerView: 2.9,
+                  spaceBetween: 25
                 }
               }
             });
@@ -892,6 +930,20 @@ $(document).ready(() => {
         $('.cart-drawer__checkout').show()
         $(cart.items).each(function(){
           // console.log(this.selling_plan_allocation.selling_plan.name);
+
+
+
+         
+
+          
+
+
+
+          
+
+
+
+
           $('.cart-drawer__items').append(
             `
             <div class="cart-drawer__item">
@@ -903,7 +955,7 @@ $(document).ready(() => {
               </div>
               <div class="cart-drawer__item-right">
                 <h3 class="body-bold">${this.product_title}</h3>
-                <h4 class="body-small">£${this.final_price / 100 }</h4>` +
+                <h4 class="body-small">${GBPFormatter(this.final_price / 100) }</h4>` +
                 (this.variant_options[0] ? `<h5 class="body-small">${this.variant_options[0]}</h5>` : "") +
                 (this.variant_options[1] ? `<h5 class="body-small">${this.variant_options[1]}</h5>` : "") +
                 (this.variant_options[2] ? `<h5 class="body-small">${this.variant_options[2]}</h5>` : "") +
@@ -961,7 +1013,7 @@ $(document).ready(() => {
 
 
       //update cart total
-      $('.js-cart-drawer-total').text("£" + cart.total_price / 100)
+      $('.js-cart-drawer-total').text( GBPFormatter(cart.total_price / 100)  )
 
 
       //qty add/minus cart drawer
@@ -1006,24 +1058,61 @@ $(document).ready(() => {
     const $plusBtn = $('.js-product-template-qty-plus')
     const $minusBtn = $('.js-product-template-qty-minus')
     const $qtyInput = $('.js-product-template-qty-amount')
-    let qty = $qtyInput.text()
+    const $stickyProduct = $('.sticky-product-bar__inner')
+    let qty = 1
 
     $plusBtn.on('click', function(){
+      console.log('clicked');
+      let price
+      let $btn = $('.js-product-card-add-to-cart').first()
+      let $qtyUnique = $('.js-product-template-qty-amount').first()
+
       qty ++
-      $qtyInput.text(qty)
-      $('.js-product-card-add-to-cart').attr('data-quantity', qty)
+      $qtyUnique.text(qty)
+      $btn.attr('data-quantity', qty)
+
+      //if discount price
+      if(!$btn.attr('data-discounted-price') == ""){   
+        $btn.attr('data-price', $(this).attr('data-price')) 
+        let discount = $btn.attr('data-discount')
+        let $originalPrice = $btn.attr('data-price') * qty
+        let discountedPrice = $originalPrice / 100 -  ($originalPrice /100) * (discount /100)
+        price = discountedPrice 
+      }else{
+        price = parseFloat(($btn.attr('data-price')*qty)/100)  
+      }
+
+      
+      $btn.find('p').text(`Add to Your Cart - ${GBPFormatter(price) }`)
     })
 
     $minusBtn.on('click', function(){
+      let price
+      let $btn = $('.js-product-card-add-to-cart').first()
+      let $qtyUnique = $('.js-product-template-qty-amount').first()
+
       if(qty > 1){
         qty --
-        $qtyInput.text(qty)
-        $('.js-product-card-add-to-cart').attr('data-quantity', qty)
+        $qtyUnique.text(qty)
+        $btn.attr('data-quantity', qty)
+
+        if(!$btn.attr('data-discounted-price') == ""){
+          $btn.attr('data-price', $(this).attr('data-price')) 
+          let discount = $btn.attr('data-discount')
+          let $originalPrice = $btn.attr('data-price') * qty
+          let discountedPrice = $originalPrice / 100 -  ($originalPrice /100) * (discount /100)
+          price = discountedPrice 
+        }else{
+          price = parseFloat(($btn.attr('data-price')*qty)/100)  
+        }
+        
+        $btn.find('p').text(`Add to Your Cart - ${GBPFormatter(price) }`)
       }
     })
 
     // sort out the variants! (also images changed on select)
     initVaraintCalc($product)
+    initVaraintCalc($stickyProduct)
   }
 
   function initAboutSecience(){
@@ -1033,9 +1122,9 @@ $(document).ready(() => {
       gsap.timeline({
         scrollTrigger: {
           trigger: this,
-          start: "75% center",
+          start: "75% 65%",
           end: "90%",
-          // markers: true,
+          //markers: true,
         }
       })
       .to(this,  { opacity: 1 })
@@ -1083,27 +1172,32 @@ $(document).ready(() => {
     const $subOptions = $('.subscription-options__radio input')
     const $durationOptions = $('.subscription-options__option')
     const $sellingPlanOption = $('.subscription-options__option select')
-    const $buyBtn = $('.js-product-card-add-to-cart')
-    let $originalPrice = $('.js-product-card-add-to-cart').attr('data-price')
+    const $buyBtn = $('.js-product-card-add-to-cart')    
     const $tooltipTrigger = $('.js-tooltip')
     const $tooltip = $('.subscription-options__tooltip')
+    let $originalPrice = $('.js-product-card-add-to-cart').attr('data-price')
 
-    $tooltipTrigger.on('mouseenter', function(){
-      $tooltip.addClass('active')
+    if ($(window).width() > 1024) {
+      $tooltipTrigger.on('mouseenter', function(){
+        $tooltip.addClass('active')
+  
+        $(document).mousemove(function(event) {
+          let x = event.pageX;        
+          let y = event.pageY;   
+          $tooltip.css({"top": `${y - 140}px`, "left": `${x - 205}px`});
+        });  
+      })
+  
+      $tooltipTrigger.on('mouseleave', function(){
+        $tooltip.removeClass('active')
+      })
+    }
 
-      $(document).mousemove(function(event) {
-        let x = event.pageX;        
-        let y = event.pageY;   
-        $tooltip.css({"top": `${y - 140}px`, "left": `${x - 205}px`});
-      });  
-    })
 
-    $tooltipTrigger.on('mouseleave', function(){
-      $tooltip.removeClass('active')
-    })
 
     $subOptions.on('change', function(){   
-
+      
+      let $originalPrice = $('.js-product-card-add-to-cart').attr('data-price')
       $subOptions.each(function(){
         $(this).prop('checked', false);
         $(this).parent().removeClass('active')
@@ -1113,21 +1207,26 @@ $(document).ready(() => {
       $(this).parent().addClass('active')
 
       if ($(this).prop('value') == 'subscribe') {
+
         $durationOptions.css("display", "flex")
-        $buyBtn.attr('data-selling-plan-id', $sellingPlanOption.find(":selected").attr('data-selling-plan-id'))
+        $buyBtn.first().attr('data-selling-plan-id', $sellingPlanOption.find(":selected").attr('data-selling-plan-id'))
         let discount = $sellingPlanOption.find(":selected").attr('data-discount')
         let discountedPrice = $originalPrice / 100 -  ($originalPrice /100) * (discount /100)
-        $buyBtn.find('p').text(`Add to Your Cart - £${discountedPrice}`)
+        $buyBtn.first().find('p').text(`Add to Your Cart - ${GBPFormatter(discountedPrice) }`)       
+        $buyBtn.first().attr('data-discount', discount)
+        $buyBtn.first().attr('data-discounted-price', discountedPrice * 100)
       }
-      else{
+      else{        
         $durationOptions.hide()
         $buyBtn.attr('data-selling-plan-id', "")
-        $buyBtn.find('p').text(`Add to Your Cart - £${$originalPrice/100}`)
+        $buyBtn.first().attr('data-discounted-price', "")
+        $buyBtn.first().attr('data-discount', "")
+        $buyBtn.find('p').text(`Add to Your Cart - ${ GBPFormatter($originalPrice/100)  }`)
       }
     })
 
     $sellingPlanOption.on('change', function(){
-      $buyBtn.attr('data-selling-plan-id', $sellingPlanOption.find(":selected").attr('data-selling-plan-id'))
+      $('.js-product-card-add-to-cart--subscription').attr('data-selling-plan-id', $sellingPlanOption.find(":selected").attr('data-selling-plan-id'))
     })
   }
 
@@ -1206,7 +1305,70 @@ $(document).ready(() => {
           // when window width is >= 640px
         }
       });
+  }
 
+  function initStickyProductPageCTA(){
+    const $stickyBar = $('.sticky-product-bar')
+
+    if(!$stickyBar.length){
+      return
+    }
+
+    const $stickyTop = $('.sticky-product-bar').offset().top;
+
+    var lastScrollTop = 0;
+
+    $(window).scroll(function(event){
+      var st = $(this).scrollTop();
+      if (st > $stickyTop){
+          $stickyBar.addClass('active')
+      } else {
+        $stickyBar.removeClass('active')
+      }
+    });
+  }
+
+  function initProductIngredients(){
+
+    setTimeout(function(){ 
+      const $items = $('.product-ingredients__item')
+
+      if(!$(".product-ingredients__grid").length){
+        return;
+      }
+  
+      const offset = $(".product-ingredients__grid").offset().top;
+      let offestLeft
+  
+      if ($(window).width() < 768) {
+        offestLeft = 100
+      }
+      else if($(window).width() < 1024) {
+          offestLeft = 200
+      }
+      else {
+        offestLeft = 305
+      }
+  
+      $items.on('mouseenter', function(){
+        $(this).find('.product-ingredients__item-hidden').addClass('active')
+        $(this).addClass('active')
+        const self = this
+  
+        $(document).mousemove(function(event) {
+          let x = event.pageX;        
+          let y = event.pageY;   
+          $(self).find('.product-ingredients__item-hidden').css(
+            {"top": `${y + 20 - offset}px`, "left": `${x - offestLeft}px`}
+            );
+        });  
+      })
+  
+      $items.on('mouseleave', function(){
+        $(this).removeClass('active')
+        $(this).find('.product-ingredients__item-hidden').removeClass('active')
+      })
+    }, 2000);
   }
 
 
@@ -1235,6 +1397,8 @@ $(document).ready(() => {
   initSubscriptionOptions()
   initFaqsFilter()
   initSingleArticleSlider()
+  initStickyProductPageCTA()
+  initProductIngredients()
 
 
   if (isObserver) {

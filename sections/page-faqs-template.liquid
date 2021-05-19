@@ -2,21 +2,21 @@
 {% assign topicArray = obj | map: 'topic' | uniq | join: "|" | split: "|"%}
 
 <section class="page-template js-visibility reveal-slide">
-  <div class="page-template__header container">
-    <h1 class="header-medium">{{ page.title }}</h1>
-  </div>
   <div class="page-template__inner container"> 
     <div class="page-template__left">
-      <div class="collection-hero__nav collection-hero__nav--faqs"  >
-        <div class="collection-hero__nav-inner collection-hero__nav-inner--faq">
-          <h2 class="body-bold-large active" data-topic="General">General</h2>
-          {% for topic in topicArray%}
-            <h2 class="body-bold-large" data-topic="{{topic}}">{{topic}}</h2>
-          {% endfor %}
-        </div>
-      </div>          
+      <div class="page-template__left-wrap">
+        <h1 class="header-medium">{{ page.title }}</h1>
+        <div class="collection-hero__nav collection-hero__nav--faqs"  >
+          <div class="collection-hero__nav-inner collection-hero__nav-inner--faq">
+            <h2 class="body-bold-large active" data-topic="General">General</h2>
+            {% for topic in topicArray%}
+              <h2 class="body-bold-large" data-topic="{{topic}}">{{topic}}</h2>
+            {% endfor %}
+          </div>
+        </div>  
+      </div>        
     </div>
-    <div class="page-template__right">
+    <div class="page-template__right page-template__right--faq">
       {% for block in section.blocks %}
         <div class="accordian__accordian-item" data-topic="{{ block.settings.topic }}">
           <div class="accordian__accordian-item-header">

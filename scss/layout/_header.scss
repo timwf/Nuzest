@@ -136,6 +136,14 @@
     }
   }
 
+  &__right-search-icon{
+    display: none;
+
+    @include respond-to(md){
+      display: block;
+    }
+  }
+
   &__right-search-input{
     position: absolute;
     right: -14px;
